@@ -201,12 +201,17 @@ public class FinanceUA {
         return minMaxCurrencies;
     }
 
+    public static String getAddressbyAdressCity(String city,String address){
+        return ("Украина, " + city + ", " + address).replace(' ', '+');
+
+    }
+
     public String AddressByOrganization(Organization organization) {
         if (cities.containsKey(organization.getCityId())) {
             String mcity = cities.get(organization.getCityId());
 
-            String s = "Украина, " + mcity + ", " + organization.getAddress();
-            return s.replace(' ', '+');
+            return getAddressbyAdressCity(mcity, organization.getAddress());
+
 
 
         }

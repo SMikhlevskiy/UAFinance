@@ -33,8 +33,9 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.CachGeocodingLocation;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 public class OrganizationActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -87,11 +88,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-
         organization = (Organization) getIntent().getExtras().getParcelable("organization");
-
-        Log.i(TAG, "Lat:" + organization.getLatitude() + ", Longi:" + organization.getLongitude());
-
 
 
         ((TextView) findViewById(R.id.organization_title)).setText(organization.getTitle());
@@ -198,21 +195,20 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         mUiSettings.setMyLocationButtonEnabled(true);
 
         mMap.setMyLocationEnabled(true);
+        GeoLocationDB geoLocationDB = new GeoLocationDB(OrganizationActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
-        mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(organization.getLatitude(),
-                                organization.getLongitude()))
-                        .title(organization.getTitle())
-        );
+        LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(city, organization.getAddress()));
+        if (latLng != null) {
+            mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title(organization.getTitle())
+            );
             mMap.moveCamera(CameraUpdateFactory
-                    .newLatLngZoom(new LatLng(organization.getLatitude(), organization.getLongitude()), 16));
+                    .newLatLngZoom(latLng, 16));
+        } else
+            Log.i(TAG,"Do not find Location");
 
 
-/*
-        CachGeocodingLocation cachGeocodingLocation = new CachGeocodingLocation();
-        cachGeocodingLocation.getAddressFromLocation(city + ", " + organization.getAddress(),
-                getApplicationContext(), new GeocoderHandler());
-*/
 
 
         // Keep the UI Settings state in sync with the checkboxes.

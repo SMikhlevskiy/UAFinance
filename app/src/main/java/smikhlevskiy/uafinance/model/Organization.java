@@ -21,8 +21,6 @@ public class Organization implements Parcelable {
     private String address;
 
 
-    private double latitude;
-    private double longitude;
 
     private String link;
     public Map<String, Currencie> currencies;
@@ -129,8 +127,6 @@ public class Organization implements Parcelable {
         dest.writeString(address);
         dest.writeString(link);
         dest.writeDouble(sortVal);
-        dest.writeDouble(latitude);
-        dest.writeDouble(longitude);
 
     }
 
@@ -145,8 +141,6 @@ public class Organization implements Parcelable {
         address = in.readString();
         link = in.readString();
         sortVal = in.readDouble();
-        latitude = in.readDouble();
-        longitude = in.readDouble();
     }
 
     public static final Creator<Organization> CREATOR = new Creator<Organization>() {
@@ -170,21 +164,6 @@ public class Organization implements Parcelable {
     }
 
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
 
 
 }

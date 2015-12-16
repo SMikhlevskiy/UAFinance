@@ -1,12 +1,8 @@
 package smikhlevskiy.uafinance.Utils;
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -20,17 +16,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
-
-import smikhlevskiy.uafinance.R;
 
 /**
  * Created by tcont98 on 05-Dec-15.
  */
-public class CachGeocodingLocation {
+public class GeoLocationUtils {
 
-    private static final String TAG = CachGeocodingLocation.class.getSimpleName();
+    private static final String TAG = GeoLocationUtils.class.getSimpleName();
     //private Geocoder geocoder;
 
 
@@ -82,33 +74,7 @@ public class CachGeocodingLocation {
         }
 
     }
-/* //
-    public Address getAddressFromLocation(final String locationAddress) {
 
-
-        try {
-
-
-            List addressList;
-            addressList = geocoder.getFromLocationName(locationAddress, 1);
-
-            if ((addressList != null) && (addressList.size() > 0)) {
-                Log.i(TAG, locationAddress + " true" + "Lat:" + ((Address) addressList.get(0)).getLatitude() +
-                        "Lon:" + ((Address) addressList.get(0)).getLongitude());
-                return (Address) addressList.get(0);
-            } else {
-                Log.i(TAG, locationAddress + " null");
-                return null;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-
-        }
-    }
-
-*/
     public void getHandleAddressFromLocation(final String locationAddress
             , final Handler handler) {
         Thread thread = new Thread() {

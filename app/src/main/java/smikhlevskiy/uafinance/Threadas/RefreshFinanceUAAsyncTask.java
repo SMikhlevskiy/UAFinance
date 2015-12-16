@@ -1,7 +1,6 @@
 package smikhlevskiy.uafinance.Threadas;
 
 import android.content.Context;
-import android.location.Address;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -22,11 +20,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.CachGeocodingLocation;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.FinanceUA;
-import smikhlevskiy.uafinance.model.Organization;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
 
 /**
  * Created by tcont98 on 11-Nov-15.
@@ -109,29 +106,6 @@ public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA
         Gson gson = new Gson();
         //saveToCache();
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
-        CachGeocodingLocation cachGeocodingLocation = null;
-
-            cachGeocodingLocation = new CachGeocodingLocation();
-        //get geo Datas
-        UAFinancePreference uaFinancePreference = new UAFinancePreference((Context) context.get());
-        String prefCity = uaFinancePreference.getCity();
-        for (Organization organization : financeUA.getOrganizations()) {
-            String city = financeUA.getCities().get(organization.getCityId());
-            if ((cachGeocodingLocation != null) && city.equals(prefCity)) {
-
-
-                LatLng latLng=cachGeocodingLocation.getAddressFromLocationByURL(financeUA.AddressByOrganization(organization));
-                if (latLng != null) {
-                    organization.setLatitude(latLng.latitude);
-                    organization.setLongitude(latLng.longitude);
-
-                    Log.i(TAG, organization.getTitle());
-                }
-
-
-            }
-            ;
-        }
 
         return financeUA;
     }
@@ -152,6 +126,11 @@ public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA
 
 
         UAFinancePreference uaFinancePreference = new UAFinancePreference((Context) context.get());
+
+        GeoLocationDB geoLocationDB = new GeoLocationDB((Context)context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+
+        geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
+
 
 
         ArrayList cityArrayList = new ArrayList<String>();

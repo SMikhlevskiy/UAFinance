@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Threadas.GeoCachThread;
 import smikhlevskiy.uafinance.Threadas.RefreshFinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
@@ -213,41 +212,41 @@ public class MainActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1://on Read finance datas
                         reDrawMainActivity();
-                        new GeoCachThread(MainActivity.this,organizationListAdapter.getFinanceUA().getAllAddresses(uaFinancePreference.getCity())).start();
                         break;
 
                 }
-            }};
-
-                //startRefreshDatas();
-                Log.i(TAG, "End OnCreate");
             }
+        };
+
+        //startRefreshDatas();
+        Log.i(TAG, "End OnCreate");
+    }
 
 
-            @Override
-            public boolean onCreateOptionsMenu(Menu menu) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.menu_main, menu);
-                return true;
-            }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-                // Handle action bar item clicks here. The action bar will
-                // automatically handle clicks on the Home/Up button, so long
-                // as you specify a parent activity in AndroidManifest.xml.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
 
 
-                int id = item.getItemId();
+        int id = item.getItemId();
 
-                //noinspection SimplifiableIfStatement
+        //noinspection SimplifiableIfStatement
 
-                switch (item.getItemId()) {
-                    case R.id.refreshmenuitem:
-                        startRefreshDatas();
-                        break;
-                    case android.R.id.home:
-                        finish();
+        switch (item.getItemId()) {
+            case R.id.refreshmenuitem:
+                startRefreshDatas();
+                break;
+            case android.R.id.home:
+                finish();
                 /*
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
@@ -264,17 +263,17 @@ public class MainActivity extends AppCompatActivity {
                     NavUtils.navigateUpTo(this, upIntent);
                 }
                 */
-                        return true;
-                }
-
-                return super.onOptionsItemSelected(item);
-            }
-
-            @Override
-            protected void onStart() {
-                super.onStart();
-                if (startRefresh)
-                    startRefreshDatas();
-                startRefresh = false;
-            }
+                return true;
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (startRefresh)
+            startRefreshDatas();
+        startRefresh = false;
+    }
+}
