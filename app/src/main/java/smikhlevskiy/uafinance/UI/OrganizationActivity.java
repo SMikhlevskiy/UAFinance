@@ -206,9 +206,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
             mMap.moveCamera(CameraUpdateFactory
                     .newLatLngZoom(latLng, 16));
         } else
-            Log.i(TAG,"Do not find Location");
-
-
+            Log.i(TAG, "Do not find Location");
 
 
         // Keep the UI Settings state in sync with the checkboxes.
@@ -223,40 +221,4 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
 
     }
 
-    private class GeocoderHandler extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            String locationAddress;
-            Bundle bundle = message.getData();
-
-            switch (message.what) {
-                case 0:
-
-                    locationAddress = bundle.getString("address");
-                    Toast.makeText(OrganizationActivity.this, locationAddress, Toast.LENGTH_LONG).show();
-                    Log.i(TAG, locationAddress);
-                    break;
-                case 1:
-
-                    //locationAddress = bundle.getString("address");
-                    //Toast.makeText(OrganizationActivity.this,locationAddress,Toast.LENGTH_LONG).show();
-                    double latitude = bundle.getDouble("latitude");
-                    double longitude = bundle.getDouble("longitude");
-
-                    mMap.moveCamera(CameraUpdateFactory
-                            .newLatLngZoom(new LatLng(latitude, longitude), 16));
-                    // mMap.moveCamera(CameraUpdateFactory.zoomBy(17));
-
-                    mMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(latitude, longitude))
-                                    .title(organization.getTitle())
-                    );
-                    break;
-
-                default:
-                    locationAddress = null;
-            }
-
-        }
-    }
 }

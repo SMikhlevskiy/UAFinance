@@ -127,10 +127,9 @@ public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA
 
         UAFinancePreference uaFinancePreference = new UAFinancePreference((Context) context.get());
 
-        GeoLocationDB geoLocationDB = new GeoLocationDB((Context)context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+        GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
         geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
-
 
 
         ArrayList cityArrayList = new ArrayList<String>();
