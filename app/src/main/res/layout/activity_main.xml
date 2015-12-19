@@ -59,7 +59,7 @@
             >
 
             <Button
-                android:id="@+id/financeUAButton"
+                android:id="@+id/currencyCashButton"
                 style="@style/UAFbuttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,11 +72,11 @@
 
 
             <Button
-                android:id="@+id/MBButton"
+                android:id="@+id/InterBankButton"
                 style="@style/UAFbuttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/financeUAButton"
+                android:layout_below="@+id/currencyCashButton"
 
 
                 android:text="Межбанк" />
@@ -86,11 +86,11 @@
                 style="@style/UAFbuttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/MBButton"
+                android:layout_below="@+id/InterBankButton"
                 android:text="НБУ" />
 
             <Button
-                android:id="@+id/METButton"
+                android:id="@+id/PreciousMetalsButton"
                 style="@style/UAFbuttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

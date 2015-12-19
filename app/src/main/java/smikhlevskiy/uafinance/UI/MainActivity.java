@@ -21,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 
 import smikhlevskiy.uafinance.R;
@@ -54,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*---*/
-    public void showFinanceUAFragment(FinanceUA financeUA) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(FinanceUAFragment.TAG);
+    public void showCurrencyCashFragment(FinanceUA financeUA) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(CurrencyCashFragment.TAG);
         if (fragment == null) {
 
-            fragment = new FinanceUAFragment();
+            fragment = new CurrencyCashFragment();
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, FinanceUAFragment.TAG);
+            ft.replace(R.id.CurencieFrame, fragment, CurrencyCashFragment.TAG);
             ft.commit();
 
         }
@@ -73,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*---*/
-    public void showMBFragment(FinanceUA financeUA) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(MBFragment.TAG);
+    public void showInterBankFragment(FinanceUA financeUA) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
         if (fragment == null) {
-            Log.i(TAG, "new MB Fragment");
-            fragment = new MBFragment();
+
+            fragment = new InterBankFragment();
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, MBFragment.TAG);
+            ft.replace(R.id.CurencieFrame, fragment, InterBankFragment.TAG);
             ft.commit();
 
         }
@@ -88,6 +87,41 @@ public class MainActivity extends AppCompatActivity {
 
         if (financeUA != null)
             ((IShowFragment) fragment).setFinanceUA(financeUA);
+
+    }
+
+    /*---*/
+    public void showNBUFragment(FinanceUA financeUA) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(NBUFragment.TAG);
+        if (fragment == null) {
+
+            fragment = new NBUFragment();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.CurencieFrame, fragment, NBUFragment.TAG);
+            ft.commit();
+
+        }
+
+
+        if (financeUA != null)
+            ((IShowFragment) fragment).setFinanceUA(financeUA);
+
+    }
+
+    /*---*/
+    public void showPreciousMetalsFragment() {
+        Fragment fragment = getFragmentManager().findFragmentByTag(PreciousMetalsFragment.TAG);
+        if (fragment == null) {
+
+            fragment = new PreciousMetalsFragment();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.CurencieFrame, fragment, PreciousMetalsFragment.TAG);
+            ft.commit();
+
+        }
+
 
     }
 
@@ -102,13 +136,13 @@ public class MainActivity extends AppCompatActivity {
 
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
         Fragment fragment;
-        fragment = getFragmentManager().findFragmentByTag(FinanceUAFragment.TAG);
+        fragment = getFragmentManager().findFragmentByTag(CurrencyCashFragment.TAG);
         if (fragment != null) {
             ((IShowFragment) fragment).setFinanceUA(financeUA);
             ((IShowFragment) fragment).drawFinanceUA();
         }
 
-        fragment = getFragmentManager().findFragmentByTag(MBFragment.TAG);
+        fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
         if (fragment != null) {
             ((IShowFragment) fragment).setFinanceUA(financeUA);
             ((IShowFragment) fragment).drawFinanceUA();
@@ -133,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         //CurrencieFragment
 
         if (savedInstanceState == null)
-            showFinanceUAFragment(null);
+            showCurrencyCashFragment(null);
 
         //ActionBar
         ActionBar ab = getSupportActionBar();
@@ -328,15 +362,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void onclick(View v) {
         switch (v.getId()) {
-            case R.id.financeUAButton:
+            case R.id.currencyCashButton:
 
-                showFinanceUAFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
-                Log.i(TAG, "Start FinanceUA Fragment");
+                showCurrencyCashFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
+
                 break;
-            case R.id.MBButton:
-                showMBFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
-                Log.i(TAG, "Start MBFragment");
+            case R.id.InterBankButton:
+                showInterBankFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
+
                 break;
+            case R.id.NBUButton:
+                showNBUFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
+
+                break;
+            case R.id.PreciousMetalsButton:
+                showPreciousMetalsFragment();
+
+                break;
+
+
         }
 
     }

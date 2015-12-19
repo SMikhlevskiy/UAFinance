@@ -2,7 +2,6 @@ package smikhlevskiy.uafinance.UI;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 
 
@@ -21,11 +20,11 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 /**
  * Created by tcont98 on 18-Dec-15.
  */
-public class FinanceUAFragment extends Fragment implements IShowFragment {
+public class CurrencyCashFragment extends Fragment implements IShowFragment {
 private Activity mainActivity;
 private FinanceUA financeUA;
 private   View fragmentView;
-public static String TAG=FinanceUAFragment.class.getSimpleName();
+public static String TAG=CurrencyCashFragment.class.getSimpleName();
 
     @Override
     public void onAttach(Activity activity) {
@@ -36,7 +35,7 @@ public static String TAG=FinanceUAFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.fragment_finance_ua, null);
+        fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
         drawFinanceUA();
         return fragmentView;
     }

@@ -14,8 +14,8 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 /**
  * Created by tcont98 on 19-Dec-15.
  */
-public class MBFragment extends Fragment implements IShowFragment {
-    public static String TAG=MBFragment.class.getSimpleName();
+public class InterBankFragment extends Fragment implements IShowFragment {
+    public static String TAG=InterBankFragment.class.getSimpleName();
     private   View fragmentView;
     private  FinanceUA financeUA;
     @Override
@@ -38,7 +38,7 @@ public class MBFragment extends Fragment implements IShowFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.fragment_finance_ua, null);
+        fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
 
         return fragmentView;
     }
