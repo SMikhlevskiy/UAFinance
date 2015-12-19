@@ -204,7 +204,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
                             .title(organization.getTitle())
             );
             mMap.moveCamera(CameraUpdateFactory
-                    .newLatLngZoom(latLng, 16));
+                    .newLatLngZoom(latLng, 17));
         } else
             Log.i(TAG, "Do not find Location");
 

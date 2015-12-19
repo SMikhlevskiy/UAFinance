@@ -1,9 +1,12 @@
 package smikhlevskiy.uafinance.UI;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
@@ -50,30 +53,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*---*/
+    public void showFinanceUAFragment(FinanceUA financeUA) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(FinanceUAFragment.TAG);
+        if (fragment == null) {
+
+            fragment = new FinanceUAFragment();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.CurencieFrame, fragment, FinanceUAFragment.TAG);
+            ft.commit();
+
+        }
+
+
+        if (financeUA != null)
+            ((IShowFragment) fragment).setFinanceUA(financeUA);
+
+    }
+
+    /*---*/
+    public void showMBFragment(FinanceUA financeUA) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(MBFragment.TAG);
+        if (fragment == null) {
+            Log.i(TAG, "new MB Fragment");
+            fragment = new MBFragment();
+
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.CurencieFrame, fragment, MBFragment.TAG);
+            ft.commit();
+
+        }
+
+
+        if (financeUA != null)
+            ((IShowFragment) fragment).setFinanceUA(financeUA);
+
+    }
+
+
     /* ------------*/
     public void reDrawMainActivity() {
         FinanceUA financeUA = ((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
         if (financeUA == null) return;
         financeUA.sort((uaFinancePreference.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
                 uaFinancePreference.getCity(), uaFinancePreference.getCurrancie());
-        financeUA.calckMinMaxCurrencies(
-                new String[]{
-                        getString(R.string.USD),
-                        getString(R.string.EUR),
-                        getString(R.string.RUB)},
-                uaFinancePreference.getCity());
+
 
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
+        Fragment fragment;
+        fragment = getFragmentManager().findFragmentByTag(FinanceUAFragment.TAG);
+        if (fragment != null) {
+            ((IShowFragment) fragment).setFinanceUA(financeUA);
+            ((IShowFragment) fragment).drawFinanceUA();
+        }
 
-        ((TextView) findViewById(R.id.USD_ask)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.USD)).getAsk());
-        ((TextView) findViewById(R.id.USD_bid)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.USD)).getBid());
+        fragment = getFragmentManager().findFragmentByTag(MBFragment.TAG);
+        if (fragment != null) {
+            ((IShowFragment) fragment).setFinanceUA(financeUA);
+            ((IShowFragment) fragment).drawFinanceUA();
+        }
 
-        ((TextView) findViewById(R.id.EUR_ask)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.EUR)).getAsk());
-        ((TextView) findViewById(R.id.EUR_bid)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.EUR)).getBid());
 
-        ((TextView) findViewById(R.id.RUB_ask)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.RUB)).getAsk());
-        ((TextView) findViewById(R.id.RUB_bid)).setText(financeUA.getMinMaxCurrencies().get(getString(R.string.RUB)).getBid());
-
+//
 
     }
 
@@ -86,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Begin OnCreate");
         startRefresh = true;
         setContentView(R.layout.activity_main);
+
+
+        //CurrencieFragment
+
+        if (savedInstanceState == null)
+            showFinanceUAFragment(null);
 
         //ActionBar
         ActionBar ab = getSupportActionBar();
@@ -275,5 +323,21 @@ public class MainActivity extends AppCompatActivity {
         if (startRefresh)
             startRefreshDatas();
         startRefresh = false;
+    }
+
+
+    public void onclick(View v) {
+        switch (v.getId()) {
+            case R.id.financeUAButton:
+
+                showFinanceUAFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
+                Log.i(TAG, "Start FinanceUA Fragment");
+                break;
+            case R.id.MBButton:
+                showMBFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
+                Log.i(TAG, "Start MBFragment");
+                break;
+        }
+
     }
 }

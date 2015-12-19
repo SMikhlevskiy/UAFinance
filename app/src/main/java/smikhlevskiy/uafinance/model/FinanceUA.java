@@ -32,7 +32,7 @@ public class FinanceUA {
     private ArrayList<Integer> index = new ArrayList<Integer>();
 
 
-    private HashMap<String, Currencie> minMaxCurrencies = null;
+
 /*
     public Set<String> getAllCurrencies() {
         Set<String> currArr = new HashSet<String>();
@@ -159,8 +159,8 @@ public class FinanceUA {
 
     }
 
-    public void calckMinMaxCurrencies(String[] keyCurrencies, String city) {
-        minMaxCurrencies = new HashMap<String, Currencie>();
+    public HashMap<String, Currencie> calckMinMaxCurrencies(String[] keyCurrencies, String city) {
+        HashMap<String, Currencie> minMaxCurrencies = new HashMap<String, Currencie>();
 
         for (String key : keyCurrencies) {
             if (!minMaxCurrencies.containsKey(key)) {
@@ -194,14 +194,11 @@ public class FinanceUA {
 
         }
 
-
-    }
-
-    public HashMap<String, Currencie> getMinMaxCurrencies() {
         return minMaxCurrencies;
     }
 
-    public static String getAddressbyAdressCity(String city,String address){
+
+    public static String getAddressbyAdressCity(String city, String address) {
         return ("Украина, " + city + ", " + address).replace(' ', '+');
 
     }
@@ -211,7 +208,6 @@ public class FinanceUA {
             String mcity = cities.get(organization.getCityId());
 
             return getAddressbyAdressCity(mcity, organization.getAddress());
-
 
 
         }
