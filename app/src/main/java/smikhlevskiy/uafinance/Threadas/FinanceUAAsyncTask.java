@@ -30,7 +30,7 @@ import smikhlevskiy.uafinance.model.GeoLocationDB;
  */
 
 
-public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
+public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
     WeakReference<OrganizationListAdapter> organizationListAdapter;
 
@@ -39,11 +39,11 @@ public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA
     WeakReference<Context> context;
     WeakReference<Handler> reDrawHandler;
 
-    static final String TAG = RefreshFinanceUAAsyncTask.class.getSimpleName();
+    static final String TAG = FinanceUAAsyncTask.class.getSimpleName();
 
     String tempFile;
 
-    public RefreshFinanceUAAsyncTask(
+    public FinanceUAAsyncTask(
             Context context,
             Handler reDrawHandler,
             OrganizationListAdapter organizationListAdapter,
@@ -130,6 +130,8 @@ public class RefreshFinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA
         GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
         geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
+
+
 
 
         ArrayList cityArrayList = new ArrayList<String>();

@@ -23,10 +23,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 
+import java.util.HashMap;
+
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Threadas.RefreshFinanceUAAsyncTask;
+import smikhlevskiy.uafinance.Threadas.FinanceUAAsyncTask;
+import smikhlevskiy.uafinance.Threadas.PrivatAsyncTask;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
+import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 
@@ -40,15 +44,19 @@ public class MainActivity extends AppCompatActivity {
     Handler mainActivityReDrawHandler;
     boolean startRefresh = true;
 
+    private HashMap<String, Currencie> privatHashMap;
+
     /*-----------*/
     public void startRefreshDatas() {
-        (new RefreshFinanceUAAsyncTask(
+        (new FinanceUAAsyncTask(
                 this,
                 mainActivityReDrawHandler,
                 organizationListAdapter,
                 (Spinner) findViewById(R.id.spinerCurrency),
                 (Spinner) findViewById(R.id.spinerCity)
         )).execute(getString(R.string.financeua_json_path));
+
+        (new PrivatAsyncTask(mainActivityReDrawHandler)).execute();
 
     }
 
@@ -124,7 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    /*-----*/
+    public void reDrawNBU(){
 
+    }
 
     /* ------------*/
     public void reDrawMainActivity() {
@@ -294,6 +305,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1://on Read finance datas
                         reDrawMainActivity();
+                        break;
+                    case 2:
+                        reDrawNBU();
+                        privatHashMap=(HashMap<String, Currencie>)msg.obj;
                         break;
 
                 }
