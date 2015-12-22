@@ -15,6 +15,7 @@
     <string name="action_settings">Settings</string>
     <string name="USD">USD</string>
     <string name="RUB">RUB</string>
+    <string name="RUR">RUR</string>
     <string name="EUR">EUR</string>
     <string name="organization_title">Название:</string>
     <string name="organization_region">Регион:</string>
@@ -28,5 +29,22 @@
     <string name="grivna">Гривны</string>
     <string name="FindLatLonError">\n Unable to get Latitude and Longitude for this address location.</string>
     <string name="serverKey">AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew</string>
+    <string name="NBU_metall">Металл</string>
+    <string name="NBU_met_cour">Курс</string>
+    <string name="Gold_rus">Золото</string>
+    <string name="Gold">Au</string>
+    <string name="Gold_key">XAU</string>
+    <string name="Silver_rus">Серебро</string>
+    <string name="Silver">Ag</string>
+    <string name="Silver_key">XAG</string>
+    <string name="Platina_rus">Платина</string>
+    <string name="Platina">Pt</string>
+    <string name="Platina_key">XPT</string>
+    <string name="Palladiy_rus">Палладий</string>
+    <string name="Palladiy">Pd</string>
+    <string name="Palladiy_key">XPD</string>
+    <string name="Cash">Наличные</string>
+    <string name="InterBank">Межбанк</string>
+    <string name="PreciousMetals">Драг.металл</string>
 
 </resources>

@@ -1,14 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
 
     <GridLayout
         android:id="@+id/curGridLayout"
-        style="@style/hiderStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:columnCount="3"></GridLayout>
+        style="@style/hiderStyle"
+        android:columnCount="3">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
+            android:text="@string/NBU_metall" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="@string/NBU_met_cour" />
+        <!--   Gold    -->
+
+
+        <TextView
+            android:id="@+id/Gold_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="1"
+            android:text="@string/Gold_rus" />
+
+        <TextView
+            android:id="@+id/Gold_shortname"
+            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="1"
+
+            android:text="@string/Gold" />
+
+        <TextView
+            android:id="@+id/Gold_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="1"
+            android:text="@string/nullvall" />
+
+        <!--   Silver    -->
+
+
+        <TextView
+            android:id="@+id/Silver_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="2"
+            android:text="@string/Silver_rus" />
+
+        <TextView
+            android:id="@+id/Silver_shortname"
+            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="2"
+            android:text="@string/Silver" />
+
+        <TextView
+            android:id="@+id/Silver_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="2"
+            android:text="@string/nullvall" />
+
+    <!--   Platina    -->
+
+
+    <TextView
+        android:id="@+id/Platina_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/custom_vertical_margin"
+        android:layout_row="3"
+        android:text="@string/Platina_rus" />
+
+    <TextView
+        android:id="@+id/Platina_shortname"
+        style="@style/hiderRedTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/custom_vertical_margin"
+        android:layout_row="3"
+        android:text="@string/Platina" />
+
+    <TextView
+        android:id="@+id/Platina_ask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/custom_vertical_margin"
+        android:layout_row="3"
+        android:text="@string/nullvall" />
+        <!--   Palladiy    -->
+        <TextView
+            android:id="@+id/Palladiy_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="4"
+            android:text="@string/Palladiy_rus" />
+
+        <TextView
+            android:id="@+id/Palladiy_shortname"
+            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="4"
+            android:text="@string/Palladiy" />
+
+        <TextView
+            android:id="@+id/Palladiy_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/custom_vertical_margin"
+            android:layout_row="4"
+            android:text="@string/nullvall" />
+</GridLayout>
 </LinearLayout>

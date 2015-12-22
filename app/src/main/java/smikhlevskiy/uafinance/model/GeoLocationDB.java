@@ -122,7 +122,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
                         } else Log.i(TAG, text + ":null");
                     } else {
                         LatLng latLng = latLonMap.get(text);
-                        Log.i(TAG, text + ":read from DBCach:" + latLng.latitude + "," + latLng.longitude);
+                        //Log.i(TAG, text + ":read from DBCach:" + latLng.latitude + "," + latLng.longitude);
                     }
 
                 db.close();

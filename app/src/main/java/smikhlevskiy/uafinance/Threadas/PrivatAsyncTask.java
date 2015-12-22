@@ -95,10 +95,13 @@ public class PrivatAsyncTask extends AsyncTask<Void, Void, HashMap<String, Curre
                             String shortName = xmlPullParser.getAttributeValue(null, "ccy");
                             if (shortName != null) {
                                 Currencie currencie = new Currencie();
-                                currencie.setAsk(xmlPullParser.getAttributeValue(null, "buy"));
-                                hashMap.put(shortName,currencie);
+                                Double val=new Double(xmlPullParser.getAttributeValue(null, "buy"));
+                                Double unit=new Double(xmlPullParser.getAttributeValue(null, "unit"));
+                                val=1.0*val/(10000.0*unit);
+                                currencie.setAsk(val.toString());
+                                hashMap.put(shortName, currencie);
 
-                                Log.i(TAG, shortName + ":" + xmlPullParser.getAttributeValue(null, "buy"));
+                                Log.i(TAG, shortName + ":" + hashMap.get(shortName).getAsk());
                             }
 
                         }
@@ -132,7 +135,7 @@ public class PrivatAsyncTask extends AsyncTask<Void, Void, HashMap<String, Curre
             return null;
         }
 
-        return null;
+        return hashMap;
     }
 
     @Override

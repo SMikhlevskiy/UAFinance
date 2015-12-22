@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Threadas.FinanceUAAsyncTask;
+import smikhlevskiy.uafinance.Threadas.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Threadas.PrivatAsyncTask;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     Handler mainActivityReDrawHandler;
     boolean startRefresh = true;
 
-    private HashMap<String, Currencie> privatHashMap;
+    private HashMap<String, Currencie> privatHashMap=null;
 
     /*-----------*/
     public void startRefreshDatas() {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         )).execute(getString(R.string.financeua_json_path));
 
         (new PrivatAsyncTask(mainActivityReDrawHandler)).execute();
+        (new InterBankAsyncTask(mainActivityReDrawHandler)).execute();
 
     }
 
@@ -112,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (financeUA != null)
-            ((IShowFragment) fragment).setFinanceUA(financeUA);
+        if (privatHashMap != null)
+            ((NBUFragment) fragment).setPrivatHashMap(privatHashMap);
 
     }
 
@@ -130,11 +132,23 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        if (privatHashMap != null)
+            ((PreciousMetalsFragment) fragment).setPrivatHashMap(privatHashMap);
+
 
     }
     /*-----*/
     public void reDrawNBU(){
-
+        Fragment fragment = getFragmentManager().findFragmentByTag(NBUFragment.TAG);
+        if (fragment != null) {
+            ((NBUFragment) fragment).setPrivatHashMap(privatHashMap);
+            ((NBUFragment) fragment).drawNBU();
+        }
+        fragment = getFragmentManager().findFragmentByTag(PreciousMetalsFragment.TAG);
+        if (fragment != null) {
+            ((PreciousMetalsFragment) fragment).setPrivatHashMap(privatHashMap);
+            ((PreciousMetalsFragment) fragment).drawNBU();
+        }
     }
 
     /* ------------*/
