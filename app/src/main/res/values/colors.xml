@@ -4,4 +4,12 @@
     <color name="myBlu">#55AADD</color>
     <color name="myYellow">#99CC22</color>
     <color name="white">#D0FFFFFF</color>
+
+    <color name="uafblack">#000000</color>
+    <color name="uafredtext">#BB2222</color>
+    <color name="uafmainback">#DDFFBB</color>
+    <color name="uafhiderback">#BBAA33</color>
+
+
+
 </resources>
