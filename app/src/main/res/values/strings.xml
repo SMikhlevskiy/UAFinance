@@ -53,5 +53,6 @@
     <string name="Cash">Наличные</string>
     <string name="InterBank">Межбанк</string>
     <string name="PreciousMetals">Драг.металл</string>
+    <string name="km">км</string>
 
 </resources>

@@ -1,16 +1,21 @@
 package smikhlevskiy.uafinance.adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DecimalFormat;
+
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 /**
@@ -20,14 +25,22 @@ public class OrganizationListAdapter extends BaseAdapter {
     private FinanceUA financeUA = null;
     private Context context;
     private UAFinancePreference uaFinancePreference;
+    private Location deviceLocation = null;
+    private GeoLocationDB geoLocationDB = null;
 
     public OrganizationListAdapter(Context context) {
         this.context = context;
-        uaFinancePreference=new UAFinancePreference((context));
+        uaFinancePreference = new UAFinancePreference((context));
+        geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
     }
+
 
     public FinanceUA getFinanceUA() {
         return financeUA;
+    }
+
+    public void setDeviceLocation(Location deviceLocation) {
+        this.deviceLocation = deviceLocation;
     }
 
     public void setFinanceUA(FinanceUA financeUA) {
@@ -69,18 +82,32 @@ public class OrganizationListAdapter extends BaseAdapter {
 
         TextView textName = (TextView) convertView.findViewById(R.id.itemName);
 
+
         textName.setText(organization.getTitle());
+
+        TextView textDistance = (TextView) convertView.findViewById(R.id.itemDistance);
+        textDistance.setVisibility(View.INVISIBLE);
+        if (deviceLocation != null) {
+            Location locationOrganization = new Location(organization.getTitle());
+
+            LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
+            if (latLng != null) {
+                locationOrganization.setLongitude(latLng.longitude);
+                locationOrganization.setLatitude(latLng.latitude);
+
+
+                float distance = locationOrganization.distanceTo(deviceLocation)/1000;
+                textDistance.setText(new DecimalFormat("####.#").format(distance) + " " + context.getString(R.string.km));
+                textDistance.setVisibility(View.VISIBLE);
+            }
+        }
 
 
         //uaFinancePreference.getAskBid(), uaFinancePreference.getCity(), uaFinancePreference.getCurrancie()
 
 
-
         TextView textCurrancie = (TextView) convertView.findViewById(R.id.itemCurrencie);
         textCurrancie.setText(new Double(organization.getSortVal()).toString());
-
-
-
 
 
         return convertView;

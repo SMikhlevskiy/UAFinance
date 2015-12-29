@@ -22,13 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
 
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements
 
     Handler mainActivityReDrawHandler;
     boolean startRefresh = true;
-    Location mLastLocation = null;
+    Location deviceLocation = null;
     GoogleApiClient mGoogleApiClient = null;
 
     private HashMap<String, Currencie> privatHashMap = null;
@@ -453,10 +451,11 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG,"Google API client: On connected");
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+        deviceLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        if (mLastLocation != null) {
-            Log.i(TAG, mLastLocation.getLatitude() + ":" + mLastLocation.getLongitude());
+        if (deviceLocation != null) {
+            Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
+            organizationListAdapter.setDeviceLocation(deviceLocation);
         } else
             Log.i(TAG, "Google API client: GetLastLocation failed");
     }
