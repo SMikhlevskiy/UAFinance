@@ -24,7 +24,13 @@ import java.util.List;
 import smikhlevskiy.uafinance.Utils.GeoLocationUtils;
 
 /**
- * Created by tcont98 on 12-Dec-15.
+ This class allows to speed up gets Latitude & Longitude for address of all organization used in application
+1) When application starting  Latitude & Longitude reads from assets/latlon_start.json
+2) if Latitude & Longitude is null it get from Google Maps
+3)  Latitude & Longitude saves in DataBase(Caching)
+4) When application works Latitude & Longitude gets from DataBase
+
+
  */
 public class GeoLocationDB extends SQLiteOpenHelper {
     public static String TAG = GeoLocationDB.class.getSimpleName();
@@ -111,8 +117,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
             Gson gson = new Gson();
 
-            HashMap<String, LatLng> latLngMap = new HashMap<String, LatLng>();
-            Type type = new TypeToken<HashMap<String, LatLng>>(){}.getType();
+            Type type = new TypeToken<HashMap<String, LatLng>>(){}.getType();//!!! good idea
 
             return (HashMap<String, LatLng>) gson.fromJson(sb.toString(), type);
 

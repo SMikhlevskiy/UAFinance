@@ -23,9 +23,28 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="hiderBlackTextStyle" parent="hiderStyle">
+
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+
+
+    </style>
+
     <style name="hiderRedTextStyle" parent="hiderStyle">
         <item name="android:background">#BBAA33</item>
         <item name="android:textColor">#BB2222</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
         <!-- Customize your theme here. -->
     </style>
 
@@ -47,7 +66,7 @@
         <item name="android:layout_marginBottom">-5dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:onClick">"onclick"</item>
 
 

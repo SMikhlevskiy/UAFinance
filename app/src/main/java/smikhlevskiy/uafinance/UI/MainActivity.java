@@ -3,6 +3,7 @@ package smikhlevskiy.uafinance.UI;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +22,13 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
 
@@ -36,16 +43,21 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     //private EditText resultTextEdit;
     final static String TAG = MainActivity.class.getSimpleName();
     OrganizationListAdapter organizationListAdapter;
     UAFinancePreference uaFinancePreference;
     ListView organizationListView;
+
     Handler mainActivityReDrawHandler;
     boolean startRefresh = true;
+    Location mLastLocation = null;
+    GoogleApiClient mGoogleApiClient = null;
 
-    private HashMap<String, Currencie> privatHashMap=null;
+    private HashMap<String, Currencie> privatHashMap = null;
+    private HashMap<String, Currencie> ibHashMap = null;
 
     /*-----------*/
     public void startRefreshDatas() {
@@ -58,7 +70,12 @@ public class MainActivity extends AppCompatActivity {
         )).execute(getString(R.string.financeua_json_path));
 
         (new PrivatAsyncTask(mainActivityReDrawHandler)).execute();
-        (new InterBankAsyncTask(mainActivityReDrawHandler)).execute();
+
+
+        (new InterBankAsyncTask(mainActivityReDrawHandler, new String[]{getString(R.string.USD),
+                getString(R.string.EUR),
+                getString(R.string.RUB)})).execute();
+
 
     }
 
@@ -95,8 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (financeUA != null)
-            ((IShowFragment) fragment).setFinanceUA(financeUA);
+        if (ibHashMap != null) ((InterBankFragment) fragment).setIBHashMap(ibHashMap);
 
     }
 
@@ -137,8 +153,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     /*-----*/
-    public void reDrawNBU(){
+    public void reDrawInterBank() {
+        Fragment fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
+        if (fragment != null) {
+            ((InterBankFragment) fragment).setIBHashMap(ibHashMap);
+            ((InterBankFragment) fragment).drawIB();
+        }
+    }
+
+    /*-----*/
+    public void reDrawNBU() {
         Fragment fragment = getFragmentManager().findFragmentByTag(NBUFragment.TAG);
         if (fragment != null) {
             ((NBUFragment) fragment).setPrivatHashMap(privatHashMap);
@@ -162,12 +188,6 @@ public class MainActivity extends AppCompatActivity {
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
         Fragment fragment;
         fragment = getFragmentManager().findFragmentByTag(CurrencyCashFragment.TAG);
-        if (fragment != null) {
-            ((IShowFragment) fragment).setFinanceUA(financeUA);
-            ((IShowFragment) fragment).drawFinanceUA();
-        }
-
-        fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
         if (fragment != null) {
             ((IShowFragment) fragment).setFinanceUA(financeUA);
             ((IShowFragment) fragment).drawFinanceUA();
@@ -322,13 +342,26 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         reDrawNBU();
-                        privatHashMap=(HashMap<String, Currencie>)msg.obj;
+                        privatHashMap = (HashMap<String, Currencie>) msg.obj;
+                        break;
+                    case 3:
+                        reDrawInterBank();
+                        ibHashMap = (HashMap<String, Currencie>) msg.obj;
                         break;
 
                 }
+
             }
         };
 
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            if (mGoogleApiClient ==null) Log.i(TAG,"GoogleApiClient init false");
+        }
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");
     }
@@ -385,7 +418,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (startRefresh)
             startRefreshDatas();
+
         startRefresh = false;
+        if (mGoogleApiClient != null) mGoogleApiClient.connect();
+
     }
 
 
@@ -411,6 +447,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(TAG,"Google API client: On connected");
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            Log.i(TAG, mLastLocation.getLatitude() + ":" + mLastLocation.getLongitude());
+        } else
+            Log.i(TAG, "Google API client: GetLastLocation failed");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 }

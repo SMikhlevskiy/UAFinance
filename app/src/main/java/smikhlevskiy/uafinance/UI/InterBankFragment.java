@@ -8,37 +8,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import smikhlevskiy.uafinance.R;
+import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
 /**
  * Created by tcont98 on 19-Dec-15.
  */
-public class InterBankFragment extends Fragment implements IShowFragment {
-    public static String TAG=InterBankFragment.class.getSimpleName();
-    private   View fragmentView;
-    private  FinanceUA financeUA;
-    @Override
-    public void drawFinanceUA() {
+public class InterBankFragment extends Fragment {
+    public static String TAG = InterBankFragment.class.getSimpleName();
+    private View fragmentView;
 
-        ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText("0.0");
-        ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText("0.0");
+    private HashMap<String, Currencie> ibHashMap = null;
 
-        ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText("0.0");
-        ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setText("0.0");
 
-        ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText("0.0");
-        ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setText("0.0");
+    public void drawIB()
+
+    {
+if (ibHashMap==null) return;
+        ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(ibHashMap.get(getString(R.string.USD)).getAsk());
+        ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(ibHashMap.get(getString(R.string.USD)).getBid());
+
+        ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(ibHashMap.get(getString(R.string.EUR)).getAsk());
+        ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setText(ibHashMap.get(getString(R.string.EUR)).getBid());
+
+        ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(ibHashMap.get(getString(R.string.RUB)).getAsk());
+        ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setText(ibHashMap.get(getString(R.string.RUB)).getBid());
 
     }
-    @Override
-    public void setFinanceUA(FinanceUA financeUA){
-        this.financeUA=financeUA;
+
+    public void setIBHashMap(HashMap<String, Currencie> ibHashMap) {
+        this.ibHashMap = ibHashMap;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
+        drawIB();
 
         return fragmentView;
     }
