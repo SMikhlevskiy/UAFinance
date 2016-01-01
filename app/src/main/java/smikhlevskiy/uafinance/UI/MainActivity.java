@@ -3,12 +3,16 @@ package smikhlevskiy.uafinance.UI;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -55,8 +59,17 @@ public class MainActivity extends AppCompatActivity implements
     Location deviceLocation = null;
     GoogleApiClient mGoogleApiClient = null;
 
+
+
     private HashMap<String, Currencie> privatHashMap = null;
     private HashMap<String, Currencie> ibHashMap = null;
+
+
+
+    DrawerLayout mDrawerLayout = null;
+    NavigationView mNavigationView=null;
+    ActionBarDrawerToggle mDrawerToggle=null;
+
 
     /*-----------*/
     public void startRefreshDatas() {
@@ -196,7 +209,69 @@ public class MainActivity extends AppCompatActivity implements
 //
 
     }
+private void setupTolbarNavigationView(){
+    Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+    if (toolbar != null) {
+        setSupportActionBar(toolbar);
+    }
 
+    ActionBar actionBar = getSupportActionBar();
+    actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+    String titleString = getResources().getString(R.string.title_activity_finance);
+    Spannable span = new SpannableString(titleString);
+    span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+    actionBar.setTitle(span);
+
+
+    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+    mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+    mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_item_1:
+                    //mCurrentSelectedPosition = 0;
+                    break;
+                case R.id.navigation_item_2:
+                    //mCurrentSelectedPosition = 1;
+                    break;
+                case R.id.navigation_item_3:
+                    //mCurrentSelectedPosition = 2;
+                    break;
+                case R.id.navigation_item_4:
+                    //mCurrentSelectedPosition = 3;
+                    break;
+            }
+
+            //setTabs(mCurrentSelectedPosition + 1);
+            mDrawerLayout.closeDrawer(mNavigationView);
+            return true;
+        }
+    });
+
+    mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openNavView, R.string.closeNawView) {
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+            //getSupportActionBar().setTitle(getString(R.string.drawer_opened));
+            invalidateOptionsMenu();
+        }
+
+        public void onDrawerClosed(View view) {
+            super.onDrawerClosed(view);
+            //getSupportActionBar().setTitle(mActivityTitle);
+            invalidateOptionsMenu();
+        }
+    };
+
+    mDrawerToggle.setDrawerIndicatorEnabled(true);
+    mDrawerLayout.setDrawerListener(mDrawerToggle);
+    actionBar.setDisplayHomeAsUpEnabled(true);
+    actionBar.setHomeButtonEnabled(true);
+    mDrawerToggle.syncState();
+
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,19 +293,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        setupTolbarNavigationView();
 
-        ActionBar ab = getSupportActionBar();
-        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
-        String titleString = getResources().getString(R.string.title_activity_finance);
-        Spannable span = new SpannableString(titleString);
-        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        ab.setTitle(span);
-        ab.setDisplayHomeAsUpEnabled(true);
 
         uaFinancePreference = new UAFinancePreference(this);
 
@@ -398,7 +462,12 @@ public class MainActivity extends AppCompatActivity implements
                 startRefreshDatas();
                 break;
             case android.R.id.home:
-                finish();
+                if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
+                    mDrawerLayout.closeDrawer(mNavigationView);
+                } else {
+                    mDrawerLayout.openDrawer(mNavigationView);
+                }
+//                finish();
                 /*
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
@@ -460,7 +529,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i(TAG,"Google API client: On connected");
+        Log.i(TAG, "Google API client: On connected");
         deviceLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (deviceLocation != null) {
@@ -478,5 +547,19 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }
