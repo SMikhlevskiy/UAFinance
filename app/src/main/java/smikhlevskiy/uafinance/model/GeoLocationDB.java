@@ -37,7 +37,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
     private static final String LATLON_START_JSON = "latlon_start.json";
 
     public static String DB_NAME = "GEOCACHDB";
-    public static int DB_VERSION = 4;
+    public static int DB_VERSION = 5;
 
     public static String TABLE_NAME = "GEOCACH";
     public static String KEY_ID = "_ID";
@@ -165,7 +165,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
                         LatLng latLng = null;
                         if ((startAppLatLon != null) && (startAppLatLon.containsKey(text))) {//first App start or new version DB
                             latLng = startAppLatLon.get(text);
-                            //Log.i(TAG, text + ":read from start JSON:" + latLng.latitude + "," + latLng.longitude);
+                            Log.i(TAG, text + ":read Lat&Lng from start JSON:" + latLng.latitude + "," + latLng.longitude);
                         } else
                             latLng = geoLocationUtils.getAddressFromLocationByURL(text);//get LatLon from GoogleMap
 

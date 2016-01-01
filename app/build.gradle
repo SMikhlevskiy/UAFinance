@@ -21,6 +21,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -33,13 +34,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
+
+
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+
+
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.android.gms:play-services:8.3.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.6.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.4'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.6.4'
-
 
 
 }

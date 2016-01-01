@@ -6,6 +6,8 @@
     <color name="white">#D0FFFFFF</color>
 
     <color name="uafblack">#000000</color>
+    <color name="uafredblack">#330000</color>
+
     <color name="uafredtext">#BB2222</color>
     <color name="uafmainback">#DDFFBB</color>
     <color name="uafhiderback">#BBAA33</color>

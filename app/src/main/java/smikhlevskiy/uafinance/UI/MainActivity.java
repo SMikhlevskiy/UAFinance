@@ -10,6 +10,7 @@ import android.os.Message;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -212,9 +213,18 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState == null)
             showCurrencyCashFragment(null);
 
+
         //ActionBar
+
+
+
+        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
         ActionBar ab = getSupportActionBar();
-        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_gradient));
+        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
         String titleString = getResources().getString(R.string.title_activity_finance);
         Spannable span = new SpannableString(titleString);
         span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);

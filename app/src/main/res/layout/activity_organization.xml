@@ -9,20 +9,24 @@
     android:paddingTop="0dp"
     tools:context="smikhlevskiy.uafinance.UI.OrganizationActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/app_bar" />
+
     <RelativeLayout
         android:id="@+id/layoutName"
         style="@style/hiderStyle"
-
         android:layout_width="fill_parent"
-        android:paddingBottom="@dimen/custom_vertical_margin"
-
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="@dimen/custom_vertical_margin"
 
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+
         android:orientation="horizontal"
-        >
+        android:paddingBottom="@dimen/custom_vertical_margin"
+        android:paddingLeft="0dp"
+
+        android:paddingRight="0dp"
+        android:paddingTop="@dimen/custom_vertical_margin">
 
 
         <TextView
@@ -220,8 +224,8 @@
         android:id="@+id/map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layoutLink"
-        android:layout_above="@+id/calckulatorLayout">
+        android:layout_above="@+id/calckulatorLayout"
+        android:layout_below="@+id/layoutLink">
 
         <fragment
             android:id="@+id/map"
