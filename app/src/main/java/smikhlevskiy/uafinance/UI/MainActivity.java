@@ -231,16 +231,16 @@ private void setupTolbarNavigationView(){
         public boolean onNavigationItemSelected(MenuItem menuItem) {
             menuItem.setChecked(true);
             switch (menuItem.getItemId()) {
-                case R.id.navigation_item_1:
+                case R.id.navmenu_map:
                     //mCurrentSelectedPosition = 0;
                     break;
-                case R.id.navigation_item_2:
+                case R.id.navmenu_cur:
                     //mCurrentSelectedPosition = 1;
                     break;
-                case R.id.navigation_item_3:
+                case R.id.navmenu_dist:
                     //mCurrentSelectedPosition = 2;
                     break;
-                case R.id.navigation_item_4:
+                case R.id.navmenu_opt:
                     //mCurrentSelectedPosition = 3;
                     break;
             }
@@ -275,10 +275,12 @@ private void setupTolbarNavigationView(){
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "Begin OnCreate");
+
         super.onCreate(savedInstanceState);
 
 
-        Log.i(TAG, "Begin OnCreate");
+
         startRefresh = true;
         setContentView(R.layout.activity_main);
 
@@ -443,6 +445,14 @@ private void setupTolbarNavigationView(){
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        /*
+        ImageButton a=((ImageButton) menu.findItem(R.id.refreshmenuitem).getActionView());
+        RotateAnimation ra =new RotateAnimation(0, 360);
+        ra.setFillAfter(true);
+        ra.setDuration(1000);
+
+        a.startAnimation(ra);
+*/
         return true;
     }
 

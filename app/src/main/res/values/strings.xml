@@ -56,5 +56,9 @@
     <string name="km">км</string>
     <string name="openNavView">открыто</string>
     <string name="closeNawView">закрыто</string>
+    <string name="navmenu_map">Карта</string>
+    <string name="navmenu_cur">Сортировка по курсу</string>
+    <string name="navmenu_dist">Сортировка по расстоянию</string>
+    <string name="navmenu_opt">Настройки</string>
 
 </resources>
