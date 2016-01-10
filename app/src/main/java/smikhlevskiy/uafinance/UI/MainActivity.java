@@ -232,6 +232,8 @@ private void setupTolbarNavigationView(){
             menuItem.setChecked(true);
             switch (menuItem.getItemId()) {
                 case R.id.navmenu_map:
+                    Intent mapIntent=new Intent(MainActivity.this,MapActivity.class);
+                    startActivity(mapIntent);
                     //mCurrentSelectedPosition = 0;
                     break;
                 case R.id.navmenu_cur:

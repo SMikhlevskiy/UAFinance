@@ -39,6 +39,15 @@
                 android:value="smikhlevskiy.uafinance.UI.OrganizationActivity" />
 
         </activity>
+        <activity
+            android:name=".UI.MapActivity"
+            android:label="@string/mapActivityName" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="smikhlevskiy.uafinance.UI.MapActivity" />
+
+        </activity>
+
     </application>
 
 </manifest>

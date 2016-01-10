@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/app_bar" />
+        layout="@layout/activity_toolbar" />
 
     <RelativeLayout
         android:id="@+id/layoutName"

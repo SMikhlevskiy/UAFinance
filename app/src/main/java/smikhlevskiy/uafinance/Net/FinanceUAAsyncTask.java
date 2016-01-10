@@ -65,7 +65,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
             // Thread.sleep(10000);//simulate lon read
             //  from URL
             InputStreamReader isr;
-            if (false) {
+            if (true) {
                 URL url = new URL(params[0]);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 isr = new InputStreamReader(con.getInputStream());
@@ -132,8 +132,6 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
         geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
-
-
 
 
         ArrayList cityArrayList = new ArrayList<String>();

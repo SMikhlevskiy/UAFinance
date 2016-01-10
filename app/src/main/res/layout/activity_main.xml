@@ -22,7 +22,7 @@
         >
         <include
             android:id="@+id/toolbar"
-            layout="@layout/app_bar"/>
+            layout="@layout/activity_toolbar"/>
 
 
     <RelativeLayout
@@ -149,7 +149,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         app:itemIconTint="@android:color/black"
-        app:headerLayout="@layout/drawer_header"
+        app:headerLayout="@layout/navigationview_header"
         app:menu="@menu/menu_navigation"/>
 
 </android.support.v4.widget.DrawerLayout>
