@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Threadas;
+package smikhlevskiy.uafinance.Net;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
-import smikhlevskiy.uafinance.model.FinanceUA;
-import smikhlevskiy.uafinance.model.GeoLocationDB;
+import smikhlevskiy.uafinance.Adapters.OrganizationListAdapter;
+import smikhlevskiy.uafinance.Model.FinanceUA;
+import smikhlevskiy.uafinance.Model.GeoLocationDB;
 
 /**
  * Created by tcont98 on 11-Nov-15.
@@ -65,7 +65,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
             // Thread.sleep(10000);//simulate lon read
             //  from URL
             InputStreamReader isr;
-            if (true) {
+            if (false) {
                 URL url = new URL(params[0]);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 isr = new InputStreamReader(con.getInputStream());
@@ -106,6 +106,8 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         Gson gson = new Gson();
         //saveToCache();
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
+
+        financeUA.optimizeOrganizationList();
 
         return financeUA;
     }

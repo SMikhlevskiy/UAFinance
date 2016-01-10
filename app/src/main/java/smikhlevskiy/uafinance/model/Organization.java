@@ -1,10 +1,10 @@
-package smikhlevskiy.uafinance.model;
+package smikhlevskiy.uafinance.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,12 +21,18 @@ public class Organization implements Parcelable {
     private String address;
 
 
+    private ArrayList<Organization> organizationBrunches = null;
+
 
     private String link;
     public Map<String, Currencie> currencies;
 
 
     private Double sortVal = 0.0;
+
+    public Organization() {
+
+    }
 
 
     public String getId() {
@@ -128,6 +134,14 @@ public class Organization implements Parcelable {
         dest.writeString(link);
         dest.writeDouble(sortVal);
 
+
+        if (organizationBrunches != null) {
+            dest.writeInt(organizationBrunches.size());
+            for (Organization organization : organizationBrunches)
+                dest.writeParcelable(organization, flags);
+        } else
+            dest.writeInt(0);
+
     }
 
     protected Organization(Parcel in) {
@@ -141,6 +155,14 @@ public class Organization implements Parcelable {
         address = in.readString();
         link = in.readString();
         sortVal = in.readDouble();
+
+        int sizeBrunch = in.readInt();
+        if (sizeBrunch > 0) {
+            organizationBrunches = new ArrayList<Organization>();
+            for (int i = 0; i < sizeBrunch; i++)
+                organizationBrunches.add((Organization) in.readParcelable(Organization.class.getClassLoader()));
+            Log.i("Organization", "Ok Brunch");
+        }
     }
 
     public static final Creator<Organization> CREATOR = new Creator<Organization>() {
@@ -164,7 +186,13 @@ public class Organization implements Parcelable {
     }
 
 
+    public ArrayList<Organization> getOrganizationBrunches() {
+        return organizationBrunches;
+    }
 
+    public void setOrganizationBrunches(ArrayList<Organization> organizationBrunches) {
+        this.organizationBrunches = organizationBrunches;
+    }
 
 }
 

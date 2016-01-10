@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Threadas;
+package smikhlevskiy.uafinance.Net;
 
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -19,8 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.model.Currencie;
-import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.Model.Currencie;
 //https://privat24.privatbank.ua/p24/accountorder?oper=prp&JSON&apicour&country=ua&full
 
 /**

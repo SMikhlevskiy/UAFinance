@@ -14,8 +14,8 @@ import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.model.Currencie;
-import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.Model.Currencie;
+import smikhlevskiy.uafinance.Model.FinanceUA;
 
 /**
  * Created by tcont98 on 18-Dec-15.

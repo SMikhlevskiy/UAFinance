@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.adapters;
+package smikhlevskiy.uafinance.Adapters;
 
 import android.content.Context;
 import android.location.Location;
@@ -14,9 +14,9 @@ import java.text.DecimalFormat;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.model.FinanceUA;
-import smikhlevskiy.uafinance.model.GeoLocationDB;
-import smikhlevskiy.uafinance.model.Organization;
+import smikhlevskiy.uafinance.Model.FinanceUA;
+import smikhlevskiy.uafinance.Model.GeoLocationDB;
+import smikhlevskiy.uafinance.Model.Organization;
 
 /**
  * Created by tcont98 on 09-Nov-15.

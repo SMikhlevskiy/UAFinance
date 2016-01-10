@@ -19,6 +19,7 @@
             android:id="@+id/navmenu_opt"
 
             android:title="@string/navmenu_opt" />
+        <!--
         <item android:title="List 1">
             <menu>
                 <group android:checkableBehavior="single">
@@ -31,5 +32,6 @@
                 </group>
             </menu>
         </item>
+        -->
     </group>
 </menu>

@@ -1,18 +1,11 @@
-package smikhlevskiy.uafinance.model;
+package smikhlevskiy.uafinance.Model;
 
-import android.content.Context;
-import android.location.Address;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 
 /**
  * Created by tcont98 on 07-Nov-15.
@@ -224,8 +217,10 @@ public class FinanceUA {
                 if (cities.containsKey(organization.getCityId())) {
                     String mcity = cities.get(organization.getCityId());
                     if (((j == 0) && mcity.equals(prefCity)) || ((j == 1) && (!mcity.equals(prefCity)))) {
-                        list.add(
-                                AddressByOrganization(organization));
+                        list.add(AddressByOrganization(organization));
+                        if (organization.getOrganizationBrunches() != null)
+                            for (Organization organizationBrunch : organization.getOrganizationBrunches())
+                                list.add(AddressByOrganization(organizationBrunch));
                     }
                 }
             }
@@ -233,5 +228,60 @@ public class FinanceUA {
         return list;
     }
 
+    public void optimizeOrganizationList() {
+
+        ArrayList<Organization> organizationsList = new ArrayList<Organization>();
+
+
+        //Organization rootOrganization = null;
+
+
+        for (int i = 0; i < organizations.length; i++) {
+            organizationsList.add(organizations[i]);
+            //if (organizations[i].getTitle().equalsIgnoreCase(organizationRootName))  rootOrganization = organizations[i];//Main
+
+        }
+/*
+        if (rootOrganization == null) {
+            Log.i("Optimization", "Not find root organization");
+            return;
+        }
+        */
+
+
+        for (int j = 0; j < organizationsList.size(); j++) {
+            Organization rootOrganization = organizationsList.get(j);
+
+            for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
+
+                if (
+                        (organizationsList.get(i).getTitle().toLowerCase().contains(rootOrganization.getTitle().toLowerCase())) &&
+                                organizationsList.get(i).getCityId().equals(rootOrganization.getCityId()) &&
+                                (!organizationsList.get(i).getTitle().equalsIgnoreCase(rootOrganization.getTitle()))
+
+
+                        ) {
+                    Log.i("Optimization", "Remove" + organizationsList.get(i).getTitle());
+
+
+                    if (rootOrganization.getOrganizationBrunches() == null)
+                        rootOrganization.setOrganizationBrunches(new ArrayList<Organization>());
+                    //move organization from root to brunch
+                    rootOrganization.getOrganizationBrunches().add(organizationsList.get(i));//add
+                    organizationsList.remove(organizationsList.get(i));//delete
+
+                }
+
+            }
+
+        }
+
+
+        organizations = new Organization[organizationsList.size()];
+        for (int i = 0; i < organizationsList.size(); i++)
+            organizations[i] = organizationsList.get(i);
+
+
+    }
 
 }

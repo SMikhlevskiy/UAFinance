@@ -1,6 +1,6 @@
 package smikhlevskiy.uafinance.UI;
 
-import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.Model.FinanceUA;
 
 /**
  * Created by tcont98 on 18-Dec-15.

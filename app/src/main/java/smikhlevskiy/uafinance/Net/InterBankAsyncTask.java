@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Threadas;
+package smikhlevskiy.uafinance.Net;
 
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.model.Currencie;
+import smikhlevskiy.uafinance.Model.Currencie;
 
 /**
  * Created by tcont98 on 22-Dec-15.

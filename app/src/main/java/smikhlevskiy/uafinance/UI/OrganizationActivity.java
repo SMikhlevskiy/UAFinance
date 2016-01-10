@@ -32,9 +32,9 @@ import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.model.FinanceUA;
-import smikhlevskiy.uafinance.model.GeoLocationDB;
-import smikhlevskiy.uafinance.model.Organization;
+import smikhlevskiy.uafinance.Model.FinanceUA;
+import smikhlevskiy.uafinance.Model.GeoLocationDB;
+import smikhlevskiy.uafinance.Model.Organization;
 
 public class OrganizationActivity extends AppCompatActivity implements OnMapReadyCallback {
     public String TAG = OrganizationActivity.class.getSimpleName();
@@ -189,6 +189,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -199,7 +200,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
 
         mMap.setMyLocationEnabled(true);
         GeoLocationDB geoLocationDB = new GeoLocationDB(OrganizationActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
-
+        //--------Main Brunch
         LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(city, organization.getAddress()));
         if (latLng != null) {
             mMap.addMarker(new MarkerOptions()
@@ -208,8 +209,17 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
             );
             mMap.moveCamera(CameraUpdateFactory
                     .newLatLngZoom(latLng, 17));
-        } else
-            Log.i(TAG, "Do not find Location");
+        } else Log.i(TAG, "Do not find Location");
+
+        //-------------other Brunches----
+        if (organization.getOrganizationBrunches()!=null)
+        for  (Organization organizationBrunch:organization.getOrganizationBrunches()){
+            latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(city, organizationBrunch.getAddress()));
+            if (latLng != null)
+                mMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(organizationBrunch.getTitle()));
+        }
 
 
         // Keep the UI Settings state in sync with the checkboxes.

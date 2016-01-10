@@ -36,14 +36,14 @@ import com.google.android.gms.location.LocationServices;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Threadas.FinanceUAAsyncTask;
-import smikhlevskiy.uafinance.Threadas.InterBankAsyncTask;
-import smikhlevskiy.uafinance.Threadas.PrivatAsyncTask;
+import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
+import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
+import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
-import smikhlevskiy.uafinance.model.Currencie;
-import smikhlevskiy.uafinance.model.FinanceUA;
-import smikhlevskiy.uafinance.model.Organization;
+import smikhlevskiy.uafinance.Adapters.OrganizationListAdapter;
+import smikhlevskiy.uafinance.Model.Currencie;
+import smikhlevskiy.uafinance.Model.FinanceUA;
+import smikhlevskiy.uafinance.Model.Organization;
 
 
 public class MainActivity extends AppCompatActivity implements
