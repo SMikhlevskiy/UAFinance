@@ -21,6 +21,9 @@ public class Organization implements Parcelable {
     private String address;
 
 
+
+
+
     private ArrayList<Organization> organizationBrunches = null;
 
 
@@ -29,6 +32,7 @@ public class Organization implements Parcelable {
 
 
     private Double sortVal = 0.0;
+
 
     public Organization() {
 
@@ -135,6 +139,7 @@ public class Organization implements Parcelable {
         dest.writeDouble(sortVal);
 
 
+
         if (organizationBrunches != null) {
             dest.writeInt(organizationBrunches.size());
             for (Organization organization : organizationBrunches)
@@ -155,6 +160,7 @@ public class Organization implements Parcelable {
         address = in.readString();
         link = in.readString();
         sortVal = in.readDouble();
+
 
         int sizeBrunch = in.readInt();
         if (sizeBrunch > 0) {
@@ -193,6 +199,8 @@ public class Organization implements Parcelable {
     public void setOrganizationBrunches(ArrayList<Organization> organizationBrunches) {
         this.organizationBrunches = organizationBrunches;
     }
+
+
 
 }
 

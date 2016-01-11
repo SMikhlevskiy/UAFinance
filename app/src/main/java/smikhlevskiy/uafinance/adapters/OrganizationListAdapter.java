@@ -52,7 +52,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         if (financeUA == null)
             return 0;
         else
-            return financeUA.getIndex().size();
+            return financeUA.getFu_index().size();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         if (financeUA == null)
             return null;
         else
-            return financeUA.getOrganizations()[(financeUA.getIndex().get(position))];
+            return financeUA.getOrganizations()[(financeUA.getFu_index().get(position))];
 
     }
 

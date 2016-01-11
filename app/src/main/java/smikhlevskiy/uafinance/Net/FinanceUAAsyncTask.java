@@ -19,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import smikhlevskiy.uafinance.Model.Organization;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.Adapters.OrganizationListAdapter;
@@ -38,6 +39,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
     WeakReference<Spinner> spinnerCity;
     WeakReference<Context> context;
     WeakReference<Handler> reDrawHandler;
+    boolean isLowWork;
 
     static final String TAG = FinanceUAAsyncTask.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
     public FinanceUAAsyncTask(
             Context context,
+            Boolean isLowWork,
             Handler reDrawHandler,
             OrganizationListAdapter organizationListAdapter,
             Spinner spinnerCurrency,
@@ -54,6 +57,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         this.spinnerCurrency = new WeakReference<Spinner>(spinnerCurrency);
         this.spinnerCity = new WeakReference<Spinner>(spinnerCity);
         this.context = new WeakReference<Context>(context);
+        this.isLowWork = isLowWork;
         tempFile = context.getCacheDir().getPath() + "/" + "financeUA.txt";
     }
 
@@ -107,6 +111,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         //saveToCache();
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
+        if (!isLowWork)
         financeUA.optimizeOrganizationList();
 
         return financeUA;
@@ -128,52 +133,58 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
 
         UAFinancePreference uaFinancePreference = new UAFinancePreference((Context) context.get());
+        if (!isLowWork) {
+            GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
-        GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+            geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
+        }
 
-        geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
 
 
-        ArrayList cityArrayList = new ArrayList<String>();
-        cityArrayList.add(uaFinancePreference.getCity());
-        String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
-        for (int i = 0; i < citiesArray.length; i++)
-            cityArrayList.add(citiesArray[i]);
-        String[] cities = (String[]) cityArrayList.toArray(new String[0]);
 
 
         if ((spinnerCity.get() != null) && (context.get() != null)) {
+            ArrayList cityArrayList = new ArrayList<String>();
+            cityArrayList.add(uaFinancePreference.getCity());
+            String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
+            for (int i = 0; i < citiesArray.length; i++)
+                cityArrayList.add(citiesArray[i]);
+            String[] cities = (String[]) cityArrayList.toArray(new String[0]);
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(((Context) context.get()), android.R.layout.simple_spinner_item, cities);
             ((Spinner) spinnerCity.get()).setAdapter(cityAdapter);
             ((Spinner) spinnerCity.get()).setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));
         }
 
-        //Arrays.allCurrancies
-        ArrayList currencyArrayList = new ArrayList<String>();// (HashSet)financeUA.getCurrancies().keySet();
 
-        currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.USD));
-        currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.RUB));
-        currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.EUR));
-
-        String[] currencyArray = (String[]) financeUA.getCurrancies().keySet().toArray(new String[0]);
-        for (int i = 0; i < currencyArray.length; i++)
-            currencyArrayList.add(currencyArray[i]);
-        String allCurrancies[] = (String[]) currencyArrayList.toArray(new String[0]);
 
         if ((spinnerCurrency.get() != null) && (context.get() != null)) {
+            //Arrays.allCurrancies
+            ArrayList currencyArrayList = new ArrayList<String>();// (HashSet)financeUA.getCurrancies().keySet();
+
+            currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.USD));
+            currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.RUB));
+            currencyArrayList.add(((Context) context.get()).getResources().getString(R.string.EUR));
+
+            String[] currencyArray = (String[]) financeUA.getCurrancies().keySet().toArray(new String[0]);
+            for (int i = 0; i < currencyArray.length; i++)
+                currencyArrayList.add(currencyArray[i]);
+            String allCurrancies[] = (String[]) currencyArrayList.toArray(new String[0]);
+
             ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(((Context) context.get()), android.R.layout.simple_spinner_item, allCurrancies);
             ((Spinner) spinnerCurrency.get()).setAdapter(currencyAdapter);
             ((Spinner) spinnerCurrency.get()).setSelection(currencyAdapter.getPosition(uaFinancePreference.getCurrancie()));
         }
 
-
-        ((OrganizationListAdapter) organizationListAdapter.get()).setFinanceUA(financeUA);
-        ((OrganizationListAdapter) organizationListAdapter.get()).notifyDataSetChanged();
+        if (organizationListAdapter.get() != null) {
+            ((OrganizationListAdapter) organizationListAdapter.get()).setFinanceUA(financeUA);
+            ((OrganizationListAdapter) organizationListAdapter.get()).notifyDataSetChanged();
+        }
 
         if (reDrawHandler.get() != null) {
 
             Message message = new Message();
             message.what = 1;
+            message.obj = financeUA;
             ((Handler) reDrawHandler.get()).handleMessage(message);
             Log.i(TAG, "datas sucsessuful reads");
         }

@@ -3,31 +3,48 @@ package smikhlevskiy.uafinance.UI;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 
+
+import smikhlevskiy.uafinance.Model.FinanceUA;
+
+import smikhlevskiy.uafinance.Model.GeoLocationDB;
+import smikhlevskiy.uafinance.Model.Organization;
+import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+
 
 /**
  * Created by tcont98 on 10-Jan-16.
  */
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    public String TAG = MapActivity.class.getSimpleName();
+    public static final String TAG = MapActivity.class.getSimpleName();
+    private FinanceUA financeUA;
+    private Location deviceLocation=null;
     UAFinancePreference uaFinancePreference;
-
+    Handler mapHandler;
 
     Geocoder geocoder;
 
@@ -36,7 +53,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate");
+        super.onCreate(savedInstanceState);
+        deviceLocation=(Location) getIntent().getExtras().getParcelable(Location.class.getSimpleName());
         setContentView(R.layout.activity_map);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -57,13 +76,74 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         ab.setDisplayHomeAsUpEnabled(true);
 
+        // financeUA = (FinanceUA) getIntent().getExtras().getParcelable(FinanceUA.class.getSimpleName());
+
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mUiSettings = mMap.getUiSettings();
+        mUiSettings.setZoomControlsEnabled(true);
+        mUiSettings.setMyLocationButtonEnabled(true);
+
+        mMap.setMyLocationEnabled(true);
+
+
+
+        if (deviceLocation!=null)
+            mMap.moveCamera(CameraUpdateFactory
+                    .newLatLngZoom(new LatLng(deviceLocation.getLatitude(),deviceLocation.getLongitude()), 17)); else
+            Log.i(TAG,"deviceLocation is null");
+
+
+        mapHandler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                Log.i(TAG, "On handleMessage");
+
+                financeUA = (FinanceUA) msg.obj;
+                GeoLocationDB geoLocationDB = new GeoLocationDB(MapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+                if (geoLocationDB == null) return;
+                for (Organization organization : financeUA.getOrganizations()) {
+                    LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
+                    if (latLng != null) {
+                        mMap.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .title(organization.getTitle())
+                        );
+
+
+                    } else Log.i(TAG, "Do not find Location");
+
+                    //-------------other Brunches----
+                    if (organization.getOrganizationBrunches() != null)
+                        for (Organization organizationBrunch : organization.getOrganizationBrunches()) {
+                            latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organizationBrunch.getCityId()), organizationBrunch.getAddress()));
+                            if (latLng != null)
+                                mMap.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .title(organizationBrunch.getTitle()));
+                        }
+
+                }
+            }
+        };
+        (new FinanceUAAsyncTask(
+                this,
+                true,
+                mapHandler,
+                null,
+                null,
+                null
+        )).execute(getString(R.string.financeua_json_path));
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

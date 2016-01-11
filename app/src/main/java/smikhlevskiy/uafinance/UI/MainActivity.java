@@ -60,21 +60,20 @@ public class MainActivity extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient = null;
 
 
-
     private HashMap<String, Currencie> privatHashMap = null;
     private HashMap<String, Currencie> ibHashMap = null;
 
 
-
     DrawerLayout mDrawerLayout = null;
-    NavigationView mNavigationView=null;
-    ActionBarDrawerToggle mDrawerToggle=null;
+    NavigationView mNavigationView = null;
+    ActionBarDrawerToggle mDrawerToggle = null;
 
 
     /*-----------*/
     public void startRefreshDatas() {
         (new FinanceUAAsyncTask(
                 this,
+                false,
                 mainActivityReDrawHandler,
                 organizationListAdapter,
                 (Spinner) findViewById(R.id.spinerCurrency),
@@ -209,78 +208,86 @@ public class MainActivity extends AppCompatActivity implements
 //
 
     }
-private void setupTolbarNavigationView(){
-    Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-    if (toolbar != null) {
-        setSupportActionBar(toolbar);
-    }
 
-    ActionBar actionBar = getSupportActionBar();
-    actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
-    String titleString = getResources().getString(R.string.title_activity_finance);
-    Spannable span = new SpannableString(titleString);
-    span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-    actionBar.setTitle(span);
+    private void setupTolbarNavigationView() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+        String titleString = getResources().getString(R.string.title_activity_finance);
+        Spannable span = new SpannableString(titleString);
+        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        actionBar.setTitle(span);
 
 
-    mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-    mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-    mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(MenuItem menuItem) {
-            menuItem.setChecked(true);
-            switch (menuItem.getItemId()) {
-                case R.id.navmenu_map:
-                    Intent mapIntent=new Intent(MainActivity.this,MapActivity.class);
-                    startActivity(mapIntent);
-                    //mCurrentSelectedPosition = 0;
-                    break;
-                case R.id.navmenu_cur:
-                    //mCurrentSelectedPosition = 1;
-                    break;
-                case R.id.navmenu_dist:
-                    //mCurrentSelectedPosition = 2;
-                    break;
-                case R.id.navmenu_opt:
-                    //mCurrentSelectedPosition = 3;
-                    break;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                menuItem.setChecked(true);
+                switch (menuItem.getItemId()) {
+                    case R.id.navmenu_map:
+
+                        if (((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA() != null) {
+                            Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
+                            //FinanceUA financeUA=((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
+                            //mapIntent.putExtra(FinanceUA.class.getSimpleName(),financeUA);
+                            Log.i(TAG,"Start "+MapActivity.TAG);
+                            mapIntent.putExtra(Location.class.getSimpleName(),deviceLocation);
+                            startActivity(mapIntent);
+                            //mCurrentSelectedPosition = 0;
+                        }
+
+                        break;
+                    case R.id.navmenu_cur:
+                        //mCurrentSelectedPosition = 1;
+                        break;
+                    case R.id.navmenu_dist:
+                        //mCurrentSelectedPosition = 2;
+                        break;
+                    case R.id.navmenu_opt:
+                        //mCurrentSelectedPosition = 3;
+                        break;
+                }
+
+                //setTabs(mCurrentSelectedPosition + 1);
+                mDrawerLayout.closeDrawer(mNavigationView);
+                return true;
+            }
+        });
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openNavView, R.string.closeNawView) {
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //getSupportActionBar().setTitle(getString(R.string.drawer_opened));
+                invalidateOptionsMenu();
             }
 
-            //setTabs(mCurrentSelectedPosition + 1);
-            mDrawerLayout.closeDrawer(mNavigationView);
-            return true;
-        }
-    });
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                //getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu();
+            }
+        };
 
-    mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openNavView, R.string.closeNawView) {
-        public void onDrawerOpened(View drawerView) {
-            super.onDrawerOpened(drawerView);
-            //getSupportActionBar().setTitle(getString(R.string.drawer_opened));
-            invalidateOptionsMenu();
-        }
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        mDrawerToggle.syncState();
 
-        public void onDrawerClosed(View view) {
-            super.onDrawerClosed(view);
-            //getSupportActionBar().setTitle(mActivityTitle);
-            invalidateOptionsMenu();
-        }
-    };
-
-    mDrawerToggle.setDrawerIndicatorEnabled(true);
-    mDrawerLayout.setDrawerListener(mDrawerToggle);
-    actionBar.setDisplayHomeAsUpEnabled(true);
-    actionBar.setHomeButtonEnabled(true);
-    mDrawerToggle.syncState();
-
-}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "Begin OnCreate");
 
         super.onCreate(savedInstanceState);
-
 
 
         startRefresh = true;
@@ -294,7 +301,6 @@ private void setupTolbarNavigationView(){
 
 
         //ActionBar
-
 
 
         setupTolbarNavigationView();
@@ -436,7 +442,7 @@ private void setupTolbarNavigationView(){
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-            if (mGoogleApiClient ==null) Log.i(TAG,"GoogleApiClient init false");
+            if (mGoogleApiClient == null) Log.i(TAG, "GoogleApiClient init false");
         }
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");

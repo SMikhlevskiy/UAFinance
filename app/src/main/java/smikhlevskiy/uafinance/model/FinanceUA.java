@@ -1,5 +1,7 @@
 package smikhlevskiy.uafinance.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class FinanceUA {
     private Map<String, String> cities;
 
 
-    private ArrayList<Integer> index = new ArrayList<Integer>();
+    private ArrayList<Integer> fu_index = new ArrayList<Integer>();
 
 
 
@@ -47,6 +49,7 @@ public class FinanceUA {
         return currArr;
     }
 */
+
 
     public String getSourceId() {
         return sourceId;
@@ -104,20 +107,20 @@ public class FinanceUA {
         this.cities = cities;
     }
 
-    public ArrayList<Integer> getIndex() {
-        return index;
+    public ArrayList<Integer> getFu_index() {
+        return fu_index;
     }
 
     public void sort(boolean askByd, String city, String currancie) {
 
-        index.clear();
+        fu_index.clear();
 
         for (int i = 0; i < organizations.length; i++) {
             organizations[i].setSortVal(0.0);
 
             if (cities.get(organizations[i].getCityId()).equals(city))
                 if (organizations[i].currencies.containsKey(currancie)) {
-                    index.add(new Integer(i));
+                    fu_index.add(new Integer(i));
                     if (askByd)
                         organizations[i].setSortVal(new Double(organizations[i].currencies.get(currancie).getBid()));
                     else
@@ -125,15 +128,15 @@ public class FinanceUA {
                 }
         }
 
-        for (int i = 0; i < index.size() - 1; i++)
-            for (int j = 0; j < index.size() - 1; j++) {
+        for (int i = 0; i < fu_index.size() - 1; i++)
+            for (int j = 0; j < fu_index.size() - 1; j++) {
 
 
-                if ((askByd && (organizations[index.get(j + 1)].getSortVal() > organizations[index.get(j)].getSortVal())) ||
-                        ((!askByd) && (organizations[index.get(j + 1)].getSortVal() < organizations[index.get(j)].getSortVal()))) {
-                    Integer a = index.get(j);
-                    index.set(j, index.get(j + 1));
-                    index.set(j + 1, a);
+                if ((askByd && (organizations[fu_index.get(j + 1)].getSortVal() > organizations[fu_index.get(j)].getSortVal())) ||
+                        ((!askByd) && (organizations[fu_index.get(j + 1)].getSortVal() < organizations[fu_index.get(j)].getSortVal()))) {
+                    Integer a = fu_index.get(j);
+                    fu_index.set(j, fu_index.get(j + 1));
+                    fu_index.set(j + 1, a);
 
 
                 }
@@ -282,6 +285,11 @@ public class FinanceUA {
             organizations[i] = organizationsList.get(i);
 
 
+    }
+
+
+    public FinanceUA() {
+        fu_index = new ArrayList<Integer>();
     }
 
 }
