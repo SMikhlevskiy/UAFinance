@@ -133,11 +133,6 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
 
         UAFinancePreference uaFinancePreference = new UAFinancePreference((Context) context.get());
-        if (!isLowWork) {
-            GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
-
-            geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
-        }
 
 
 
@@ -188,6 +183,13 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
             ((Handler) reDrawHandler.get()).handleMessage(message);
             Log.i(TAG, "datas sucsessuful reads");
         }
+
+        if (!isLowWork) {//Start GeoChaching Thread
+            GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+
+            geoLocationDB.UpdteLocationBase(financeUA.getAllAddresses(uaFinancePreference.getCity()));
+        }
+
         super.onPostExecute(financeUA);
     }
 }

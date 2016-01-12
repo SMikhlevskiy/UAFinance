@@ -236,6 +236,8 @@ public class FinanceUA {
 
         LinkedList<Organization> organizationsList = new LinkedList<Organization>();
 
+        LinkedList<String> organizationsTitleList = new LinkedList<String>();
+
 
 
 
@@ -243,18 +245,19 @@ public class FinanceUA {
 
         for (int i = 0; i < organizations.length; i++) {
             organizationsList.add(organizations[i]);
+            organizationsTitleList.add(organizations[i].getTitle().toLowerCase());
 
 
         }
 
-
+        Organization rootOrganization;
         for (int j = 0; j < organizationsList.size(); j++) {
-            Organization rootOrganization = organizationsList.get(j);
+            rootOrganization = organizationsList.get(j);
 
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
 
                 if (
-                        (organizationsList.get(i).getTitle().toLowerCase().contains(rootOrganization.getTitle().toLowerCase())) &&
+                        (organizationsTitleList.get(i).contains(organizationsTitleList.get(j))) &&
                                 organizationsList.get(i).getCityId().equals(rootOrganization.getCityId()) &&
                                 (!organizationsList.get(i).getTitle().equalsIgnoreCase(rootOrganization.getTitle()))
 
@@ -268,6 +271,7 @@ public class FinanceUA {
                     //move organization from root to brunch
                     rootOrganization.getOrganizationBrunches().add(organizationsList.get(i));//add
                     organizationsList.remove(organizationsList.get(i));//delete
+                    organizationsTitleList.remove(i);
 
                 }
 
