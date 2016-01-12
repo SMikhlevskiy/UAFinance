@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -233,23 +234,18 @@ public class FinanceUA {
 
     public void optimizeOrganizationList() {
 
-        ArrayList<Organization> organizationsList = new ArrayList<Organization>();
+        LinkedList<Organization> organizationsList = new LinkedList<Organization>();
 
 
-        //Organization rootOrganization = null;
+
+
 
 
         for (int i = 0; i < organizations.length; i++) {
             organizationsList.add(organizations[i]);
-            //if (organizations[i].getTitle().equalsIgnoreCase(organizationRootName))  rootOrganization = organizations[i];//Main
+
 
         }
-/*
-        if (rootOrganization == null) {
-            Log.i("Optimization", "Not find root organization");
-            return;
-        }
-        */
 
 
         for (int j = 0; j < organizationsList.size(); j++) {
