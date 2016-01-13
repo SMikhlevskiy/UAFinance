@@ -42,11 +42,11 @@
 
         </activity>
         <activity
-            android:name=".UI.MapActivity"
+            android:name=".UI.LocationMapActivity"
             android:label="@string/mapActivityName" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="smikhlevskiy.uafinance.UI.MapActivity" />
+                android:value=".UI.LocationMapActivity" />
 
         </activity>
 

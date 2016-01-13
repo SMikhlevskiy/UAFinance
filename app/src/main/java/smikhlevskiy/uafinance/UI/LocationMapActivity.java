@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,8 +38,8 @@ import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 /**
  * Created by tcont98 on 10-Jan-16.
  */
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    public static final String TAG = MapActivity.class.getSimpleName();
+public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    public static final String TAG = LocationMapActivity.class.getSimpleName();
     private FinanceUA financeUA;
     private Location deviceLocation=null;
     UAFinancePreference uaFinancePreference;
@@ -56,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         deviceLocation=(Location) getIntent().getExtras().getParcelable(Location.class.getSimpleName());
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_locationmap);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -107,7 +106,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Log.i(TAG, "On handleMessage");
 
                 financeUA = (FinanceUA) msg.obj;
-                GeoLocationDB geoLocationDB = new GeoLocationDB(MapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+                GeoLocationDB geoLocationDB = new GeoLocationDB(LocationMapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
                 if (geoLocationDB == null) return;
                 for (Organization organization : financeUA.getOrganizations()) {
                     LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));

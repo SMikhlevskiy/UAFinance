@@ -19,12 +19,16 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -50,27 +54,41 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     //private EditText resultTextEdit;
     final static String TAG = MainActivity.class.getSimpleName();
-    OrganizationListAdapter organizationListAdapter;
-    UAFinancePreference uaFinancePreference;
-    ListView organizationListView;
+    private OrganizationListAdapter organizationListAdapter;
+    private UAFinancePreference uaFinancePreference;
+    private ListView organizationListView;
 
-    Handler mainActivityReDrawHandler;
-    boolean startRefresh = true;
-    Location deviceLocation = null;
-    GoogleApiClient mGoogleApiClient = null;
+    private Handler mainActivityReDrawHandler;
+    private boolean startRefresh = true;
+    private boolean prFirstMenuCreate = true;
+    private Location deviceLocation = null;
+    private GoogleApiClient mGoogleApiClient = null;
 
 
     private HashMap<String, Currencie> privatHashMap = null;
     private HashMap<String, Currencie> ibHashMap = null;
 
 
-    DrawerLayout mDrawerLayout = null;
-    NavigationView mNavigationView = null;
-    ActionBarDrawerToggle mDrawerToggle = null;
+    private DrawerLayout mDrawerLayout = null;
+    private NavigationView mNavigationView = null;
+    private ActionBarDrawerToggle mDrawerToggle = null;
 
+    private MenuItem refreshMenuItem = null;
+
+    private void startAnimation() {
+        //--Start Animation---
+        LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        ImageView iv = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
+        rotation.setRepeatCount(Animation.INFINITE);
+        iv.startAnimation(rotation);
+        refreshMenuItem.setActionView(iv);
+    }
 
     /*-----------*/
     public void startRefreshDatas() {
+
+
         (new FinanceUAAsyncTask(
                 this,
                 false,
@@ -234,11 +252,11 @@ public class MainActivity extends AppCompatActivity implements
                     case R.id.navmenu_map:
 
                         if (((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA() != null) {
-                            Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
+                            Intent mapIntent = new Intent(MainActivity.this, LocationMapActivity.class);
                             //FinanceUA financeUA=((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
                             //mapIntent.putExtra(FinanceUA.class.getSimpleName(),financeUA);
-                            Log.i(TAG,"Start "+MapActivity.TAG);
-                            mapIntent.putExtra(Location.class.getSimpleName(),deviceLocation);
+                            Log.i(TAG, "Start " + LocationMapActivity.TAG);
+                            mapIntent.putExtra(Location.class.getSimpleName(), deviceLocation);
                             startActivity(mapIntent);
                             //mCurrentSelectedPosition = 0;
                         }
@@ -421,6 +439,11 @@ public class MainActivity extends AppCompatActivity implements
                 switch (msg.what) {
                     case 1://on Read finance datas
                         reDrawMainActivity();
+
+                        // Remove the animation.
+                        refreshMenuItem.getActionView().clearAnimation();
+                        refreshMenuItem.setActionView(null);
+
                         break;
                     case 2:
                         reDrawNBU();
@@ -453,8 +476,20 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        /*
-        ImageButton a=((ImageButton) menu.findItem(R.id.refreshmenuitem).getActionView());
+
+
+        refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
+        if (prFirstMenuCreate) {
+            startAnimation();
+            prFirstMenuCreate = false;
+        }
+
+/*
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        ImageView a = (ImageView) inflater.inflate(R.id.refreshmenuitem, null);
+
+        //ImageView a=((ImageView) menu.findItem(R.id.refreshmenuitem).getActionView());
+        if (a==null) return true;
         RotateAnimation ra =new RotateAnimation(0, 360);
         ra.setFillAfter(true);
         ra.setDuration(1000);
@@ -477,7 +512,9 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (item.getItemId()) {
             case R.id.refreshmenuitem:
+                startAnimation();
                 startRefreshDatas();
+
                 break;
             case android.R.id.home:
                 if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
