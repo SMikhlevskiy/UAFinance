@@ -33,7 +33,7 @@
 
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">@dimen/midl_text_size</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
 
@@ -46,7 +46,7 @@
         <item name="android:textColor">@color/uafredtext</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">@dimen/midl_text_size</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
 
@@ -71,7 +71,7 @@
         <item name="android:layout_marginBottom">-5dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:onClick">"onclick"</item>
 
 

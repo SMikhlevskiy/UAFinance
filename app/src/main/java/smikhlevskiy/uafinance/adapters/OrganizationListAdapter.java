@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -81,6 +82,41 @@ public class OrganizationListAdapter extends BaseAdapter {
         Organization organization = (Organization) getItem(position);
 
         TextView textName = (TextView) convertView.findViewById(R.id.itemName);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
+
+        if (organization.getOrgType() == 1)
+            imageView.setImageResource(R.mipmap.bank);
+        else
+            imageView.setImageResource(R.mipmap.exchange_shop);
+        String lowertitle = organization.getTitle().toLowerCase();
+        if (lowertitle.contains("приват"))
+            imageView.setImageResource(R.mipmap.bank_privat);
+        else if (lowertitle.contains("правэкс"))
+            imageView.setImageResource(R.mipmap.bank_praveks);
+        else if (lowertitle.contains("пумб"))
+            imageView.setImageResource(R.mipmap.bank_pumb);
+        else if (lowertitle.contains("укргазбанк"))
+            imageView.setImageResource(R.mipmap.bank_ukrgazbank);
+        else if (lowertitle.contains("альфа"))
+            imageView.setImageResource(R.mipmap.bank_alfa);
+        else if (lowertitle.contains("укрсоцбанк"))
+            imageView.setImageResource(R.mipmap.bank_ukrsoc);
+        else if (lowertitle.contains("отп банк"))
+            imageView.setImageResource(R.mipmap.bank_otp);
+        else if (lowertitle.contains("агриколь"))
+            imageView.setImageResource(R.mipmap.bank_agricol);
+        else if (lowertitle.contains("укрсиб"))
+            imageView.setImageResource(R.mipmap.bank_ukrsib);
+        else if (lowertitle.contains("ощад"))
+            imageView.setImageResource(R.mipmap.bank_oschad);
+        else if (lowertitle.contains("таскомбанк"))
+            imageView.setImageResource(R.mipmap.bank_tas);
+        else if (lowertitle.contains("укрсиб"))
+            imageView.setImageResource(R.mipmap.bank_ukrsib);
+        else if (lowertitle.contains("авал"))
+            imageView.setImageResource(R.mipmap.bank_aval);
+        else if (lowertitle.contains("сбербанк"))
+            imageView.setImageResource(R.mipmap.bank_sberbank);
 
 
         textName.setText(organization.getTitle());
@@ -96,7 +132,7 @@ public class OrganizationListAdapter extends BaseAdapter {
                 locationOrganization.setLatitude(latLng.latitude);
 
 
-                float distance = locationOrganization.distanceTo(deviceLocation)/1000;
+                float distance = locationOrganization.distanceTo(deviceLocation) / 1000;
                 textDistance.setText(new DecimalFormat("####.#").format(distance) + " " + context.getString(R.string.km));
                 textDistance.setVisibility(View.VISIBLE);
             }
