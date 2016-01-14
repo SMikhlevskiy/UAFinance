@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import smikhlevskiy.uafinance.Utils.UAFConstansts;
+
 /**
  * Created by tcont98 on 07-Nov-15.
  */
@@ -253,6 +255,20 @@ public class FinanceUA {
         Organization rootOrganization;
         for (int j = 0; j < organizationsList.size(); j++) {
             rootOrganization = organizationsList.get(j);
+
+            if (organizationsTitleList.get(j).contains(UAFConstansts.ukrsocLC) &&
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.ukrsocLC)))
+            {
+                organizationsTitleList.set(j, UAFConstansts.ukrsocLC);
+                rootOrganization.setTitle(UAFConstansts.ukrsoc);
+            }
+
+            if (organizationsTitleList.get(j).contains(UAFConstansts.privatLC) &&
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.privatLC)))
+            {
+                organizationsTitleList.set(j, UAFConstansts.privatLC);
+                rootOrganization.setTitle(UAFConstansts.privat);
+            }
 
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
 

@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DecimalFormat;
 
 import smikhlevskiy.uafinance.R;
+import smikhlevskiy.uafinance.Utils.UAFConstansts;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.Model.FinanceUA;
 import smikhlevskiy.uafinance.Model.GeoLocationDB;
@@ -89,7 +90,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         else
             imageView.setImageResource(R.mipmap.exchange_shop);
         String lowertitle = organization.getTitle().toLowerCase();
-        if (lowertitle.contains("приват"))
+        if (lowertitle.contains(UAFConstansts.privatLC))
             imageView.setImageResource(R.mipmap.bank_privat);
         else if (lowertitle.contains("правэкс"))
             imageView.setImageResource(R.mipmap.bank_praveks);
@@ -99,7 +100,7 @@ public class OrganizationListAdapter extends BaseAdapter {
             imageView.setImageResource(R.mipmap.bank_ukrgazbank);
         else if (lowertitle.contains("альфа"))
             imageView.setImageResource(R.mipmap.bank_alfa);
-        else if (lowertitle.contains("укрсоцбанк"))
+        else if (lowertitle.contains(UAFConstansts.ukrsocLC))
             imageView.setImageResource(R.mipmap.bank_ukrsoc);
         else if (lowertitle.contains("отп банк"))
             imageView.setImageResource(R.mipmap.bank_otp);
