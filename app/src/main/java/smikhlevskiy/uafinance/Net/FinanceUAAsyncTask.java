@@ -19,12 +19,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import smikhlevskiy.uafinance.Model.Organization;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.Adapters.OrganizationListAdapter;
-import smikhlevskiy.uafinance.Model.FinanceUA;
-import smikhlevskiy.uafinance.Model.GeoLocationDB;
+import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
+import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
 
 /**
  * Created by tcont98 on 11-Nov-15.
@@ -44,9 +43,11 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
     static final String TAG = FinanceUAAsyncTask.class.getSimpleName();
 
     String tempFile;
+    String city;
 
     public FinanceUAAsyncTask(
             Context context,
+            String city,
             Boolean isLowWork,
             Handler reDrawHandler,
             OrganizationListAdapter organizationListAdapter,
@@ -58,6 +59,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         this.spinnerCity = new WeakReference<Spinner>(spinnerCity);
         this.context = new WeakReference<Context>(context);
         this.isLowWork = isLowWork;
+        this.city = city;
         tempFile = context.getCacheDir().getPath() + "/" + "financeUA.txt";
     }
 
@@ -112,7 +114,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
         if (!isLowWork)
-        financeUA.optimizeOrganizationList();
+        financeUA.optimizeOrganizationList(city);
 
         return financeUA;
     }
@@ -139,12 +141,22 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
 
         if ((spinnerCity.get() != null) && (context.get() != null)) {
-            ArrayList cityArrayList = new ArrayList<String>();
-            cityArrayList.add(uaFinancePreference.getCity());
+            //ArrayList cityArrayList = new ArrayList<String>();
+            //cityArrayList.add(((Context) (context.get())).getResources().getString(R.string.default_city));
             String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
+
+            //for (int i = 0; i < citiesArray.length; i++) cityArrayList.add(citiesArray[i]);
+            String[] cities = new String[citiesArray.length+2];//(String[]) cityArrayList.toArray(new String[0]);
+
+            cities[0]=uaFinancePreference.getCity();
+            cities[1]=((Context) (context.get())).getResources().getString(R.string.default_city);
+
             for (int i = 0; i < citiesArray.length; i++)
-                cityArrayList.add(citiesArray[i]);
-            String[] cities = (String[]) cityArrayList.toArray(new String[0]);
+                cities[i+2]=citiesArray[i];
+
+
+
+
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(((Context) context.get()), android.R.layout.simple_spinner_item, cities);
             ((Spinner) spinnerCity.get()).setAdapter(cityAdapter);
             ((Spinner) spinnerCity.get()).setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));

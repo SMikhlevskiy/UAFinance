@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Model;
+package smikhlevskiy.uafinance.model;
 
 import android.content.ContentValues;
 import android.content.Context;

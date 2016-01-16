@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Model;
+package smikhlevskiy.uafinance.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

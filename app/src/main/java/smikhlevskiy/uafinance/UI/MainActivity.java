@@ -44,10 +44,10 @@ import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.Adapters.OrganizationListAdapter;
-import smikhlevskiy.uafinance.Model.Currencie;
-import smikhlevskiy.uafinance.Model.FinanceUA;
-import smikhlevskiy.uafinance.Model.Organization;
+import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
+import smikhlevskiy.uafinance.model.Currencie;
+import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.Organization;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements
 
         (new FinanceUAAsyncTask(
                 this,
+                uaFinancePreference.getCity(),
                 false,
                 mainActivityReDrawHandler,
                 organizationListAdapter,
@@ -366,10 +367,14 @@ public class MainActivity extends AppCompatActivity implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
 
+                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getCity())) {// city was changed
+                    uaFinancePreference.setCity((String) parent.getAdapter().getItem(position));
 
-                uaFinancePreference.setCity((String) parent.getAdapter().getItem(position));
-
-                reDrawMainActivity();
+                    reDrawMainActivity();
+                    Log.i(TAG, "City was changed");
+                    startAnimation();
+                    startRefreshDatas();
+                }
             }
 
             @Override

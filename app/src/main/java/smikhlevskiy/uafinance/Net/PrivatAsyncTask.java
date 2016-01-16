@@ -19,7 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.Model.Currencie;
+import smikhlevskiy.uafinance.model.Currencie;
 //https://privat24.privatbank.ua/p24/accountorder?oper=prp&JSON&apicour&country=ua&full
 
 /**

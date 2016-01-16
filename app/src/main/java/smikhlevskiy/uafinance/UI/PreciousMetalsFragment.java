@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Model.Currencie;
+import smikhlevskiy.uafinance.model.Currencie;
 
 /**
  * Created by tcont98 on 19-Dec-15.

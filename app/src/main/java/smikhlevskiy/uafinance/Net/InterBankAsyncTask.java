@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.Model.Currencie;
+import smikhlevskiy.uafinance.model.Currencie;
 
 /**
  * Created by tcont98 on 22-Dec-15.

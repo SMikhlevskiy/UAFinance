@@ -1,7 +1,5 @@
-package smikhlevskiy.uafinance.Model;
+package smikhlevskiy.uafinance.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -234,38 +232,34 @@ public class FinanceUA {
         return list;
     }
 
-    public void optimizeOrganizationList() {
+    public void optimizeOrganizationList(String city) {
 
         LinkedList<Organization> organizationsList = new LinkedList<Organization>();
 
         LinkedList<String> organizationsTitleList = new LinkedList<String>();
 
 
+        for (int i = 0; i < organizations.length; i++)
+            if (city.equals(cities.get(organizations[i].getCityId()))) {
+
+                organizationsList.add(organizations[i]);
+                organizationsTitleList.add(organizations[i].getTitle().toLowerCase());
 
 
-
-
-        for (int i = 0; i < organizations.length; i++) {
-            organizationsList.add(organizations[i]);
-            organizationsTitleList.add(organizations[i].getTitle().toLowerCase());
-
-
-        }
+            }
 
         Organization rootOrganization;
         for (int j = 0; j < organizationsList.size(); j++) {
             rootOrganization = organizationsList.get(j);
 
             if (organizationsTitleList.get(j).contains(UAFConstansts.ukrsocLC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.ukrsocLC)))
-            {
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.ukrsocLC))) {
                 organizationsTitleList.set(j, UAFConstansts.ukrsocLC);
                 rootOrganization.setTitle(UAFConstansts.ukrsoc);
             }
 
             if (organizationsTitleList.get(j).contains(UAFConstansts.privatLC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.privatLC)))
-            {
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.privatLC))) {
                 organizationsTitleList.set(j, UAFConstansts.privatLC);
                 rootOrganization.setTitle(UAFConstansts.privat);
             }
@@ -274,7 +268,7 @@ public class FinanceUA {
 
                 if (
                         (organizationsTitleList.get(i).contains(organizationsTitleList.get(j))) &&
-                                organizationsList.get(i).getCityId().equals(rootOrganization.getCityId()) &&
+                                /*organizationsList.get(i).getCityId().equals(rootOrganization.getCityId()) &&*/
                                 (!organizationsList.get(i).getTitle().equalsIgnoreCase(rootOrganization.getTitle()))
 
 

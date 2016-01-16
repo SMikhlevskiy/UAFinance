@@ -32,9 +32,9 @@ import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
-import smikhlevskiy.uafinance.Model.FinanceUA;
-import smikhlevskiy.uafinance.Model.GeoLocationDB;
-import smikhlevskiy.uafinance.Model.Organization;
+import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
+import smikhlevskiy.uafinance.model.Organization;
 
 public class OrganizationActivity extends AppCompatActivity implements OnMapReadyCallback {
     public String TAG = OrganizationActivity.class.getSimpleName();

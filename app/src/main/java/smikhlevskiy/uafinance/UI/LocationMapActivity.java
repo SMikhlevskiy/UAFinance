@@ -26,10 +26,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.Locale;
 
 
-import smikhlevskiy.uafinance.Model.FinanceUA;
+import smikhlevskiy.uafinance.model.FinanceUA;
 
-import smikhlevskiy.uafinance.Model.GeoLocationDB;
-import smikhlevskiy.uafinance.Model.Organization;
+import smikhlevskiy.uafinance.model.GeoLocationDB;
+import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
@@ -134,6 +134,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         };
         (new FinanceUAAsyncTask(
                 this,
+                "",
                 true,
                 mapHandler,
                 null,
