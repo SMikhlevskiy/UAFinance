@@ -24,6 +24,19 @@
             android:id="@+id/toolbar"
             layout="@layout/activity_toolbar"/>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/showMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="onclick"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:backgroundTint="@color/uafmainback"
+            
+            android:src="@mipmap/map" />
 
     <RelativeLayout
         android:id="@+id/hiderLayout"
@@ -116,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/NBUButton"
                 android:text="@string/PreciousMetals" />
+
 
         </RelativeLayout>
 

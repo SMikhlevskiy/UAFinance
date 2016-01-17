@@ -227,7 +227,19 @@ public class MainActivity extends AppCompatActivity implements
 //
 
     }
+private void showLocationMapActivity(){
+    if (((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA() != null) {
+        Intent mapIntent = new Intent(MainActivity.this, LocationMapActivity.class);
+        //FinanceUA financeUA=((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
+        //mapIntent.putExtra(FinanceUA.class.getSimpleName(),financeUA);
+        Log.i(TAG, "Start " + LocationMapActivity.TAG);
+        mapIntent.putExtra(Location.class.getSimpleName(), deviceLocation);
+        startActivity(mapIntent);
+        //mCurrentSelectedPosition = 0;
+    }
 
+
+}
     private void setupTolbarNavigationView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -251,17 +263,7 @@ public class MainActivity extends AppCompatActivity implements
                 menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
                     case R.id.navmenu_map:
-
-                        if (((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA() != null) {
-                            Intent mapIntent = new Intent(MainActivity.this, LocationMapActivity.class);
-                            //FinanceUA financeUA=((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
-                            //mapIntent.putExtra(FinanceUA.class.getSimpleName(),financeUA);
-                            Log.i(TAG, "Start " + LocationMapActivity.TAG);
-                            mapIntent.putExtra(Location.class.getSimpleName(), deviceLocation);
-                            startActivity(mapIntent);
-                            //mCurrentSelectedPosition = 0;
-                        }
-
+                        showLocationMapActivity();
                         break;
                     case R.id.navmenu_cur:
                         //mCurrentSelectedPosition = 1;
@@ -580,6 +582,10 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.PreciousMetalsButton:
                 showPreciousMetalsFragment();
 
+                break;
+
+            case R.id.showMapButton:
+                showLocationMapActivity();
                 break;
 
 
