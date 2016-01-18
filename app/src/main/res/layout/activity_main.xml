@@ -24,19 +24,7 @@
             android:id="@+id/toolbar"
             layout="@layout/activity_toolbar"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/showMapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="onclick"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            app:backgroundTint="@color/uafmainback"
-            
-            android:src="@mipmap/map" />
+
 
     <RelativeLayout
         android:id="@+id/hiderLayout"
@@ -154,6 +142,27 @@
 
 
     </ListView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/showMapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:onClick="onclick"
+
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/map"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            app:backgroundTint="@color/uafmainback"
+            />
+
+
+        <!--
+
+
+
+        -->
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
