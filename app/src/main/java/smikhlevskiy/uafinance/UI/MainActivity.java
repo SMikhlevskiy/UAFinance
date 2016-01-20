@@ -1,7 +1,5 @@
 package smikhlevskiy.uafinance.UI;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -10,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,12 +42,14 @@ import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
+import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
+import smikhlevskiy.uafinance.Utils.UAFConstansts;
 import smikhlevskiy.uafinance.Utils.UAFinancePreference;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
-
+import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private HashMap<String, Currencie> privatHashMap = null;
     private HashMap<String, Currencie> ibHashMap = null;
+    private FinanceUA financeUA = null;
 
 
     private DrawerLayout mDrawerLayout = null;
@@ -75,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements
 
     private MenuItem refreshMenuItem = null;
 
-    private void startAnimation() {
+    private CurrencyFragmentPagerAdapter adapterViewPager = null;
+
+    private void startRefreshButtonAnimation() {
         //--Start Animation---
         LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
         ImageView iv = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
@@ -109,137 +113,35 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    /*---*/
-    public void showCurrencyCashFragment(FinanceUA financeUA) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(CurrencyCashFragment.TAG);
-        if (fragment == null) {
-
-            fragment = new CurrencyCashFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, CurrencyCashFragment.TAG);
-            ft.commit();
-
-        }
-
-
-        if (financeUA != null)
-            ((IShowFragment) fragment).setFinanceUA(financeUA);
-
-    }
-
-    /*---*/
-    public void showInterBankFragment(FinanceUA financeUA) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
-        if (fragment == null) {
-
-            fragment = new InterBankFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, InterBankFragment.TAG);
-            ft.commit();
-
-        }
-
-
-        if (ibHashMap != null) ((InterBankFragment) fragment).setIBHashMap(ibHashMap);
-
-    }
-
-    /*---*/
-    public void showNBUFragment(FinanceUA financeUA) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(NBUFragment.TAG);
-        if (fragment == null) {
-
-            fragment = new NBUFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, NBUFragment.TAG);
-            ft.commit();
-
-        }
-
-
-        if (privatHashMap != null)
-            ((NBUFragment) fragment).setPrivatHashMap(privatHashMap);
-
-    }
-
-    /*---*/
-    public void showPreciousMetalsFragment() {
-        Fragment fragment = getFragmentManager().findFragmentByTag(PreciousMetalsFragment.TAG);
-        if (fragment == null) {
-
-            fragment = new PreciousMetalsFragment();
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.CurencieFrame, fragment, PreciousMetalsFragment.TAG);
-            ft.commit();
-
-        }
-
-        if (privatHashMap != null)
-            ((PreciousMetalsFragment) fragment).setPrivatHashMap(privatHashMap);
-
-
-    }
-
-    /*-----*/
-    public void reDrawInterBank() {
-        Fragment fragment = getFragmentManager().findFragmentByTag(InterBankFragment.TAG);
-        if (fragment != null) {
-            ((InterBankFragment) fragment).setIBHashMap(ibHashMap);
-            ((InterBankFragment) fragment).drawIB();
-        }
-    }
-
-    /*-----*/
-    public void reDrawNBU() {
-        Fragment fragment = getFragmentManager().findFragmentByTag(NBUFragment.TAG);
-        if (fragment != null) {
-            ((NBUFragment) fragment).setPrivatHashMap(privatHashMap);
-            ((NBUFragment) fragment).drawNBU();
-        }
-        fragment = getFragmentManager().findFragmentByTag(PreciousMetalsFragment.TAG);
-        if (fragment != null) {
-            ((PreciousMetalsFragment) fragment).setPrivatHashMap(privatHashMap);
-            ((PreciousMetalsFragment) fragment).drawNBU();
-        }
-    }
-
     /* ------------*/
     public void reDrawMainActivity() {
-        FinanceUA financeUA = ((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
+
         if (financeUA == null) return;
         financeUA.sort((uaFinancePreference.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
                 uaFinancePreference.getCity(), uaFinancePreference.getCurrancie());
 
 
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
-        Fragment fragment;
-        fragment = getFragmentManager().findFragmentByTag(CurrencyCashFragment.TAG);
-        if (fragment != null) {
-            ((IShowFragment) fragment).setFinanceUA(financeUA);
-            ((IShowFragment) fragment).drawFinanceUA();
-        }
+
+        adapterViewPager.setFinanceUA(financeUA);
+        adapterViewPager.notifyDataSetChanged();
 
 
 //
 
     }
-private void showLocationMapActivity(){
-    if (((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA() != null) {
+
+    private void showLocationMapActivity() {
+        if (financeUA == null) return;
         Intent mapIntent = new Intent(MainActivity.this, LocationMapActivity.class);
-        //FinanceUA financeUA=((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA();
-        //mapIntent.putExtra(FinanceUA.class.getSimpleName(),financeUA);
         Log.i(TAG, "Start " + LocationMapActivity.TAG);
         mapIntent.putExtra(Location.class.getSimpleName(), deviceLocation);
         startActivity(mapIntent);
         //mCurrentSelectedPosition = 0;
+
+
     }
 
-
-}
     private void setupTolbarNavigationView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -304,6 +206,29 @@ private void showLocationMapActivity(){
 
     }
 
+    public void setTabs(int count) {
+        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        adapterViewPager = new CurrencyFragmentPagerAdapter(getSupportFragmentManager(), this, count);
+        vpPager.setAdapter(adapterViewPager);
+//////
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        //slidingTabLayout.setTextColor(getResources().getColor(R.color.tab_text_color));
+        //slidingTabLayout.setTextColorSelected(getResources().getColor(R.color.tab_text_color_selected));
+        slidingTabLayout.setDistributeEvenly();
+        slidingTabLayout.setViewPager(vpPager);
+        slidingTabLayout.setTabSelected(0);
+
+        // Change indicator color
+        slidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.uafredtext /*tab_indicator*/);
+            }
+        });
+
+    }
+
+    /*--------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "Begin OnCreate");
@@ -314,14 +239,9 @@ private void showLocationMapActivity(){
         startRefresh = true;
         setContentView(R.layout.activity_main);
 
-
-        //CurrencieFragment
-
-        if (savedInstanceState == null)
-            showCurrencyCashFragment(null);
+        setTabs(UAFConstansts.CURRENCY_FRAGMENT_COUNT);
 
 
-        //ActionBar
 
 
         setupTolbarNavigationView();
@@ -374,7 +294,7 @@ private void showLocationMapActivity(){
 
                     reDrawMainActivity();
                     Log.i(TAG, "City was changed");
-                    startAnimation();
+                    startRefreshButtonAnimation();
                     startRefreshDatas();
                 }
             }
@@ -424,8 +344,8 @@ private void showLocationMapActivity(){
 
 
                 intent.putExtra("organization", organization);
-                intent.putExtra("city", organizationListAdapter.getFinanceUA().getCities().get(organization.getCityId()));
-                intent.putExtra("region", organizationListAdapter.getFinanceUA().getRegions().get(organization.getRegionId()));
+                intent.putExtra("city", financeUA.getCities().get(organization.getCityId()));
+                intent.putExtra("region", financeUA.getRegions().get(organization.getRegionId()));
 
 
                 startActivity(intent);
@@ -434,10 +354,7 @@ private void showLocationMapActivity(){
         });
 
 
-        //ab.setIcon(R.mipmap.currency_exchange);
-        //ab.setDisplayOptions(ab.DISPLAY_SHOW_HOME | ab.DISPLAY_SHOW_TITLE);
 
-        //resultTextEdit = (EditText) findViewById(R.id.editTextResult);
 
         mainActivityReDrawHandler = new Handler() {
 
@@ -445,6 +362,7 @@ private void showLocationMapActivity(){
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1://on Read finance datas
+                        financeUA = (FinanceUA) msg.obj;
                         reDrawMainActivity();
 
                         // Remove the animation.
@@ -453,12 +371,17 @@ private void showLocationMapActivity(){
 
                         break;
                     case 2:
-                        reDrawNBU();
+
                         privatHashMap = (HashMap<String, Currencie>) msg.obj;
+
+                        adapterViewPager.setPrivat(privatHashMap);
+                        adapterViewPager.notifyDataSetChanged();
                         break;
                     case 3:
-                        reDrawInterBank();
+
                         ibHashMap = (HashMap<String, Currencie>) msg.obj;
+                        adapterViewPager.setInterBank(ibHashMap);
+                        adapterViewPager.notifyDataSetChanged();
                         break;
 
                 }
@@ -487,22 +410,10 @@ private void showLocationMapActivity(){
 
         refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
         if (prFirstMenuCreate) {
-            startAnimation();
+            startRefreshButtonAnimation();
             prFirstMenuCreate = false;
         }
 
-/*
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        ImageView a = (ImageView) inflater.inflate(R.id.refreshmenuitem, null);
-
-        //ImageView a=((ImageView) menu.findItem(R.id.refreshmenuitem).getActionView());
-        if (a==null) return true;
-        RotateAnimation ra =new RotateAnimation(0, 360);
-        ra.setFillAfter(true);
-        ra.setDuration(1000);
-
-        a.startAnimation(ra);
-*/
         return true;
     }
 
@@ -519,7 +430,7 @@ private void showLocationMapActivity(){
 
         switch (item.getItemId()) {
             case R.id.refreshmenuitem:
-                startAnimation();
+                startRefreshButtonAnimation();
                 startRefreshDatas();
 
                 break;
@@ -529,23 +440,6 @@ private void showLocationMapActivity(){
                 } else {
                     mDrawerLayout.openDrawer(mNavigationView);
                 }
-//                finish();
-                /*
-                Intent upIntent = NavUtils.getParentActivityIntent(this);
-                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
-                    TaskStackBuilder.create(this)
-                            // Add all of this activity's parents to the back stack
-                            .addNextIntentWithParentStack(upIntent)
-                                    // Navigate up to the closest parent
-                            .startActivities();
-                } else {
-                    // This activity is part of this app's task, so simply
-                    // navigate up to the logical parent activity.
-                    NavUtils.navigateUpTo(this, upIntent);
-                }
-                */
                 return true;
         }
 
@@ -566,23 +460,7 @@ private void showLocationMapActivity(){
 
     public void onclick(View v) {
         switch (v.getId()) {
-            case R.id.currencyCashButton:
 
-                showCurrencyCashFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
-
-                break;
-            case R.id.InterBankButton:
-                showInterBankFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
-
-                break;
-            case R.id.NBUButton:
-                showNBUFragment(((OrganizationListAdapter) organizationListView.getAdapter()).getFinanceUA());
-
-                break;
-            case R.id.PreciousMetalsButton:
-                showPreciousMetalsFragment();
-
-                break;
 
             case R.id.showMapButton:
                 showLocationMapActivity();

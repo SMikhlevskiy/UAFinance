@@ -90,7 +90,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         else
             imageView.setImageResource(R.mipmap.exchange_shop);
         String lowertitle = organization.getTitle().toLowerCase();
-        if (lowertitle.contains(UAFConstansts.privatLC))
+        if (lowertitle.contains(UAFConstansts.PRIVAT_LC))
             imageView.setImageResource(R.mipmap.bank_privat);
         else if (lowertitle.contains("правэкс"))
             imageView.setImageResource(R.mipmap.bank_praveks);
@@ -100,7 +100,7 @@ public class OrganizationListAdapter extends BaseAdapter {
             imageView.setImageResource(R.mipmap.bank_ukrgazbank);
         else if (lowertitle.contains("альфа"))
             imageView.setImageResource(R.mipmap.bank_alfa);
-        else if (lowertitle.contains(UAFConstansts.ukrsocLC))
+        else if (lowertitle.contains(UAFConstansts.UKRSOC_LC))
             imageView.setImageResource(R.mipmap.bank_ukrsoc);
         else if (lowertitle.contains("отп банк"))
             imageView.setImageResource(R.mipmap.bank_otp);

@@ -252,16 +252,16 @@ public class FinanceUA {
         for (int j = 0; j < organizationsList.size(); j++) {
             rootOrganization = organizationsList.get(j);
 
-            if (organizationsTitleList.get(j).contains(UAFConstansts.ukrsocLC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.ukrsocLC))) {
-                organizationsTitleList.set(j, UAFConstansts.ukrsocLC);
-                rootOrganization.setTitle(UAFConstansts.ukrsoc);
+            if (organizationsTitleList.get(j).contains(UAFConstansts.UKRSOC_LC) &&
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.UKRSOC_LC))) {
+                organizationsTitleList.set(j, UAFConstansts.UKRSOC_LC);
+                rootOrganization.setTitle(UAFConstansts.UKRSOC);
             }
 
-            if (organizationsTitleList.get(j).contains(UAFConstansts.privatLC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.privatLC))) {
-                organizationsTitleList.set(j, UAFConstansts.privatLC);
-                rootOrganization.setTitle(UAFConstansts.privat);
+            if (organizationsTitleList.get(j).contains(UAFConstansts.PRIVAT_LC) &&
+                    (!organizationsTitleList.get(j).equals(UAFConstansts.PRIVAT_LC))) {
+                organizationsTitleList.set(j, UAFConstansts.PRIVAT_LC);
+                rootOrganization.setTitle(UAFConstansts.PRIVAT);
             }
 
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {

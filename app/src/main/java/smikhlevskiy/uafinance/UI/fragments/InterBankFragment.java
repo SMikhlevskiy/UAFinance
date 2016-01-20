@@ -1,7 +1,7 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.UI.fragments;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,7 @@ public class InterBankFragment extends Fragment {
     private HashMap<String, Currencie> ibHashMap = null;
 
 
-    public void drawIB()
+    public void draw()
 
     {
 if (ibHashMap==null) return;
@@ -38,14 +38,14 @@ if (ibHashMap==null) return;
 
     }
 
-    public void setIBHashMap(HashMap<String, Currencie> ibHashMap) {
+    public void setDatas(HashMap<String, Currencie> ibHashMap) {
         this.ibHashMap = ibHashMap;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
-        drawIB();
+        draw();
 
         return fragmentView;
     }

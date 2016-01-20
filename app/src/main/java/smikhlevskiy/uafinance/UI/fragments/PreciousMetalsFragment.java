@@ -1,7 +1,7 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.UI.fragments;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,14 +21,14 @@ public class PreciousMetalsFragment extends Fragment {
 
     public static String TAG=PreciousMetalsFragment.class.getSimpleName();
     private View fragmentView;
-    private HashMap<String, Currencie> privatHashMap;
+    private HashMap<String, Currencie> privatHashMap=null;
 
 
-    public void setPrivatHashMap(HashMap<String, Currencie> privatHashMap){
+    public void setDatas(HashMap<String, Currencie> privatHashMap){
         this.privatHashMap=privatHashMap;
     }
 
-    public void drawNBU(){
+    public void draw(){
         if (privatHashMap!=null) {
             ((TextView) fragmentView.findViewById(R.id.Gold_ask)).setText(privatHashMap.get(getString(R.string.Gold_key)).getAsk());
             ((TextView) fragmentView.findViewById(R.id.Silver_ask)).setText(privatHashMap.get(getString(R.string.Silver_key)).getAsk());
@@ -42,7 +42,7 @@ public class PreciousMetalsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView= inflater.inflate(R.layout.fragment_precious_metals,null);
-        drawNBU();
+        draw();
         return fragmentView;
     }
 

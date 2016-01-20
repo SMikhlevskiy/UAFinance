@@ -1,8 +1,9 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.UI.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,14 @@ import smikhlevskiy.uafinance.model.Currencie;
 public class NBUFragment extends Fragment {
     public static String TAG = NBUFragment.class.getSimpleName();
     private View fragmentView;
-    private HashMap<String, Currencie> privatHashMap;
+    private HashMap<String, Currencie> privatHashMap=null;
 
 
-    public void setPrivatHashMap(HashMap<String, Currencie> privatHashMap){
+    public void setDatas(HashMap<String, Currencie> privatHashMap){
         this.privatHashMap=privatHashMap;
     }
 
-    public void drawNBU(){
+    public void draw(){
 if (privatHashMap!=null) {
     ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(privatHashMap.get(getString(R.string.USD)).getAsk());
     ((TextView) fragmentView.findViewById(R.id.USD_bid)).setVisibility(View.INVISIBLE);
@@ -39,7 +40,7 @@ if (privatHashMap!=null) {
 
     ((TextView) fragmentView.findViewById(R.id.ask)).setVisibility(View.INVISIBLE);
     ((TextView) fragmentView.findViewById(R.id.bid)).setVisibility(View.INVISIBLE);
-}
+} else Log.i(TAG,"PRIVAT hash is null");
     }
 
 
@@ -47,7 +48,7 @@ if (privatHashMap!=null) {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
-        drawNBU();
+        draw();
         return fragmentView;
     }
 }

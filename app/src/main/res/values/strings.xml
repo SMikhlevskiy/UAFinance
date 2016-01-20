@@ -50,9 +50,12 @@
     <string name="Palladiy_rus">Палладий</string>
     <string name="Palladiy">Pd</string>
     <string name="Palladiy_key">XPD</string>
-    <string name="Cash">Наличные</string>
+
+    <string name="CurrencyCash">Наличные</string>
     <string name="InterBank">Межбанк</string>
     <string name="PreciousMetals">Драг.металл</string>
+    <string name="NBU">НБУ</string>
+
     <string name="km">км</string>
     <string name="openNavView">открыто</string>
     <string name="closeNawView">закрыто</string>
