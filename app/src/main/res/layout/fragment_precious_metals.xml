@@ -12,30 +12,23 @@
         android:layout_centerInParent="true"
 
         style="@style/hiderLightStyle"
-        android:columnCount="3">
+        android:columnCount="4">
 
 
-        <TextView
-            android:layout_width="wrap_content"
 
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
-            android:text="@string/NBU_metall" />
+
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="" />
 
-
-        <TextView
+            android:layout_row="0"
+            android:layout_column="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:text="@string/NBU_met_cour" />
+
         <!--   Gold    -->
 
 
@@ -46,7 +39,7 @@
             android:layout_column="0"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="1"
+            android:layout_row="0"
             android:text="@string/Gold_rus" />
 
         <TextView
@@ -57,7 +50,7 @@
             android:layout_column="1"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="1"
+            android:layout_row="0"
 
             android:text="@string/Gold" />
 
@@ -68,7 +61,7 @@
             android:layout_column="2"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="1"
+            android:layout_row="0"
             android:text="@string/nullvall" />
 
         <!--   Silver    -->
@@ -81,7 +74,7 @@
             android:layout_column="0"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="2"
+            android:layout_row="1"
             android:text="@string/Silver_rus" />
 
         <TextView
@@ -92,7 +85,7 @@
             android:layout_column="1"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="2"
+            android:layout_row="1"
             android:text="@string/Silver" />
 
         <TextView
@@ -102,7 +95,7 @@
             android:layout_column="2"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/custom_vertical_margin"
-            android:layout_row="2"
+            android:layout_row="1"
             android:text="@string/nullvall" />
 
     <!--   Platina    -->
@@ -115,7 +108,7 @@
         android:layout_column="0"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/custom_vertical_margin"
-        android:layout_row="3"
+        android:layout_row="2"
         android:text="@string/Platina_rus" />
 
     <TextView
@@ -126,7 +119,7 @@
         android:layout_column="1"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/custom_vertical_margin"
-        android:layout_row="3"
+        android:layout_row="2"
         android:text="@string/Platina" />
 
     <TextView
@@ -136,7 +129,7 @@
         android:layout_column="2"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/custom_vertical_margin"
-        android:layout_row="3"
+        android:layout_row="2"
         android:text="@string/nullvall" />
         <!--   Palladiy    -->
         <TextView

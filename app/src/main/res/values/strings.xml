@@ -37,7 +37,7 @@
     <string name="FindLatLonError">\n Unable to get Latitude and Longitude for this address location.</string>
     <string name="serverKey">AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew</string>
     <string name="NBU_metall">Металл</string>
-    <string name="NBU_met_cour">Курс</string>
+    <string name="NBU_met_cour">1 тр.унция(31.1 г.)</string>
     <string name="Gold_rus">Золото</string>
     <string name="Gold">Au</string>
     <string name="Gold_key">XAU</string>

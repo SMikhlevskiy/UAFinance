@@ -1,8 +1,12 @@
 package smikhlevskiy.uafinance.UI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -242,8 +246,6 @@ public class MainActivity extends AppCompatActivity implements
         setTabs(UAFConstansts.CURRENCY_FRAGMENT_COUNT);
 
 
-
-
         setupTolbarNavigationView();
 
 
@@ -352,8 +354,6 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-
-
 
 
         mainActivityReDrawHandler = new Handler() {
@@ -474,6 +474,62 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Google API client: On connected");
+
+        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+/*
+        if ((locationManager==null) ||
+                (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+*/
+        try {
+            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            if (deviceLocation != null) {
+                Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
+                organizationListAdapter.setDeviceLocation(deviceLocation);
+            }
+
+            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 50, new LocationListener() {
+
+
+                @Override
+                public void onLocationChanged(Location location) {
+                    deviceLocation = location;
+                    organizationListAdapter.setDeviceLocation(deviceLocation);
+                    organizationListAdapter.notifyDataSetChanged();
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
+
+        } catch (SecurityException se)
+        {
+
+            Log.i(TAG,"Program is not have permission");
+        }
+
+        /*
         deviceLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (deviceLocation != null) {
@@ -481,6 +537,8 @@ public class MainActivity extends AppCompatActivity implements
             organizationListAdapter.setDeviceLocation(deviceLocation);
         } else
             Log.i(TAG, "Google API client: GetLastLocation failed");
+            */
+
     }
 
     @Override
