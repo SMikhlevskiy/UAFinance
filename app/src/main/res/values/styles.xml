@@ -28,8 +28,15 @@
 
     </style>
 
+    <!-- Base application theme. -->
+    <style name="hiderLightStyle" parent="Base.Theme.AppCompat.Light">
+        <item name="android:background">@color/uaflighthiderback</item>
+        <item name="android:textColor">@color/uafblack</item>
 
-    <style name="hiderBlackTextStyle" parent="hiderStyle">
+    </style>
+
+
+    <style name="hiderBlackTextStyle" parent="hiderLightStyle">
 
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
@@ -41,8 +48,8 @@
 
     </style>
 
-    <style name="hiderRedTextStyle" parent="hiderStyle">
-        <item name="android:background">@color/uafhiderback</item>
+    <style name="hiderRedTextStyle" parent="hiderLightStyle">
+
         <item name="android:textColor">@color/uafredtext</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/custom_vertical_margin</item>
