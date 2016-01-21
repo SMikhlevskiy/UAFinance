@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group>
+
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/navmenu_cur"
+                android:checked="true"
+
+                android:title="@string/navmenu_cur" />
+            <item
+                android:id="@+id/navmenu_dist"
+                android:checked="false"
+                android:title="@string/navmenu_dist" />
+        </group>
         <item
             android:id="@+id/navmenu_map"
 
 
             android:title="@string/navmenu_map" />
-        <item
-            android:id="@+id/navmenu_cur"
-            android:checked="true"
-
-            android:title="@string/navmenu_cur" />
-        <item
-            android:id="@+id/navmenu_dist"
-            android:checked="false"
-            android:title="@string/navmenu_dist" />
         <item
             android:id="@+id/navmenu_opt"
 

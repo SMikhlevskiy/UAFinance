@@ -13,6 +13,8 @@ public class UAFinancePreference {
     static final String ASK_BID_KEY = "ask_bid_pref";
     static final String CURRENCIE_KEY = "currencie_pref";
     static final String CITY_KEY = "city_pref";
+    static final String SORTCUR_KEY = "sortcur_pref";
+
     SharedPreferences sharedPreferences;
     Context context;
 
@@ -58,6 +60,16 @@ public class UAFinancePreference {
     }
 
 
+    public boolean getSortCurrency() {
+        return sharedPreferences.getBoolean(SORTCUR_KEY, true);
+    }
+
+    public void setSortCurrency(boolean sortCurrency) {
+        SharedPreferences.Editor ed=sharedPreferences.edit();
+        ed.putBoolean(SORTCUR_KEY, sortCurrency);
+        ed.commit();
+
+    }
 
 
 

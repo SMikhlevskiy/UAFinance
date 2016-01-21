@@ -31,7 +31,7 @@ public class Organization implements Parcelable {
     public Map<String, Currencie> currencies;
 
 
-    private Double sortVal = 0.0;
+    private Double currentCurrencyVal = 0.0;
 
 
     public Organization() {
@@ -136,7 +136,7 @@ public class Organization implements Parcelable {
         dest.writeString(phone);
         dest.writeString(address);
         dest.writeString(link);
-        dest.writeDouble(sortVal);
+        dest.writeDouble(currentCurrencyVal);
 
 
 
@@ -159,7 +159,7 @@ public class Organization implements Parcelable {
         phone = in.readString();
         address = in.readString();
         link = in.readString();
-        sortVal = in.readDouble();
+        currentCurrencyVal = in.readDouble();
 
 
         int sizeBrunch = in.readInt();
@@ -183,12 +183,12 @@ public class Organization implements Parcelable {
         }
     };
 
-    public Double getSortVal() {
-        return sortVal;
+    public Double getCurrentCurrencyVal() {
+        return currentCurrencyVal;
     }
 
-    public void setSortVal(Double sortVal) {
-        this.sortVal = sortVal;
+    public void setCurrentCurrencyVal(Double currentCurrencyVal) {
+        this.currentCurrencyVal = currentCurrencyVal;
     }
 
 

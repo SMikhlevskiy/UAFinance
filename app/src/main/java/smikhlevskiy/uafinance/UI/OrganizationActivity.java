@@ -51,7 +51,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
 
 
         try {
-            Double d = Double.parseDouble(s) * organization.getSortVal();
+            Double d = Double.parseDouble(s) * organization.getCurrentCurrencyVal();
             String ss = new DecimalFormat("####.###").format(d);
             if (ss.length() > 7)
                 return "######.##";

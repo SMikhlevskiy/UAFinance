@@ -135,11 +135,12 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         (new FinanceUAAsyncTask(
                 this,
                 "",
+                "",
+                false,
+                false,
                 true,
-                mapHandler,
-                null,
-                null,
-                null
+                mapHandler
+
         )).execute(getString(R.string.financeua_json_path));
 
     }

@@ -1,5 +1,6 @@
 package smikhlevskiy.uafinance.model;
 
+import android.location.Location;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -112,37 +113,53 @@ public class FinanceUA {
         return fu_index;
     }
 
-    public void sort(boolean askByd, String city, String currancie) {
+    public void sort(boolean askByd, boolean sortCurrency, String city, String currancie, Location deviceLocation) {
 
         fu_index.clear();
 
         for (int i = 0; i < organizations.length; i++) {
-            organizations[i].setSortVal(0.0);
+            organizations[i].setCurrentCurrencyVal(0.0);
 
             if (cities.get(organizations[i].getCityId()).equals(city))
                 if (organizations[i].currencies.containsKey(currancie)) {
                     fu_index.add(new Integer(i));
                     if (askByd)
-                        organizations[i].setSortVal(new Double(organizations[i].currencies.get(currancie).getBid()));
+                        organizations[i].setCurrentCurrencyVal(new Double(organizations[i].currencies.get(currancie).getBid()));
                     else
-                        organizations[i].setSortVal(new Double(organizations[i].currencies.get(currancie).getAsk()));
+                        organizations[i].setCurrentCurrencyVal(new Double(organizations[i].currencies.get(currancie).getAsk()));
                 }
         }
+
 
         for (int i = 0; i < fu_index.size() - 1; i++)
             for (int j = 0; j < fu_index.size() - 1; j++) {
 
+                if (sortCurrency) {
+                    if ((askByd && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() > organizations[fu_index.get(j)].getCurrentCurrencyVal())) ||
+                            ((!askByd) && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() < organizations[fu_index.get(j)].getCurrentCurrencyVal()))) {
+                        Integer a = fu_index.get(j);
+                        fu_index.set(j, fu_index.get(j + 1));
+                        fu_index.set(j + 1, a);
 
-                if ((askByd && (organizations[fu_index.get(j + 1)].getSortVal() > organizations[fu_index.get(j)].getSortVal())) ||
-                        ((!askByd) && (organizations[fu_index.get(j + 1)].getSortVal() < organizations[fu_index.get(j)].getSortVal()))) {
-                    Integer a = fu_index.get(j);
-                    fu_index.set(j, fu_index.get(j + 1));
-                    fu_index.set(j + 1, a);
 
+                    }
+
+                    //   s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
+
+                } else
+                 {//sort Distance
+                    if ((askByd && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() > organizations[fu_index.get(j)].getCurrentCurrencyVal())) ||
+                            ((!askByd) && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() < organizations[fu_index.get(j)].getCurrentCurrencyVal()))) {
+                        Integer a = fu_index.get(j);
+                        fu_index.set(j, fu_index.get(j + 1));
+                        fu_index.set(j + 1, a);
+
+
+                    }
+
+                    //   s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
 
                 }
-
-                //   s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
 
             }
 

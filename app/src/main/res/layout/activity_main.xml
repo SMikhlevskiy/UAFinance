@@ -4,7 +4,7 @@
     android:id="@+id/drawerlayout"
     style="@style/mainStyle"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
@@ -14,7 +14,7 @@
     <RelativeLayout
         style="@style/mainStyle"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:paddingBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
@@ -124,6 +124,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:paddingBottom="0dp"
+            android:paddingRight="0dp"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
 
             android:layout_margin="3dp"
             android:onClick="onclick"

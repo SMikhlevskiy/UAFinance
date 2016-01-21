@@ -1,8 +1,6 @@
 package smikhlevskiy.uafinance.UI;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
@@ -40,6 +38,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements
     private UAFinancePreference uaFinancePreference;
     private ListView organizationListView;
 
-    private Handler mainActivityReDrawHandler;
+    private Handler mainActivityHandler;
     private boolean startRefresh = true;
     private boolean prFirstMenuCreate = true;
     private Location deviceLocation = null;
@@ -100,17 +99,19 @@ public class MainActivity extends AppCompatActivity implements
         (new FinanceUAAsyncTask(
                 this,
                 uaFinancePreference.getCity(),
+                uaFinancePreference.getCurrancie(),
+                (uaFinancePreference.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
+                uaFinancePreference.getSortCurrency(),
+
                 false,
-                mainActivityReDrawHandler,
-                organizationListAdapter,
-                (Spinner) findViewById(R.id.spinerCurrency),
-                (Spinner) findViewById(R.id.spinerCity)
+                mainActivityHandler
+
         )).execute(getString(R.string.financeua_json_path));
 
-        (new PrivatAsyncTask(mainActivityReDrawHandler)).execute();
+        (new PrivatAsyncTask(mainActivityHandler)).execute();
 
 
-        (new InterBankAsyncTask(mainActivityReDrawHandler, new String[]{getString(R.string.USD),
+        (new InterBankAsyncTask(mainActivityHandler, new String[]{getString(R.string.USD),
                 getString(R.string.EUR),
                 getString(R.string.RUB)})).execute();
 
@@ -121,8 +122,7 @@ public class MainActivity extends AppCompatActivity implements
     public void reDrawMainActivity() {
 
         if (financeUA == null) return;
-        financeUA.sort((uaFinancePreference.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
-                uaFinancePreference.getCity(), uaFinancePreference.getCurrancie());
+
 
 
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements
         adapterViewPager.notifyDataSetChanged();
 
 
-//
+
 
     }
 
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+//        mNavigationView.setCheckedItem();
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -172,10 +173,12 @@ public class MainActivity extends AppCompatActivity implements
                         showLocationMapActivity();
                         break;
                     case R.id.navmenu_cur:
-                        //mCurrentSelectedPosition = 1;
+                        uaFinancePreference.setSortCurrency(true);
+                        reDrawMainActivity();
                         break;
                     case R.id.navmenu_dist:
-                        //mCurrentSelectedPosition = 2;
+                        uaFinancePreference.setSortCurrency(false);
+                        reDrawMainActivity();
                         break;
                     case R.id.navmenu_opt:
                         //mCurrentSelectedPosition = 3;
@@ -231,6 +234,59 @@ public class MainActivity extends AppCompatActivity implements
         });
 
     }
+/*------------------------------------------------------------------------------------------------*/
+public void configureUpHiderSpenners(){
+
+    Spinner spinnerCity=(Spinner)findViewById(R.id.spinerCity);
+    Spinner spinnerCurrency=(Spinner) findViewById(R.id.spinerCurrency);
+
+    if (spinnerCity != null)  {
+
+        String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
+
+
+        String[] cities = new String[citiesArray.length+2];
+
+        cities[0]=uaFinancePreference.getCity();
+        cities[1]=this.getResources().getString(R.string.default_city);
+
+        for (int i = 0; i < citiesArray.length; i++)
+            cities[i+2]=citiesArray[i];
+
+
+
+
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
+        spinnerCity.setAdapter(cityAdapter);
+        spinnerCity.setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));
+    }
+
+
+
+    if (spinnerCurrency != null) {
+
+        ArrayList currencyArrayList = new ArrayList<String>();
+
+        currencyArrayList.add(this.getResources().getString(R.string.USD));
+        currencyArrayList.add(this.getResources().getString(R.string.RUB));
+        currencyArrayList.add(this.getResources().getString(R.string.EUR));
+
+        String[] currencyArray = (String[]) financeUA.getCurrancies().keySet().toArray(new String[0]);
+        for (int i = 0; i < currencyArray.length; i++)
+            currencyArrayList.add(currencyArray[i]);
+        String allCurrancies[] = (String[]) currencyArrayList.toArray(new String[0]);
+
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allCurrancies);
+        spinnerCurrency.setAdapter(currencyAdapter);
+        spinnerCurrency.setSelection(currencyAdapter.getPosition(uaFinancePreference.getCurrancie()));
+    }
+
+    if (organizationListAdapter != null) {
+        organizationListAdapter.setFinanceUA(financeUA);
+        organizationListAdapter.notifyDataSetChanged();
+    }
+
+}
 
     /*--------------------------------------------------------------------------------------------*/
     @Override
@@ -356,7 +412,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
-        mainActivityReDrawHandler = new Handler() {
+        mainActivityHandler = new Handler() {
 
             @Override
             public void handleMessage(Message msg) {
@@ -365,6 +421,7 @@ public class MainActivity extends AppCompatActivity implements
                         financeUA = (FinanceUA) msg.obj;
                         reDrawMainActivity();
 
+                        configureUpHiderSpenners();
                         // Remove the animation.
                         refreshMenuItem.getActionView().clearAnimation();
                         refreshMenuItem.setActionView(null);
@@ -439,6 +496,13 @@ public class MainActivity extends AppCompatActivity implements
                     mDrawerLayout.closeDrawer(mNavigationView);
                 } else {
                     mDrawerLayout.openDrawer(mNavigationView);
+
+                   if (mNavigationView.getMenu().getItem(0).isChecked()!=uaFinancePreference.getSortCurrency())
+                        mNavigationView.getMenu().getItem(0).setChecked(uaFinancePreference.getSortCurrency());
+
+                    if (mNavigationView.getMenu().getItem(1).isChecked()==uaFinancePreference.getSortCurrency())
+                        mNavigationView.getMenu().getItem(1).setChecked(!uaFinancePreference.getSortCurrency());
+
                 }
                 return true;
         }
@@ -476,20 +540,8 @@ public class MainActivity extends AppCompatActivity implements
         Log.i(TAG, "Google API client: On connected");
 
         LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-/*
-        if ((locationManager==null) ||
-                (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return;
-        }
-*/
-        try {
+
+        try {//SecurityException
             deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
             if (deviceLocation != null) {
                 Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());

@@ -144,7 +144,7 @@ public class OrganizationListAdapter extends BaseAdapter {
 
 
         TextView textCurrancie = (TextView) convertView.findViewById(R.id.itemCurrencie);
-        textCurrancie.setText(new Double(organization.getSortVal()).toString());
+        textCurrancie.setText(new Double(organization.getCurrentCurrencyVal()).toString());
 
 
         return convertView;
