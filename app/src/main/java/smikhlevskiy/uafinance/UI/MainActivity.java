@@ -581,15 +581,6 @@ public void configureUpHiderSpenners(){
             Log.i(TAG,"Program is not have permission");
         }
 
-        /*
-        deviceLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (deviceLocation != null) {
-            Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
-            organizationListAdapter.setDeviceLocation(deviceLocation);
-        } else
-            Log.i(TAG, "Google API client: GetLastLocation failed");
-            */
 
     }
 

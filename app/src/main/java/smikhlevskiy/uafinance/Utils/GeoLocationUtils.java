@@ -3,6 +3,7 @@ package smikhlevskiy.uafinance.Utils;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,6 +17,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by tcont98 on 05-Dec-15.
@@ -34,9 +38,28 @@ public class GeoLocationUtils {
         StringBuilder bulder = new StringBuilder("");
         try {
             InputStreamReader isr;
+            String text="https://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(locationAddress, "utf-8") + "&key=AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew&language=ru";
+            Log.i(TAG, text);
+            URL url = new URL(text);
 
-            URL url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=" + locationAddress + "&key=AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            Log.i(TAG, url.toString());
+
+//https://maps.googleapis.com/maps/api/geocode/json?address=Украина,+Берегово,+пл.+Л.+Кошута,+2&key=AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+
+
+
+            con.setReadTimeout(15000);
+            con.setConnectTimeout(15000);
+            con.setRequestMethod("GET");
+            con.setDoInput(true);
+            con.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+            con.setDoOutput(true);
+
+
+            if (con.getResponseCode() != HttpsURLConnection.HTTP_OK) return null;
+
             isr = new InputStreamReader(con.getInputStream());
 
 
@@ -51,6 +74,11 @@ public class GeoLocationUtils {
                     bulder.append(str);
             } while (str != null);
 
+            isr.close();
+            con.disconnect();
+
+            Thread.sleep(100,0);
+
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
             return null;
@@ -58,16 +86,26 @@ public class GeoLocationUtils {
             e1.printStackTrace();
             return null;
 
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         try {
+            Log.i(TAG,bulder.toString());
             JSONObject obj = new JSONObject(bulder.toString());
+            if (obj==null) return null;
+
             JSONArray array = obj.getJSONArray("results");
             if (array.length()<=0) return null;
 
             JSONObject item = array.getJSONObject(0);
+            if (item==null) return null;
             JSONObject geoJson=item.getJSONObject("geometry");
+            if (geoJson==null) return null;
             JSONObject locJson=geoJson.getJSONObject("location");
-            return new LatLng(Double.parseDouble(locJson.getString("lat")),Double.parseDouble(locJson.getString("lng")));
+            if (locJson==null) return null;
+            LatLng latLng=new LatLng(Double.parseDouble(locJson.getString("lat")), Double.parseDouble(locJson.getString("lng")));
+
+            return latLng;
 
         } catch (JSONException e) {
             return null;

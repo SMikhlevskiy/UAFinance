@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Message;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -14,27 +15,27 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Handler;
 
 import smikhlevskiy.uafinance.Utils.GeoLocationUtils;
 
 /**
- This class allows to speed up gets Latitude & Longitude for address of all organization used in application
-1) When application starting  Latitude & Longitude reads from assets/latlon_start.json
-2) if Latitude & Longitude is null it get from Google Maps
-3)  Latitude & Longitude saves in DataBase(Caching)
-4) When application works Latitude & Longitude gets from DataBase
-
-
+ * This class allows to speed up gets Latitude & Longitude for address of all organization used in application
+ * 1) When application starting  Latitude & Longitude reads from assets/latlon_start.json
+ * 2) if Latitude & Longitude is null it get from Google Maps
+ * 3)  Latitude & Longitude saves in DataBase(Caching)
+ * 4) When application works Latitude & Longitude gets from DataBase
  */
 public class GeoLocationDB extends SQLiteOpenHelper {
     public static String TAG = GeoLocationDB.class.getSimpleName();
     private static final String LATLON_START_JSON = "latlon_start.json";
 
     public static String DB_NAME = "GEOCACHDB";
-    public static int DB_VERSION = 5;
+    public static int DB_VERSION = 27;
 
     public static String TABLE_NAME = "GEOCACH";
     public static String KEY_ID = "_ID";
@@ -42,6 +43,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
     public static String KEY_LATITUDE = "LATITUDE";
     public static String KEY_LONGITUDE = "LONGITUDE";
     private Context context;
+    private static volatile boolean locked = false;
 
 
     public GeoLocationDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -51,7 +53,11 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
 
     public LatLng getLocation(final String locationAddress) {
+
+        if (locked) return null;
+
         SQLiteDatabase db = getReadableDatabase();
+
         Log.i(TAG, locationAddress);
         if (db == null) {
             Log.i(TAG, "Do not open DB");
@@ -72,6 +78,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
             Log.i(TAG, "DO not get Cursor");
             return null;
         }
+
     }
 
     @Override
@@ -92,7 +99,8 @@ public class GeoLocationDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-/*------------Read Start form JSON in assets LatLon whean first app start--------------*/
+
+    /*------------Read Start form JSON in assets LatLon whean first app start--------------*/
     private HashMap<String, LatLng> readStartLatLonFromJSON() {
         Log.i(TAG, "First start Application||new version BD");
         try {
@@ -114,7 +122,8 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
             Gson gson = new Gson();
 
-            Type type = new TypeToken<HashMap<String, LatLng>>(){}.getType();//!!! good idea
+            Type type = new TypeToken<HashMap<String, LatLng>>() {
+            }.getType();//!!! good idea
 
             return (HashMap<String, LatLng>) gson.fromJson(sb.toString(), type);
 
@@ -129,18 +138,50 @@ public class GeoLocationDB extends SQLiteOpenHelper {
     }
 
     public void UpdteLocationBase(final List<String> textAddress) {
+
+
         //Log.i(TAG, text);
         new Thread(new Runnable() {
             @Override
             public void run() {
+                locked = true;
+
                 GeoLocationUtils geoLocationUtils = new GeoLocationUtils();
 
                 SQLiteDatabase db = getWritableDatabase();
+                Cursor cursor;
+
+                 /*--------calk count ROWS------*/
+                cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+                cursor.moveToFirst();
+                int count = cursor.getInt(0);
+                cursor.close();
+
+                /*----------if count is 0  read datas from startJSON----*/
+
+                if (count <= 0) //firstStart Application
+                {
+                    HashMap<String, LatLng> startAppLatLon = readStartLatLonFromJSON();
+                    String key[] = (String[]) startAppLatLon.keySet().toArray(new String[0]);
+                    LatLng latLngs[] = (LatLng[]) startAppLatLon.values().toArray(new LatLng[0]);
+
+                    for (int i = 0; i < key.length; i++) {
+                        ContentValues cv = new ContentValues();
+
+                        cv.put(KEY_ADDRESS, key[i]);
+                        cv.put(KEY_LATITUDE, latLngs[i].latitude);
+                        cv.put(KEY_LONGITUDE, latLngs[i].longitude);
+
+
+                        db.insert(TABLE_NAME, null, cv);
+
+                    }
+                }
 
 
                 HashMap<String, LatLng> latLonMap = new HashMap<String, LatLng>();
 
-                Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+                cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
                 if (cursor.moveToFirst()) {
                     do {
 
@@ -150,21 +191,13 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
                     } while (cursor.moveToNext());
                 }
-                HashMap<String, LatLng> startAppLatLon = null;
-                if (latLonMap.size() <= 0) //firstStart Application
-                {
-                    startAppLatLon = readStartLatLonFromJSON();
-                }
 
 
                 for (String text : textAddress)
-                    if (!latLonMap.containsKey(text)) {
-                        LatLng latLng = null;
-                        if ((startAppLatLon != null) && (startAppLatLon.containsKey(text))) {//first App start or new version DB
-                            latLng = startAppLatLon.get(text);
-                            Log.i(TAG, text + ":read Lat&Lng from start JSON:" + latLng.latitude + "," + latLng.longitude);
-                        } else
-                            latLng = geoLocationUtils.getAddressFromLocationByURL(text);//get LatLon from GoogleMap
+                    if (!latLonMap.containsKey(text)) {//Coordinates is absent in BD
+
+
+                        LatLng latLng = geoLocationUtils.getAddressFromLocationByURL(text);//get LatLon from GoogleMap
 
                         if (latLng != null) {
                             Log.i(TAG, text + ":" + latLng.toString());
@@ -179,13 +212,20 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
 
                         } else Log.i(TAG, text + ": do not find address");
-                    } else {
-                        LatLng latLng = latLonMap.get(text);//Get Lat Long from Cash
+                    } else {//Coordinates is present in DB
+
+                        //LatLng latLng = latLonMap.get(text);//Get Lat Long from Cash
                         //Log.i(TAG, text + ":read from DBCach:" + latLng.latitude + "," + latLng.longitude);
                     }
 
                 db.close();
+
+                locked=false;
+
+
+
                 /*
+
 // result to GSON for first start app
                 Gson gson = new Gson();
                 File path = context.getExternalFilesDir(null);
@@ -206,9 +246,13 @@ public class GeoLocationDB extends SQLiteOpenHelper {
                 }
 
 */
-            }
-        }).start();
-
-
+        }
     }
+
+    ).
+
+    start();
+
+
+}
 }
