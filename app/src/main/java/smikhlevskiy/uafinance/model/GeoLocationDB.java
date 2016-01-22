@@ -155,6 +155,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
         if (count <= 0) //firstStart Application
         {
+            locked=true;
             HashMap<String, LatLng> startAppLatLon = readStartLatLonFromJSON();
             String key[] = (String[]) startAppLatLon.keySet().toArray(new String[0]);
             LatLng latLngs[] = (LatLng[]) startAppLatLon.values().toArray(new LatLng[0]);
@@ -170,6 +171,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
                 db.insert(TABLE_NAME, null, cv);
 
             }
+            locked=false;
         }
 
 
@@ -229,9 +231,9 @@ public class GeoLocationDB extends SQLiteOpenHelper {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                locked = true;
+
                 updteLocationBase(textAddress);
-                locked=false;
+
 
 
 

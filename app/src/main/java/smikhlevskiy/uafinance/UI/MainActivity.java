@@ -473,6 +473,14 @@ public class MainActivity extends AppCompatActivity implements
             }
         };
 
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+        } catch (SecurityException se) {
+            deviceLocation =null;
+            Log.i(TAG, "Program is not have permission");
+        }
+
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
