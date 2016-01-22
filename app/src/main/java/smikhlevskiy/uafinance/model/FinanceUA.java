@@ -117,7 +117,22 @@ public class FinanceUA {
 
         fu_index.clear();
 
+        Location location=new Location("");
+
         for (int i = 0; i < organizations.length; i++) {
+
+            //---------------cack Distance for organiztations-----(sort by Distance)
+            if ((!sortCurrency)){
+                if ((deviceLocation!=null) && (organizations[i].getLatLong()!=null)){
+                    location.setLatitude(organizations[i].getLatLong().latitude);
+                    location.setLongitude(organizations[i].getLatLong().longitude);
+                    organizations[i].setDistance(location.distanceTo(deviceLocation));
+
+                } else
+                    organizations[i].setDistance(Double.MAX_VALUE);
+            }
+
+
             organizations[i].setCurrentCurrencyVal(0.0);
 
             if (cities.get(organizations[i].getCityId()).equals(city))
@@ -134,7 +149,7 @@ public class FinanceUA {
         for (int i = 0; i < fu_index.size() - 1; i++)
             for (int j = 0; j < fu_index.size() - 1; j++) {
 
-                if (sortCurrency) {
+                if (sortCurrency) {//Sort by Currancy
                     if ((askByd && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() > organizations[fu_index.get(j)].getCurrentCurrencyVal())) ||
                             ((!askByd) && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() < organizations[fu_index.get(j)].getCurrentCurrencyVal()))) {
                         Integer a = fu_index.get(j);
@@ -146,10 +161,8 @@ public class FinanceUA {
 
                     //   s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
 
-                } else
-                 {//sort Distance
-                    if ((askByd && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() > organizations[fu_index.get(j)].getCurrentCurrencyVal())) ||
-                            ((!askByd) && (organizations[fu_index.get(j + 1)].getCurrentCurrencyVal() < organizations[fu_index.get(j)].getCurrentCurrencyVal()))) {
+                } else {//sort by Distance
+                    if (organizations[fu_index.get(j + 1)].getDistance() < organizations[fu_index.get(j)].getDistance()) {
                         Integer a = fu_index.get(j);
                         fu_index.set(j, fu_index.get(j + 1));
                         fu_index.set(j + 1, a);
@@ -217,7 +230,7 @@ public class FinanceUA {
 
     }
 
-    public String AddressByOrganization(Organization organization) {
+    public String getURLAddressByOrganization(Organization organization) {
         if (cities.containsKey(organization.getCityId())) {
             String mcity = cities.get(organization.getCityId());
 
@@ -238,10 +251,10 @@ public class FinanceUA {
                 if (cities.containsKey(organization.getCityId())) {
                     String mcity = cities.get(organization.getCityId());
                     if (((j == 0) && mcity.equals(prefCity)) || ((j == 1) && (!mcity.equals(prefCity)))) {
-                        list.add(AddressByOrganization(organization));
+                        list.add(getURLAddressByOrganization(organization));
                         if (organization.getOrganizationBrunches() != null)
                             for (Organization organizationBrunch : organization.getOrganizationBrunches())
-                                list.add(AddressByOrganization(organizationBrunch));
+                                list.add(getURLAddressByOrganization(organizationBrunch));
                     }
                 }
             }
@@ -258,6 +271,7 @@ public class FinanceUA {
 
         for (int i = 0; i < organizations.length; i++)
             if (city.equals(cities.get(organizations[i].getCityId()))) {
+
 
                 organizationsList.add(organizations[i]);
                 organizationsTitleList.add(organizations[i].getTitle().toLowerCase());

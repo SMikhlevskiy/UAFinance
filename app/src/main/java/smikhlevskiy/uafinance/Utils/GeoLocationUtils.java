@@ -39,10 +39,10 @@ public class GeoLocationUtils {
         try {
             InputStreamReader isr;
             String text="https://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(locationAddress, "utf-8") + "&key=AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew&language=ru";
-            Log.i(TAG, text);
+            //Log.i(TAG, text);
             URL url = new URL(text);
 
-            Log.i(TAG, url.toString());
+            //Log.i(TAG, url.toString());
 
 //https://maps.googleapis.com/maps/api/geocode/json?address=Украина,+Берегово,+пл.+Л.+Кошута,+2&key=AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew
             HttpsURLConnection con = (HttpsURLConnection) url.openConnection();

@@ -137,7 +137,92 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
     }
 
-    public void UpdteLocationBase(final List<String> textAddress) {
+    public HashMap<String, LatLng> updteLocationBase(final List<String> textAddress) {
+        Log.i(TAG,"Start UPDATE");
+
+        GeoLocationUtils geoLocationUtils = new GeoLocationUtils();
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+                 /*--------calk count ROWS------*/
+        cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        cursor.close();
+
+                /*----------if count is 0  read datas from startJSON----*/
+
+        if (count <= 0) //firstStart Application
+        {
+            HashMap<String, LatLng> startAppLatLon = readStartLatLonFromJSON();
+            String key[] = (String[]) startAppLatLon.keySet().toArray(new String[0]);
+            LatLng latLngs[] = (LatLng[]) startAppLatLon.values().toArray(new LatLng[0]);
+
+            for (int i = 0; i < key.length; i++) {
+                ContentValues cv = new ContentValues();
+
+                cv.put(KEY_ADDRESS, key[i]);
+                cv.put(KEY_LATITUDE, latLngs[i].latitude);
+                cv.put(KEY_LONGITUDE, latLngs[i].longitude);
+
+
+                db.insert(TABLE_NAME, null, cv);
+
+            }
+        }
+
+
+
+        HashMap<String, LatLng> latLonMap = new HashMap<String, LatLng>();
+
+        cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                latLonMap.put(cursor.getString(1), new LatLng(cursor.getDouble(2), cursor.getDouble(3)));
+
+
+            } while (cursor.moveToNext());
+        }
+
+
+        for (String text : textAddress)
+            if (!latLonMap.containsKey(text)) {//Coordinates is absent in BD
+
+
+                LatLng latLng = geoLocationUtils.getAddressFromLocationByURL(text);//get LatLon from GoogleMap
+
+                if (latLng != null) {
+                    latLonMap.put(text,latLng);
+
+                    Log.i(TAG, text + ":" + latLng.toString());
+                    ContentValues cv = new ContentValues();
+
+                    cv.put(KEY_ADDRESS, text);
+                    cv.put(KEY_LATITUDE, latLng.latitude);
+                    cv.put(KEY_LONGITUDE, latLng.longitude);
+
+
+                    db.insert(TABLE_NAME, null, cv);
+
+
+                } else Log.i(TAG, text + ": do not find address");
+            } else {//Coordinates is present in DB
+
+                //LatLng latLng = latLonMap.get(text);//Get Lat Long from Cash
+                //Log.i(TAG, text + ":read from DBCach:" + latLng.latitude + "," + latLng.longitude);
+            }
+
+        db.close();
+        Log.i(TAG, "END UPDATE");
+
+        return latLonMap;
+
+    }
+
+    public void startUpdteLocationBase(final List<String> textAddress) {
 
 
         //Log.i(TAG, text);
@@ -145,82 +230,9 @@ public class GeoLocationDB extends SQLiteOpenHelper {
             @Override
             public void run() {
                 locked = true;
-
-                GeoLocationUtils geoLocationUtils = new GeoLocationUtils();
-
-                SQLiteDatabase db = getWritableDatabase();
-                Cursor cursor;
-
-                 /*--------calk count ROWS------*/
-                cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
-                cursor.moveToFirst();
-                int count = cursor.getInt(0);
-                cursor.close();
-
-                /*----------if count is 0  read datas from startJSON----*/
-
-                if (count <= 0) //firstStart Application
-                {
-                    HashMap<String, LatLng> startAppLatLon = readStartLatLonFromJSON();
-                    String key[] = (String[]) startAppLatLon.keySet().toArray(new String[0]);
-                    LatLng latLngs[] = (LatLng[]) startAppLatLon.values().toArray(new LatLng[0]);
-
-                    for (int i = 0; i < key.length; i++) {
-                        ContentValues cv = new ContentValues();
-
-                        cv.put(KEY_ADDRESS, key[i]);
-                        cv.put(KEY_LATITUDE, latLngs[i].latitude);
-                        cv.put(KEY_LONGITUDE, latLngs[i].longitude);
-
-
-                        db.insert(TABLE_NAME, null, cv);
-
-                    }
-                }
-
-
-                HashMap<String, LatLng> latLonMap = new HashMap<String, LatLng>();
-
-                cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-                if (cursor.moveToFirst()) {
-                    do {
-
-
-                        latLonMap.put(cursor.getString(1), new LatLng(cursor.getDouble(2), cursor.getDouble(3)));
-
-
-                    } while (cursor.moveToNext());
-                }
-
-
-                for (String text : textAddress)
-                    if (!latLonMap.containsKey(text)) {//Coordinates is absent in BD
-
-
-                        LatLng latLng = geoLocationUtils.getAddressFromLocationByURL(text);//get LatLon from GoogleMap
-
-                        if (latLng != null) {
-                            Log.i(TAG, text + ":" + latLng.toString());
-                            ContentValues cv = new ContentValues();
-
-                            cv.put(KEY_ADDRESS, text);
-                            cv.put(KEY_LATITUDE, latLng.latitude);
-                            cv.put(KEY_LONGITUDE, latLng.longitude);
-
-
-                            db.insert(TABLE_NAME, null, cv);
-
-
-                        } else Log.i(TAG, text + ": do not find address");
-                    } else {//Coordinates is present in DB
-
-                        //LatLng latLng = latLonMap.get(text);//Get Lat Long from Cash
-                        //Log.i(TAG, text + ":read from DBCach:" + latLng.latitude + "," + latLng.longitude);
-                    }
-
-                db.close();
-
+                updteLocationBase(textAddress);
                 locked=false;
+
 
 
 

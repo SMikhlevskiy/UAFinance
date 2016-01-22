@@ -77,19 +77,35 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout mDrawerLayout = null;
     private NavigationView mNavigationView = null;
     private ActionBarDrawerToggle mDrawerToggle = null;
+    private ImageView animationImageView = null;
 
     private MenuItem refreshMenuItem = null;
 
+    private boolean animationStarted = false;
+
     private CurrencyFragmentPagerAdapter adapterViewPager = null;
 
+    private void stopRefreshAnimation() {
+        //      if (true) return;
+        animationStarted = false;
+        if (animationImageView != null) {
+            animationImageView.setVisibility(View.INVISIBLE);
+            animationImageView.clearAnimation();
+        }
+        //if ( refreshMenuItem.getActionView()!=null)   refreshMenuItem.getActionView().clearAnimation();
+        refreshMenuItem.setActionView(null);
+    }
+
     private void startRefreshButtonAnimation() {
+        animationStarted = true;
+        //    if (true) return;
         //--Start Animation---
         LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        ImageView iv = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
+        animationImageView = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
         Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
         rotation.setRepeatCount(Animation.INFINITE);
-        iv.startAnimation(rotation);
-        refreshMenuItem.setActionView(iv);
+        animationImageView.startAnimation(rotation);
+        refreshMenuItem.setActionView(animationImageView);
     }
 
     /*-----------*/
@@ -104,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements
                 uaFinancePreference.getSortCurrency(),
 
                 false,
+                deviceLocation,
                 mainActivityHandler
 
         )).execute(getString(R.string.financeua_json_path));
@@ -124,13 +141,10 @@ public class MainActivity extends AppCompatActivity implements
         if (financeUA == null) return;
 
 
-
         ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
 
         adapterViewPager.setFinanceUA(financeUA);
         adapterViewPager.notifyDataSetChanged();
-
-
 
 
     }
@@ -170,23 +184,39 @@ public class MainActivity extends AppCompatActivity implements
                 menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
                     case R.id.navmenu_map:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+
                         showLocationMapActivity();
                         break;
                     case R.id.navmenu_cur:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+
                         uaFinancePreference.setSortCurrency(true);
-                        reDrawMainActivity();
+
+                        Log.i(TAG, "Sort by Currency");
+                        startRefreshButtonAnimation();
+                        startRefreshDatas();
+
                         break;
                     case R.id.navmenu_dist:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+
                         uaFinancePreference.setSortCurrency(false);
-                        reDrawMainActivity();
+
+                        Log.i(TAG, "Sort by Distance");
+                        startRefreshButtonAnimation();
+                        startRefreshDatas();
                         break;
                     case R.id.navmenu_opt:
+                        mDrawerLayout.closeDrawer(mNavigationView);
                         //mCurrentSelectedPosition = 3;
                         break;
+                    default:
+                        mDrawerLayout.closeDrawer(mNavigationView);
                 }
 
                 //setTabs(mCurrentSelectedPosition + 1);
-                mDrawerLayout.closeDrawer(mNavigationView);
+
                 return true;
             }
         });
@@ -234,59 +264,57 @@ public class MainActivity extends AppCompatActivity implements
         });
 
     }
-/*------------------------------------------------------------------------------------------------*/
-public void configureUpHiderSpenners(){
 
-    Spinner spinnerCity=(Spinner)findViewById(R.id.spinerCity);
-    Spinner spinnerCurrency=(Spinner) findViewById(R.id.spinerCurrency);
+    /*------------------------------------------------------------------------------------------------*/
+    public void configureUpHiderSpenners() {
 
-    if (spinnerCity != null)  {
+        Spinner spinnerCity = (Spinner) findViewById(R.id.spinerCity);
+        Spinner spinnerCurrency = (Spinner) findViewById(R.id.spinerCurrency);
 
-        String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
+        if (spinnerCity != null) {
 
-
-        String[] cities = new String[citiesArray.length+2];
-
-        cities[0]=uaFinancePreference.getCity();
-        cities[1]=this.getResources().getString(R.string.default_city);
-
-        for (int i = 0; i < citiesArray.length; i++)
-            cities[i+2]=citiesArray[i];
+            String[] citiesArray = (String[]) financeUA.getCities().values().toArray(new String[0]);
 
 
+            String[] cities = new String[citiesArray.length + 2];
+
+            cities[0] = uaFinancePreference.getCity();
+            cities[1] = this.getResources().getString(R.string.default_city);
+
+            for (int i = 0; i < citiesArray.length; i++)
+                cities[i + 2] = citiesArray[i];
 
 
-        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
-        spinnerCity.setAdapter(cityAdapter);
-        spinnerCity.setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));
+            ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
+            spinnerCity.setAdapter(cityAdapter);
+            spinnerCity.setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));
+        }
+
+
+        if (spinnerCurrency != null) {
+
+            ArrayList currencyArrayList = new ArrayList<String>();
+
+            currencyArrayList.add(this.getResources().getString(R.string.USD));
+            currencyArrayList.add(this.getResources().getString(R.string.RUB));
+            currencyArrayList.add(this.getResources().getString(R.string.EUR));
+
+            String[] currencyArray = (String[]) financeUA.getCurrancies().keySet().toArray(new String[0]);
+            for (int i = 0; i < currencyArray.length; i++)
+                currencyArrayList.add(currencyArray[i]);
+            String allCurrancies[] = (String[]) currencyArrayList.toArray(new String[0]);
+
+            ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allCurrancies);
+            spinnerCurrency.setAdapter(currencyAdapter);
+            spinnerCurrency.setSelection(currencyAdapter.getPosition(uaFinancePreference.getCurrancie()));
+        }
+
+        if (organizationListAdapter != null) {
+            organizationListAdapter.setFinanceUA(financeUA);
+            organizationListAdapter.notifyDataSetChanged();
+        }
+
     }
-
-
-
-    if (spinnerCurrency != null) {
-
-        ArrayList currencyArrayList = new ArrayList<String>();
-
-        currencyArrayList.add(this.getResources().getString(R.string.USD));
-        currencyArrayList.add(this.getResources().getString(R.string.RUB));
-        currencyArrayList.add(this.getResources().getString(R.string.EUR));
-
-        String[] currencyArray = (String[]) financeUA.getCurrancies().keySet().toArray(new String[0]);
-        for (int i = 0; i < currencyArray.length; i++)
-            currencyArrayList.add(currencyArray[i]);
-        String allCurrancies[] = (String[]) currencyArrayList.toArray(new String[0]);
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allCurrancies);
-        spinnerCurrency.setAdapter(currencyAdapter);
-        spinnerCurrency.setSelection(currencyAdapter.getPosition(uaFinancePreference.getCurrancie()));
-    }
-
-    if (organizationListAdapter != null) {
-        organizationListAdapter.setFinanceUA(financeUA);
-        organizationListAdapter.notifyDataSetChanged();
-    }
-
-}
 
     /*--------------------------------------------------------------------------------------------*/
     @Override
@@ -423,8 +451,7 @@ public void configureUpHiderSpenners(){
 
                         configureUpHiderSpenners();
                         // Remove the animation.
-                        refreshMenuItem.getActionView().clearAnimation();
-                        refreshMenuItem.setActionView(null);
+                        stopRefreshAnimation();
 
                         break;
                     case 2:
@@ -462,11 +489,19 @@ public void configureUpHiderSpenners(){
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        if (animationStarted) {
+            stopRefreshAnimation();
+            animationStarted = true;
+        }
+        //if (!prFirstMenuCreate) return true;
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        Log.i(TAG, "onCreateOptionsMenu");
 
 
         refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
-        if (prFirstMenuCreate) {
+        if (prFirstMenuCreate || animationStarted) {
             startRefreshButtonAnimation();
             prFirstMenuCreate = false;
         }
@@ -497,10 +532,10 @@ public void configureUpHiderSpenners(){
                 } else {
                     mDrawerLayout.openDrawer(mNavigationView);
 
-                   if (mNavigationView.getMenu().getItem(0).isChecked()!=uaFinancePreference.getSortCurrency())
+                    if (mNavigationView.getMenu().getItem(0).isChecked() != uaFinancePreference.getSortCurrency())
                         mNavigationView.getMenu().getItem(0).setChecked(uaFinancePreference.getSortCurrency());
 
-                    if (mNavigationView.getMenu().getItem(1).isChecked()==uaFinancePreference.getSortCurrency())
+                    if (mNavigationView.getMenu().getItem(1).isChecked() == uaFinancePreference.getSortCurrency())
                         mNavigationView.getMenu().getItem(1).setChecked(!uaFinancePreference.getSortCurrency());
 
                 }
@@ -575,10 +610,9 @@ public void configureUpHiderSpenners(){
                 }
             });
 
-        } catch (SecurityException se)
-        {
+        } catch (SecurityException se) {
 
-            Log.i(TAG,"Program is not have permission");
+            Log.i(TAG, "Program is not have permission");
         }
 
 

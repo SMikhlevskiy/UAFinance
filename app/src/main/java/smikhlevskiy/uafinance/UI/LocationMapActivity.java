@@ -139,6 +139,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
                 false,
                 false,
                 true,
+                null,
                 mapHandler
 
         )).execute(getString(R.string.financeua_json_path));

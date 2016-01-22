@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -22,8 +24,6 @@ public class Organization implements Parcelable {
 
 
 
-
-
     private ArrayList<Organization> organizationBrunches = null;
 
 
@@ -33,6 +33,12 @@ public class Organization implements Parcelable {
 
     private Double currentCurrencyVal = 0.0;
 
+
+    private LatLng latLong = null;
+
+
+
+    private double distance=Double.MAX_VALUE;
 
     public Organization() {
 
@@ -139,7 +145,6 @@ public class Organization implements Parcelable {
         dest.writeDouble(currentCurrencyVal);
 
 
-
         if (organizationBrunches != null) {
             dest.writeInt(organizationBrunches.size());
             for (Organization organization : organizationBrunches)
@@ -200,7 +205,21 @@ public class Organization implements Parcelable {
         this.organizationBrunches = organizationBrunches;
     }
 
+    public LatLng getLatLong() {
+        return latLong;
+    }
 
+    public void setLatLong(LatLng latLong) {
+        this.latLong = latLong;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
 }
 
