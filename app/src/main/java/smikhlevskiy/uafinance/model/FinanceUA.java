@@ -15,7 +15,7 @@ import smikhlevskiy.uafinance.Utils.UAFConstansts;
  * Created by tcont98 on 07-Nov-15.
  */
 public class FinanceUA {
-
+    static final String TAG=FinanceUA.class.getSimpleName();
     private String sourceId;
     private String date;
     private Organization[] organizations;
@@ -117,19 +117,59 @@ public class FinanceUA {
 
         fu_index.clear();
 
-        Location location=new Location("");
+        Location location = new Location("");
+        Location bLocation = new Location("");
 
         for (int i = 0; i < organizations.length; i++) {
 
             //---------------cack Distance for organiztations-----(sort by Distance)
-            if ((!sortCurrency)){
-                if ((deviceLocation!=null) && (organizations[i].getLatLong()!=null)){
+            if ((!sortCurrency)) {
+                if ((deviceLocation != null) && (organizations[i].getLatLong() != null)) {
                     location.setLatitude(organizations[i].getLatLong().latitude);
                     location.setLongitude(organizations[i].getLatLong().longitude);
                     organizations[i].setDistance(location.distanceTo(deviceLocation));
 
                 } else
                     organizations[i].setDistance(Double.MAX_VALUE);
+
+                //  find nearby organization in brunch and move it to root
+                if (organizations[i].getOrganizationBrunches() != null) {
+                    Organization maxOrg = null;
+                    Location bLockation = null;
+                    int n = 0;
+                    for (Organization bOrganization : organizations[i].getOrganizationBrunches())
+                        if ((deviceLocation != null) && (bOrganization.getLatLong() != null)) {
+                            bLocation.setLatitude(bOrganization.getLatLong().latitude);
+                            bLocation.setLongitude(bOrganization.getLatLong().longitude);
+                            bOrganization.setDistance(bLocation.distanceTo(deviceLocation));
+
+                            Log.i(TAG,bOrganization.getAddress()+" "+bLocation.distanceTo(deviceLocation));
+
+
+                            if ((maxOrg == null) || (maxOrg.getDistance() > bOrganization.getDistance())) {
+                                maxOrg = bOrganization;
+
+                            }
+
+                        }
+
+
+                    //move nearby organization to root&and  old root move to brunch
+                    if ((maxOrg != null) && (maxOrg.getDistance() < organizations[i].getDistance())) {
+                        Log.i(TAG,"OLD root "+organizations[i].getAddress()+" "+organizations[i].getDistance());
+                        Log.i(TAG, "NEW root " + maxOrg.getAddress() + " " + maxOrg.getDistance());
+
+                        organizations[i].getOrganizationBrunches().remove(maxOrg);//remove nearby organization from brunch
+                        maxOrg.setOrganizationBrunches(organizations[i].getOrganizationBrunches());//move brunch from old root to nearby organization
+                        organizations[i].setOrganizationBrunches(null);//remove brunch from old root
+                        maxOrg.getOrganizationBrunches().add(organizations[i]);//add old root to brunch of nearby organization
+                        organizations[i] = maxOrg;//set nearby organization to root
+
+
+                    }
+                }
+
+
             }
 
 
