@@ -349,9 +349,14 @@ public class MainActivity extends AppCompatActivity implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
 
-                uaFinancePreference.setCurrancie((String) parent.getAdapter().getItem(position));
+                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getCurrancie())) //  was changed)
+                {
+                    uaFinancePreference.setCurrancie((String) parent.getAdapter().getItem(position));
 
-                reDrawMainActivity();
+
+                    startRefreshButtonAnimation();
+                    startRefreshDatas();
+                }
 
 
             }
@@ -380,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     reDrawMainActivity();
                     Log.i(TAG, "City was changed");
+
                     startRefreshButtonAnimation();
                     startRefreshDatas();
                 }
@@ -403,10 +409,15 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
+                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getAskBid())) //  was changed)
+                {
+                    uaFinancePreference.setAskBid((String) parent.getAdapter().getItem(position));
 
-                uaFinancePreference.setAskBid((String) parent.getAdapter().getItem(position));
+                    startRefreshButtonAnimation();
+                    startRefreshDatas();
+                }
 
-                reDrawMainActivity();
+
             }
 
 
@@ -477,7 +488,7 @@ public class MainActivity extends AppCompatActivity implements
             LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
             deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
         } catch (SecurityException se) {
-            deviceLocation =null;
+            deviceLocation = null;
             Log.i(TAG, "Program is not have permission");
         }
 

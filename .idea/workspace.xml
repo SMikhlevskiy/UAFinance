@@ -14,7 +14,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56154364-c5c8-4985-a14d-162eeab5123a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="UAFinance.iws" />
@@ -43,11 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.137931">
-              <caret line="478" column="33" selection-start-line="478" selection-start-column="33" selection-end-line="478" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.5306749">
+              <caret line="412" column="17" selection-start-line="412" selection-start-column="17" selection-end-line="412" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4744#4783#0" expanded="true" />
@@ -65,12 +65,12 @@
                 <element signature="e#11560#11603#0" expanded="true" />
                 <element signature="e#11988#11996#0" expanded="true" />
                 <element signature="e#13097#13105#0" expanded="true" />
-                <element signature="e#13959#13967#0" expanded="true" />
-                <element signature="e#15181#15189#0" expanded="true" />
-                <element signature="e#16215#16902#0" expanded="true" />
-                <element signature="e#16901#16902#0" expanded="true" />
-                <element signature="e#16937#17980#0" expanded="true" />
-                <element signature="e#17979#17980#0" expanded="true" />
+                <element signature="e#14185#14193#0" expanded="true" />
+                <element signature="e#15408#15416#0" expanded="true" />
+                <element signature="e#16665#17352#0" expanded="true" />
+                <element signature="e#17351#17352#0" expanded="true" />
+                <element signature="e#17387#18430#0" expanded="true" />
+                <element signature="e#18429#18430#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinanceUA.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FinanceUA.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.05214724">
-              <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.862069">
+              <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
               <folding>
                 <element signature="e#1232#1233#0" expanded="true" />
                 <element signature="e#1263#1264#0" expanded="true" />
@@ -1686,9 +1686,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Net/FinanceUAAsyncTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/Organization.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/GeoLocationDB.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2191,7 +2191,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.85555553" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.85555553" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924694" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2279,12 +2279,12 @@
             <element signature="e#11560#11603#0" expanded="true" />
             <element signature="e#11988#11996#0" expanded="true" />
             <element signature="e#13097#13105#0" expanded="true" />
-            <element signature="e#13959#13967#0" expanded="true" />
-            <element signature="e#15181#15189#0" expanded="true" />
-            <element signature="e#16215#16902#0" expanded="true" />
-            <element signature="e#16901#16902#0" expanded="true" />
-            <element signature="e#16937#17980#0" expanded="true" />
-            <element signature="e#17979#17980#0" expanded="true" />
+            <element signature="e#14185#14193#0" expanded="true" />
+            <element signature="e#15408#15416#0" expanded="true" />
+            <element signature="e#16665#17352#0" expanded="true" />
+            <element signature="e#17351#17352#0" expanded="true" />
+            <element signature="e#17387#18430#0" expanded="true" />
+            <element signature="e#18429#18430#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2374,12 +2374,12 @@
             <element signature="e#11560#11603#0" expanded="true" />
             <element signature="e#11988#11996#0" expanded="true" />
             <element signature="e#13097#13105#0" expanded="true" />
-            <element signature="e#13959#13967#0" expanded="true" />
-            <element signature="e#15181#15189#0" expanded="true" />
-            <element signature="e#16215#16902#0" expanded="true" />
-            <element signature="e#16901#16902#0" expanded="true" />
-            <element signature="e#16937#17980#0" expanded="true" />
-            <element signature="e#17979#17980#0" expanded="true" />
+            <element signature="e#14185#14193#0" expanded="true" />
+            <element signature="e#15408#15416#0" expanded="true" />
+            <element signature="e#16665#17352#0" expanded="true" />
+            <element signature="e#17351#17352#0" expanded="true" />
+            <element signature="e#17387#18430#0" expanded="true" />
+            <element signature="e#18429#18430#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2739,37 +2739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.137931">
-          <caret line="478" column="33" selection-start-line="478" selection-start-column="33" selection-end-line="478" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4744#4783#0" expanded="true" />
-            <element signature="e#6100#6157#0" expanded="true" />
-            <element signature="e#6768#8365#0" expanded="true" />
-            <element signature="e#8364#8365#0" expanded="true" />
-            <element signature="e#8440#8460#0" expanded="true" />
-            <element signature="e#8462#8483#0" expanded="true" />
-            <element signature="e#9992#10218#0" expanded="true" />
-            <element signature="e#10217#10218#0" expanded="true" />
-            <element signature="e#10816#10868#0" expanded="true" />
-            <element signature="e#11041#11049#0" expanded="true" />
-            <element signature="e#11400#11443#0" expanded="true" />
-            <element signature="e#11480#11523#0" expanded="true" />
-            <element signature="e#11560#11603#0" expanded="true" />
-            <element signature="e#11988#11996#0" expanded="true" />
-            <element signature="e#13097#13105#0" expanded="true" />
-            <element signature="e#13959#13967#0" expanded="true" />
-            <element signature="e#15181#15189#0" expanded="true" />
-            <element signature="e#16215#16902#0" expanded="true" />
-            <element signature="e#16901#16902#0" expanded="true" />
-            <element signature="e#16937#17980#0" expanded="true" />
-            <element signature="e#17979#17980#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/GeoLocationDB.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-21.793104">
@@ -2792,8 +2761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05214724">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+        <state vertical-scroll-proportion="-5.862069">
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
           <folding>
             <element signature="e#1232#1233#0" expanded="true" />
             <element signature="e#1263#1264#0" expanded="true" />
@@ -2801,6 +2770,37 @@
             <element signature="e#1760#1761#0" expanded="true" />
             <element signature="e#10763#10777#0" expanded="true" />
             <element signature="e#10848#10856#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5306749">
+          <caret line="412" column="17" selection-start-line="412" selection-start-column="17" selection-end-line="412" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4744#4783#0" expanded="true" />
+            <element signature="e#6100#6157#0" expanded="true" />
+            <element signature="e#6768#8365#0" expanded="true" />
+            <element signature="e#8364#8365#0" expanded="true" />
+            <element signature="e#8440#8460#0" expanded="true" />
+            <element signature="e#8462#8483#0" expanded="true" />
+            <element signature="e#9992#10218#0" expanded="true" />
+            <element signature="e#10217#10218#0" expanded="true" />
+            <element signature="e#10816#10868#0" expanded="true" />
+            <element signature="e#11041#11049#0" expanded="true" />
+            <element signature="e#11400#11443#0" expanded="true" />
+            <element signature="e#11480#11523#0" expanded="true" />
+            <element signature="e#11560#11603#0" expanded="true" />
+            <element signature="e#11988#11996#0" expanded="true" />
+            <element signature="e#13097#13105#0" expanded="true" />
+            <element signature="e#14185#14193#0" expanded="true" />
+            <element signature="e#15408#15416#0" expanded="true" />
+            <element signature="e#16665#17352#0" expanded="true" />
+            <element signature="e#17351#17352#0" expanded="true" />
+            <element signature="e#17387#18430#0" expanded="true" />
+            <element signature="e#18429#18430#0" expanded="true" />
           </folding>
         </state>
       </provider>
