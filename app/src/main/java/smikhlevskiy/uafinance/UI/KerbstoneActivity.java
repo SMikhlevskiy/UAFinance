@@ -7,8 +7,10 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import smikhlevskiy.uafinance.R;
 
@@ -16,7 +18,8 @@ import smikhlevskiy.uafinance.R;
  * Created by tcont98 on 24-Jan-16.
  */
 public class KerbstoneActivity extends AppCompatActivity {
-
+    public static  final String TAG=KerbstoneActivity.class.getSimpleName();
+private  WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +34,27 @@ public class KerbstoneActivity extends AppCompatActivity {
 
         ab.setDisplayHomeAsUpEnabled(true);
 
-        WebView webView=(WebView)findViewById(R.id.kerbstone_webview);
-        webView.loadUrl("http://miniaylo.finance.ua/");
-        //webView.loadUrl("https://www.google.com.ua/?gws_rd=ssl");
+webView=(WebView)findViewById(R.id.kerbstone_webview);
+
+
+        webView.loadUrl(getString(R.string.kerbstone_financeua_URL));
+
         webView.getSettings().setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url)
+            {
+                Log.i(TAG, url);
+                if (url.contains(getString(R.string.kerbstone_financeua_URL))) {
+                    view.loadUrl(url);
+
+                }
+                return true;
+            }
+
+        });
+
 
     }
 
