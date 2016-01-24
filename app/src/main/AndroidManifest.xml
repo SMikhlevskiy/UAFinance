@@ -50,6 +50,16 @@
 
         </activity>
 
+        <activity
+            android:name=".UI.KerbstoneActivity"
+            android:label="@string/kerbstone_market_financeua" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.LocationMapActivity" />
+
+        </activity>
+
+
     </application>
 
 </manifest>

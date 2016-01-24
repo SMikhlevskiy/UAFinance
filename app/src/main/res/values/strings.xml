@@ -64,6 +64,7 @@
     <string name="navmenu_dist">Сортировка по расстоянию</string>
     <string name="navmenu_opt">Настройки</string>
     <string name="mapActivityName">Карта</string>
+    <string name="kerbstone_market_financeua">Черный рынок валюты (Finace.UA)</string>
 
 
 </resources>

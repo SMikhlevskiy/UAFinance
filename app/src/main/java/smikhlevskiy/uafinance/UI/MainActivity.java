@@ -211,6 +211,11 @@ public class MainActivity extends AppCompatActivity implements
                         mDrawerLayout.closeDrawer(mNavigationView);
                         //mCurrentSelectedPosition = 3;
                         break;
+                    case R.id.navmenu_kerbstone:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+                        Intent intent=new Intent(MainActivity.this,KerbstoneActivity.class);
+                        startActivity(intent);
+                        break;
                     default:
                         mDrawerLayout.closeDrawer(mNavigationView);
                 }

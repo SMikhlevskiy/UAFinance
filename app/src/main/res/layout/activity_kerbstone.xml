@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/mainStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="smikhlevskiy.uafinance.UI.KerbstoneActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/activity_toolbar" />
+
+    <WebView
+        android:id="@+id/kerbstone_webview"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
+</RelativeLayout>

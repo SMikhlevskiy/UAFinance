@@ -13,6 +13,11 @@
                 android:checked="false"
                 android:title="@string/navmenu_dist" />
         </group>
+
+        <item
+            android:id="@+id/navmenu_kerbstone"
+            android:title="@string/kerbstone_market_financeua"/>
+
         <item
             android:id="@+id/navmenu_map"
 
