@@ -18,8 +18,11 @@ import smikhlevskiy.uafinance.R;
  * Created by tcont98 on 24-Jan-16.
  */
 public class KerbstoneActivity extends AppCompatActivity {
-    public static  final String TAG=KerbstoneActivity.class.getSimpleName();
-private  WebView webView;
+    public static final String TAG = KerbstoneActivity.class.getSimpleName();
+    public static final String URL_PAR_NAME = "url_name";
+    private String cur_url = "";
+    private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +37,20 @@ private  WebView webView;
 
         ab.setDisplayHomeAsUpEnabled(true);
 
-webView=(WebView)findViewById(R.id.kerbstone_webview);
+        cur_url = getIntent().getExtras().getString(URL_PAR_NAME);
+
+        webView = (WebView) findViewById(R.id.kerbstone_webview);
 
 
-        webView.loadUrl(getString(R.string.kerbstone_financeua_URL));
+        webView.loadUrl(cur_url);
 
         webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url)
-            {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.i(TAG, url);
-                if (url.contains(getString(R.string.kerbstone_financeua_URL))) {
+                if (url.contains(cur_url)) {
                     view.loadUrl(url);
 
                 }

@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Utils;
+package smikhlevskiy.uafinance.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,7 +9,7 @@ import smikhlevskiy.uafinance.R;
 /**
  * Created by tcont98 on 16-Nov-15.
  */
-public class UAFinancePreference {
+public class UAFPreferences {
     static final String ASK_BID_KEY = "ask_bid_pref";
     static final String CURRENCIE_KEY = "currencie_pref";
     static final String CITY_KEY = "city_pref";
@@ -18,7 +18,7 @@ public class UAFinancePreference {
     SharedPreferences sharedPreferences;
     Context context;
 
-    public UAFinancePreference(Context context) {
+    public UAFPreferences(Context context) {
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(context);
         this.context=context;
     }

@@ -15,8 +15,13 @@
         </group>
 
         <item
-            android:id="@+id/navmenu_kerbstone"
+            android:id="@+id/navmenu_kerbstone_finance_ua"
             android:title="@string/kerbstone_market_financeua"/>
+
+        <item
+            android:id="@+id/navmenu_kerbstone_finance_i"
+            android:title="@string/kerbstone_market_finance_i"/>
+
 
         <item
             android:id="@+id/navmenu_map"

@@ -31,14 +31,14 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 public class OrganizationActivity extends AppCompatActivity implements OnMapReadyCallback {
     public String TAG = OrganizationActivity.class.getSimpleName();
-    UAFinancePreference uaFinancePreference;
+    UAFPreferences UAFPreferences;
     EditText editTextSum;
     TextView calcResultTextView;
     Organization organization;
@@ -78,7 +78,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         geocoder = new Geocoder(this, Locale.getDefault());
 
 
-        uaFinancePreference = new UAFinancePreference(this);
+        UAFPreferences = new UAFPreferences(this);
 
         Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -120,8 +120,8 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
             }
         });
         //---Calculator----------
-        ((TextView) findViewById(R.id.calckSum)).setText(uaFinancePreference.getAskBid());
-        ((TextView) findViewById(R.id.calckCurr)).setText(uaFinancePreference.getCurrancie());
+        ((TextView) findViewById(R.id.calckSum)).setText(UAFPreferences.getAskBid());
+        ((TextView) findViewById(R.id.calckCurr)).setText(UAFPreferences.getCurrancie());
         editTextSum = (EditText) findViewById(R.id.editTextSum);
 
         calcResultTextView = (TextView) findViewById(R.id.calckResult);

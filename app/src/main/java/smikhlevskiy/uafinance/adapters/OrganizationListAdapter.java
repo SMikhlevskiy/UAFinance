@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Utils.UAFConstansts;
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
@@ -26,13 +26,13 @@ import smikhlevskiy.uafinance.model.Organization;
 public class OrganizationListAdapter extends BaseAdapter {
     private FinanceUA financeUA = null;
     private Context context;
-    private UAFinancePreference uaFinancePreference;
+    private UAFPreferences UAFPreferences;
     private Location deviceLocation = null;
     private GeoLocationDB geoLocationDB = null;
 
     public OrganizationListAdapter(Context context) {
         this.context = context;
-        uaFinancePreference = new UAFinancePreference((context));
+        UAFPreferences = new UAFPreferences((context));
         geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
     }
 
@@ -140,7 +140,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         }
 
 
-        //uaFinancePreference.getAskBid(), uaFinancePreference.getCity(), uaFinancePreference.getCurrancie()
+        //UAFPreferences.getAskBid(), UAFPreferences.getCity(), UAFPreferences.getCurrancie()
 
 
         TextView textCurrancie = (TextView) convertView.findViewById(R.id.itemCurrencie);

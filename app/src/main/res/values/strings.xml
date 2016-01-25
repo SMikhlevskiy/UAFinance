@@ -65,8 +65,10 @@
     <string name="navmenu_opt">Настройки</string>
     <string name="mapActivityName">Карта</string>
     <string name="kerbstone_market_financeua">Черный рынок валюты (Finace.UA)</string>
+    <string name="kerbstone_market_finance_i">Черный рынок валюты (Finace.i.ua)</string>
     <string name="kerbstone_market">Черный рынок валюты</string>
-    <string name="kerbstone_financeua_URL">http://miniaylo.finance.ua/</string>
+    <string name="kerbstone_finance_ua_URL">http://miniaylo.finance.ua/ru/</string>
+    <string name="kerbstone_finance_i_URL">http://finance.i.ua/market/kiev/</string>
 
 
 </resources>

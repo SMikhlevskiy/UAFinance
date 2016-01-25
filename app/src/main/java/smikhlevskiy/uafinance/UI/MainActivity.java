@@ -47,7 +47,7 @@ import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
 import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
 import smikhlevskiy.uafinance.Utils.UAFConstansts;
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements
     //private EditText resultTextEdit;
     final static String TAG = MainActivity.class.getSimpleName();
     private OrganizationListAdapter organizationListAdapter;
-    private UAFinancePreference uaFinancePreference;
+    private UAFPreferences UAFPreferences;
     private ListView organizationListView;
 
     private Handler mainActivityHandler;
@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity implements
 
         (new FinanceUAAsyncTask(
                 this,
-                uaFinancePreference.getCity(),
-                uaFinancePreference.getCurrancie(),
-                (uaFinancePreference.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
-                uaFinancePreference.getSortCurrency(),
+                UAFPreferences.getCity(),
+                UAFPreferences.getCurrancie(),
+                (UAFPreferences.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
+                UAFPreferences.getSortCurrency(),
 
                 false,
                 deviceLocation,
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements
                     case R.id.navmenu_cur:
                         mDrawerLayout.closeDrawer(mNavigationView);
 
-                        uaFinancePreference.setSortCurrency(true);
+                        UAFPreferences.setSortCurrency(true);
 
                         Log.i(TAG, "Sort by Currency");
                         startRefreshButtonAnimation();
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements
                     case R.id.navmenu_dist:
                         mDrawerLayout.closeDrawer(mNavigationView);
 
-                        uaFinancePreference.setSortCurrency(false);
+                        UAFPreferences.setSortCurrency(false);
 
                         Log.i(TAG, "Sort by Distance");
                         startRefreshButtonAnimation();
@@ -211,10 +211,17 @@ public class MainActivity extends AppCompatActivity implements
                         mDrawerLayout.closeDrawer(mNavigationView);
                         //mCurrentSelectedPosition = 3;
                         break;
-                    case R.id.navmenu_kerbstone:
+                    case R.id.navmenu_kerbstone_finance_ua:
                         mDrawerLayout.closeDrawer(mNavigationView);
                         Intent intent=new Intent(MainActivity.this,KerbstoneActivity.class);
+                        intent.putExtra(KerbstoneActivity.URL_PAR_NAME,getString(R.string.kerbstone_finance_ua_URL));
                         startActivity(intent);
+                        break;
+                    case R.id.navmenu_kerbstone_finance_i:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+                        Intent iintent=new Intent(MainActivity.this,KerbstoneActivity.class);
+                        iintent.putExtra(KerbstoneActivity.URL_PAR_NAME,getString(R.string.kerbstone_finance_i_URL));
+                        startActivity(iintent);
                         break;
                     default:
                         mDrawerLayout.closeDrawer(mNavigationView);
@@ -283,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements
 
             String[] cities = new String[citiesArray.length + 2];
 
-            cities[0] = uaFinancePreference.getCity();
+            cities[0] = UAFPreferences.getCity();
             cities[1] = this.getResources().getString(R.string.default_city);
 
             for (int i = 0; i < citiesArray.length; i++)
@@ -292,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements
 
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
             spinnerCity.setAdapter(cityAdapter);
-            spinnerCity.setSelection(cityAdapter.getPosition(uaFinancePreference.getCity()));
+            spinnerCity.setSelection(cityAdapter.getPosition(UAFPreferences.getCity()));
         }
 
 
@@ -311,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements
 
             ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allCurrancies);
             spinnerCurrency.setAdapter(currencyAdapter);
-            spinnerCurrency.setSelection(currencyAdapter.getPosition(uaFinancePreference.getCurrancie()));
+            spinnerCurrency.setSelection(currencyAdapter.getPosition(UAFPreferences.getCurrancie()));
         }
 
         if (organizationListAdapter != null) {
@@ -338,14 +345,14 @@ public class MainActivity extends AppCompatActivity implements
         setupTolbarNavigationView();
 
 
-        uaFinancePreference = new UAFinancePreference(this);
+        UAFPreferences = new UAFPreferences(this);
 
 
         //---------CurrencieSpinner
 
         Spinner spinnerCurrencie = ((Spinner) findViewById(R.id.spinerCurrency));
 
-        ArrayAdapter<String> CurrencieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uaFinancePreference.getCurrancie()});
+        ArrayAdapter<String> CurrencieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{UAFPreferences.getCurrancie()});
         spinnerCurrencie.setAdapter(CurrencieAdapter);
 
 
@@ -354,9 +361,9 @@ public class MainActivity extends AppCompatActivity implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
 
-                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getCurrancie())) //  was changed)
+                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getCurrancie())) //  was changed)
                 {
-                    uaFinancePreference.setCurrancie((String) parent.getAdapter().getItem(position));
+                    UAFPreferences.setCurrancie((String) parent.getAdapter().getItem(position));
 
 
                     startRefreshButtonAnimation();
@@ -376,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Spinner spinnerCity = ((Spinner) findViewById(R.id.spinerCity));
 
-        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uaFinancePreference.getCity()});
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{UAFPreferences.getCity()});
         spinnerCity.setAdapter(cityAdapter);
 
 
@@ -385,8 +392,8 @@ public class MainActivity extends AppCompatActivity implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
 
-                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getCity())) {// city was changed
-                    uaFinancePreference.setCity((String) parent.getAdapter().getItem(position));
+                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getCity())) {// city was changed
+                    UAFPreferences.setCity((String) parent.getAdapter().getItem(position));
 
                     reDrawMainActivity();
                     Log.i(TAG, "City was changed");
@@ -408,15 +415,15 @@ public class MainActivity extends AppCompatActivity implements
         ArrayAdapter<String> askBidAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, askBid);
         spinnerAskBid.setAdapter(askBidAdapter);
 
-        spinnerAskBid.setSelection(askBidAdapter.getPosition(uaFinancePreference.getAskBid()));
+        spinnerAskBid.setSelection(askBidAdapter.getPosition(UAFPreferences.getAskBid()));
 
         spinnerAskBid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
-                if (!((String) parent.getAdapter().getItem(position)).equals(uaFinancePreference.getAskBid())) //  was changed)
+                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getAskBid())) //  was changed)
                 {
-                    uaFinancePreference.setAskBid((String) parent.getAdapter().getItem(position));
+                    UAFPreferences.setAskBid((String) parent.getAdapter().getItem(position));
 
                     startRefreshButtonAnimation();
                     startRefreshDatas();
@@ -556,11 +563,11 @@ public class MainActivity extends AppCompatActivity implements
                 } else {
                     mDrawerLayout.openDrawer(mNavigationView);
 
-                    if (mNavigationView.getMenu().getItem(0).isChecked() != uaFinancePreference.getSortCurrency())
-                        mNavigationView.getMenu().getItem(0).setChecked(uaFinancePreference.getSortCurrency());
+                    if (mNavigationView.getMenu().getItem(0).isChecked() != UAFPreferences.getSortCurrency())
+                        mNavigationView.getMenu().getItem(0).setChecked(UAFPreferences.getSortCurrency());
 
-                    if (mNavigationView.getMenu().getItem(1).isChecked() == uaFinancePreference.getSortCurrency())
-                        mNavigationView.getMenu().getItem(1).setChecked(!uaFinancePreference.getSortCurrency());
+                    if (mNavigationView.getMenu().getItem(1).isChecked() == UAFPreferences.getSortCurrency())
+                        mNavigationView.getMenu().getItem(1).setChecked(!UAFPreferences.getSortCurrency());
 
                 }
                 return true;

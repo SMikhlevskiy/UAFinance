@@ -14,8 +14,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56154364-c5c8-4985-a14d-162eeab5123a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MOVED" beforePath="C:\andrstudioworkspace\UAFinance\app\src\main\java\smikhlevskiy\uafinance\Utils\UAFinancePreference.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/UAFPreferences.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/fragments/CurrencyCashFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/fragments/CurrencyCashFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/adapters/OrganizationListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/adapters/OrganizationListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -48,34 +55,52 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.344828">
-              <caret line="214" column="67" selection-start-line="214" selection-start-column="67" selection-end-line="214" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="217" column="46" selection-start-line="217" selection-start-column="46" selection-end-line="217" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4744#4783#0" expanded="true" />
-                <element signature="e#4917#4940#0" expanded="true" />
-                <element signature="e#4958#4981#0" expanded="true" />
-                <element signature="e#4999#5022#0" expanded="true" />
-                <element signature="e#6100#6157#0" expanded="true" />
-                <element signature="e#6768#8653#0" expanded="true" />
-                <element signature="e#8652#8653#0" expanded="true" />
-                <element signature="e#8728#8748#0" expanded="true" />
-                <element signature="e#8750#8771#0" expanded="true" />
-                <element signature="e#10280#10506#0" expanded="true" />
-                <element signature="e#10505#10506#0" expanded="true" />
-                <element signature="e#11104#11156#0" expanded="true" />
-                <element signature="e#11329#11337#0" expanded="true" />
-                <element signature="e#11688#11731#0" expanded="true" />
-                <element signature="e#11768#11811#0" expanded="true" />
-                <element signature="e#11848#11891#0" expanded="true" />
-                <element signature="e#12276#12284#0" expanded="true" />
-                <element signature="e#13385#13393#0" expanded="true" />
-                <element signature="e#14473#14481#0" expanded="true" />
-                <element signature="e#15696#15704#0" expanded="true" />
-                <element signature="e#16953#17640#0" expanded="true" />
-                <element signature="e#17639#17640#0" expanded="true" />
-                <element signature="e#17675#18718#0" expanded="true" />
-                <element signature="e#18717#18718#0" expanded="true" />
+                <element signature="e#4709#4748#0" expanded="true" />
+                <element signature="e#4882#4905#0" expanded="true" />
+                <element signature="e#4923#4946#0" expanded="true" />
+                <element signature="e#4964#4987#0" expanded="true" />
+                <element signature="e#6065#6122#0" expanded="true" />
+                <element signature="e#6733#9155#0" expanded="true" />
+                <element signature="e#8386#8430#0" expanded="true" />
+                <element signature="e#8804#8847#0" expanded="true" />
+                <element signature="e#9154#9155#0" expanded="true" />
+                <element signature="e#9230#9250#0" expanded="true" />
+                <element signature="e#9252#9273#0" expanded="true" />
+                <element signature="e#10782#11008#0" expanded="true" />
+                <element signature="e#11007#11008#0" expanded="true" />
+                <element signature="e#11601#11653#0" expanded="true" />
+                <element signature="e#11826#11834#0" expanded="true" />
+                <element signature="e#12180#12223#0" expanded="true" />
+                <element signature="e#12260#12303#0" expanded="true" />
+                <element signature="e#12340#12383#0" expanded="true" />
+                <element signature="e#12768#12776#0" expanded="true" />
+                <element signature="e#13862#13870#0" expanded="true" />
+                <element signature="e#14935#14943#0" expanded="true" />
+                <element signature="e#16143#16151#0" expanded="true" />
+                <element signature="e#17385#18072#0" expanded="true" />
+                <element signature="e#18071#18072#0" expanded="true" />
+                <element signature="e#18107#19150#0" expanded="true" />
+                <element signature="e#19149#19150#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="menu_navigation.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="51" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
+              <folding>
+                <element signature="e#303#324#0" expanded="true" />
+                <element signature="e#463#485#0" expanded="true" />
+                <element signature="e#744#780#0" expanded="true" />
+                <element signature="e#869#890#0" expanded="true" />
+                <element signature="e#977#998#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,14 +109,12 @@
       <file leaf-file-name="KerbstoneActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47887325">
-              <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.74846625">
+              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1247#1290#0" expanded="true" />
-                <element signature="e#1386#1746#0" expanded="true" />
-                <element signature="e#1587#1630#0" expanded="true" />
-                <element signature="e#1745#1746#0" expanded="true" />
+                <element signature="e#1525#1838#0" expanded="true" />
+                <element signature="e#1837#1838#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,8 +136,8 @@
       <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.703704">
-              <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
+            <state vertical-scroll-proportion="-3.9629629">
+              <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -124,7 +147,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="190" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
+              <caret line="93" column="62" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -138,6 +161,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-8.206897">
               <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UAFPreferences.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/UAFPreferences.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1687,12 +1720,12 @@
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/Organization.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/GeoLocationDB.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/FinanceUA.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/kerbstone_market.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_kerbstone.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java" />
       </list>
     </option>
@@ -2179,7 +2212,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1320" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.4873016" order="7" side_tool="false" content_ui="tabs" />
@@ -2188,15 +2221,16 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.85555553" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.85079366" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924694" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.14444445" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3891547" sideWeight="0.14920636" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2468254" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24761905" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.4968254" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2210,7 +2244,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32924694" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2263,13 +2296,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Utils/UAFinancePreference.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/UAFPreferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="49" column="108" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="108" />
           <folding>
-            <element signature="e#1761#1762#0" expanded="true" />
-            <element signature="e#1831#1832#0" expanded="true" />
+            <element signature="e#1751#1752#0" expanded="true" />
+            <element signature="e#1821#1822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2287,8 +2320,8 @@
           <caret line="136" column="19" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#3250#5004#0" expanded="false" />
-            <element signature="e#5003#5004#0" expanded="false" />
+            <element signature="e#3225#4979#0" expanded="false" />
+            <element signature="e#4978#4979#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2306,30 +2339,32 @@
           <caret line="271" column="0" selection-start-line="271" selection-start-column="0" selection-end-line="271" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4744#4783#0" expanded="true" />
-            <element signature="e#4917#4940#0" expanded="true" />
-            <element signature="e#4958#4981#0" expanded="true" />
-            <element signature="e#4999#5022#0" expanded="true" />
-            <element signature="e#6100#6157#0" expanded="true" />
-            <element signature="e#6768#8653#0" expanded="true" />
-            <element signature="e#8652#8653#0" expanded="true" />
-            <element signature="e#8728#8748#0" expanded="true" />
-            <element signature="e#8750#8771#0" expanded="true" />
-            <element signature="e#10280#10506#0" expanded="true" />
-            <element signature="e#10505#10506#0" expanded="true" />
-            <element signature="e#11104#11156#0" expanded="true" />
-            <element signature="e#11329#11337#0" expanded="true" />
-            <element signature="e#11688#11731#0" expanded="true" />
-            <element signature="e#11768#11811#0" expanded="true" />
-            <element signature="e#11848#11891#0" expanded="true" />
-            <element signature="e#12276#12284#0" expanded="true" />
-            <element signature="e#13385#13393#0" expanded="true" />
-            <element signature="e#14473#14481#0" expanded="true" />
-            <element signature="e#15696#15704#0" expanded="true" />
-            <element signature="e#16953#17640#0" expanded="true" />
-            <element signature="e#17639#17640#0" expanded="true" />
-            <element signature="e#17675#18718#0" expanded="true" />
-            <element signature="e#18717#18718#0" expanded="true" />
+            <element signature="e#4709#4748#0" expanded="true" />
+            <element signature="e#4882#4905#0" expanded="true" />
+            <element signature="e#4923#4946#0" expanded="true" />
+            <element signature="e#4964#4987#0" expanded="true" />
+            <element signature="e#6065#6122#0" expanded="true" />
+            <element signature="e#6733#9155#0" expanded="true" />
+            <element signature="e#8386#8430#0" expanded="true" />
+            <element signature="e#8804#8847#0" expanded="true" />
+            <element signature="e#9154#9155#0" expanded="true" />
+            <element signature="e#9230#9250#0" expanded="true" />
+            <element signature="e#9252#9273#0" expanded="true" />
+            <element signature="e#10782#11008#0" expanded="true" />
+            <element signature="e#11007#11008#0" expanded="true" />
+            <element signature="e#11601#11653#0" expanded="true" />
+            <element signature="e#11826#11834#0" expanded="true" />
+            <element signature="e#12180#12223#0" expanded="true" />
+            <element signature="e#12260#12303#0" expanded="true" />
+            <element signature="e#12340#12383#0" expanded="true" />
+            <element signature="e#12768#12776#0" expanded="true" />
+            <element signature="e#13862#13870#0" expanded="true" />
+            <element signature="e#14935#14943#0" expanded="true" />
+            <element signature="e#16143#16151#0" expanded="true" />
+            <element signature="e#17385#18072#0" expanded="true" />
+            <element signature="e#18071#18072#0" expanded="true" />
+            <element signature="e#18107#19150#0" expanded="true" />
+            <element signature="e#19149#19150#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2350,13 +2385,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Utils/UAFinancePreference.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/UAFPreferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="49" column="108" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="108" />
           <folding>
-            <element signature="e#1761#1762#0" expanded="true" />
-            <element signature="e#1831#1832#0" expanded="true" />
+            <element signature="e#1751#1752#0" expanded="true" />
+            <element signature="e#1821#1822#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2374,8 +2409,8 @@
           <caret line="136" column="19" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#3250#5004#0" expanded="false" />
-            <element signature="e#5003#5004#0" expanded="false" />
+            <element signature="e#3225#4979#0" expanded="false" />
+            <element signature="e#4978#4979#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2543,17 +2578,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Utils/UAFinancePreference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="20" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
-          <folding>
-            <element signature="e#1761#1762#0" expanded="true" />
-            <element signature="e#1831#1832#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/navigationview_header.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2654,16 +2678,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="e#595#631#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2680,40 +2694,6 @@
         <state vertical-scroll-proportion="-5.275862">
           <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.344828">
-          <caret line="214" column="67" selection-start-line="214" selection-start-column="67" selection-end-line="214" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4744#4783#0" expanded="true" />
-            <element signature="e#4917#4940#0" expanded="true" />
-            <element signature="e#4958#4981#0" expanded="true" />
-            <element signature="e#4999#5022#0" expanded="true" />
-            <element signature="e#6100#6157#0" expanded="true" />
-            <element signature="e#6768#8653#0" expanded="true" />
-            <element signature="e#8652#8653#0" expanded="true" />
-            <element signature="e#8728#8748#0" expanded="true" />
-            <element signature="e#8750#8771#0" expanded="true" />
-            <element signature="e#10280#10506#0" expanded="true" />
-            <element signature="e#10505#10506#0" expanded="true" />
-            <element signature="e#11104#11156#0" expanded="true" />
-            <element signature="e#11329#11337#0" expanded="true" />
-            <element signature="e#11688#11731#0" expanded="true" />
-            <element signature="e#11768#11811#0" expanded="true" />
-            <element signature="e#11848#11891#0" expanded="true" />
-            <element signature="e#12276#12284#0" expanded="true" />
-            <element signature="e#13385#13393#0" expanded="true" />
-            <element signature="e#14473#14481#0" expanded="true" />
-            <element signature="e#15696#15704#0" expanded="true" />
-            <element signature="e#16953#17640#0" expanded="true" />
-            <element signature="e#17639#17640#0" expanded="true" />
-            <element signature="e#17675#18718#0" expanded="true" />
-            <element signature="e#18717#18718#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2739,14 +2719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="190" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_kerbstone.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2754,14 +2726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.793103">
           <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.703704">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -2777,16 +2741,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/model/UAFPreferences.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47887325">
-          <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="51" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
+          <folding>
+            <element signature="e#303#324#0" expanded="true" />
+            <element signature="e#463#485#0" expanded="true" />
+            <element signature="e#744#780#0" expanded="true" />
+            <element signature="e#869#890#0" expanded="true" />
+            <element signature="e#977#998#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9629629">
+          <caret line="60" column="48" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="217" column="46" selection-start-line="217" selection-start-column="46" selection-end-line="217" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1247#1290#0" expanded="true" />
-            <element signature="e#1386#1746#0" expanded="true" />
-            <element signature="e#1587#1630#0" expanded="true" />
-            <element signature="e#1745#1746#0" expanded="true" />
+            <element signature="e#4709#4748#0" expanded="true" />
+            <element signature="e#4882#4905#0" expanded="true" />
+            <element signature="e#4923#4946#0" expanded="true" />
+            <element signature="e#4964#4987#0" expanded="true" />
+            <element signature="e#6065#6122#0" expanded="true" />
+            <element signature="e#6733#9155#0" expanded="true" />
+            <element signature="e#8386#8430#0" expanded="true" />
+            <element signature="e#8804#8847#0" expanded="true" />
+            <element signature="e#9154#9155#0" expanded="true" />
+            <element signature="e#9230#9250#0" expanded="true" />
+            <element signature="e#9252#9273#0" expanded="true" />
+            <element signature="e#10782#11008#0" expanded="true" />
+            <element signature="e#11007#11008#0" expanded="true" />
+            <element signature="e#11601#11653#0" expanded="true" />
+            <element signature="e#11826#11834#0" expanded="true" />
+            <element signature="e#12180#12223#0" expanded="true" />
+            <element signature="e#12260#12303#0" expanded="true" />
+            <element signature="e#12340#12383#0" expanded="true" />
+            <element signature="e#12768#12776#0" expanded="true" />
+            <element signature="e#13862#13870#0" expanded="true" />
+            <element signature="e#14935#14943#0" expanded="true" />
+            <element signature="e#16143#16151#0" expanded="true" />
+            <element signature="e#17385#18072#0" expanded="true" />
+            <element signature="e#18071#18072#0" expanded="true" />
+            <element signature="e#18107#19150#0" expanded="true" />
+            <element signature="e#19149#19150#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="93" column="62" selection-start-line="93" selection-start-column="38" selection-end-line="93" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74846625">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1525#1838#0" expanded="true" />
+            <element signature="e#1837#1838#0" expanded="true" />
           </folding>
         </state>
       </provider>

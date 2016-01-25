@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
@@ -48,14 +48,14 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
     public void draw() {
 
         if (financeUA==null) return;
-        UAFinancePreference uaFinancePreference=new UAFinancePreference(fragmentView.getContext());
+        UAFPreferences UAFPreferences =new UAFPreferences(fragmentView.getContext());
 
         HashMap<String, Currencie> minMaxCurrencies =financeUA.calckMinMaxCurrencies(
                 new String[]{
                         getString(R.string.USD),
                         getString(R.string.EUR),
                         getString(R.string.RUB)},
-                uaFinancePreference.getCity());
+                UAFPreferences.getCity());
 
         ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(minMaxCurrencies.get(getString(R.string.USD)).getAsk());
         ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(minMaxCurrencies.get(getString(R.string.USD)).getBid());

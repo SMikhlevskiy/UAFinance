@@ -32,7 +32,7 @@ import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.UAFinancePreference;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 
 
 /**
@@ -42,7 +42,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     public static final String TAG = LocationMapActivity.class.getSimpleName();
     private FinanceUA financeUA;
     private Location deviceLocation=null;
-    UAFinancePreference uaFinancePreference;
+    UAFPreferences UAFPreferences;
     Handler mapHandler;
 
     Geocoder geocoder;
@@ -63,7 +63,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         geocoder = new Geocoder(this, Locale.getDefault());
 
 
-        uaFinancePreference = new UAFinancePreference(this);
+        UAFPreferences = new UAFPreferences(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
