@@ -11,6 +11,7 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 public class PrivatAddresesAsyncTask  extends AsyncTask<String, Void, FinanceUA>{
     @Override
     protected FinanceUA doInBackground(String... params) {
+
         return null;
     }
 }

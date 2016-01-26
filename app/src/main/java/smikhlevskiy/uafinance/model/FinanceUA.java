@@ -15,7 +15,7 @@ import smikhlevskiy.uafinance.Utils.UAFConstansts;
  * Created by tcont98 on 07-Nov-15.
  */
 public class FinanceUA {
-    static final String TAG=FinanceUA.class.getSimpleName();
+    static final String TAG = FinanceUA.class.getSimpleName();
     private String sourceId;
     private String date;
     private Organization[] organizations;
@@ -143,7 +143,7 @@ public class FinanceUA {
                             bLocation.setLongitude(bOrganization.getLatLong().longitude);
                             bOrganization.setDistance(bLocation.distanceTo(deviceLocation));
 
-                            Log.i(TAG,bOrganization.getAddress()+" "+bLocation.distanceTo(deviceLocation));
+                            Log.i(TAG, bOrganization.getAddress() + " " + bLocation.distanceTo(deviceLocation));
 
 
                             if ((maxOrg == null) || (maxOrg.getDistance() > bOrganization.getDistance())) {
@@ -156,7 +156,7 @@ public class FinanceUA {
 
                     //move nearby organization to root&and  old root move to brunch
                     if ((maxOrg != null) && (maxOrg.getDistance() < organizations[i].getDistance())) {
-                        Log.i(TAG,"OLD root "+organizations[i].getAddress()+" "+organizations[i].getDistance());
+                        Log.i(TAG, "OLD root " + organizations[i].getAddress() + " " + organizations[i].getDistance());
                         Log.i(TAG, "NEW root " + maxOrg.getAddress() + " " + maxOrg.getDistance());
 
                         organizations[i].getOrganizationBrunches().remove(maxOrg);//remove nearby organization from brunch
@@ -302,12 +302,13 @@ public class FinanceUA {
         return list;
     }
 
-    public void optimizeOrganizationList(String city) {
+    public void optimizeOrganizationList(String city, ArrayList<Organization> privatAdresses) {
 
         LinkedList<Organization> organizationsList = new LinkedList<Organization>();
 
         LinkedList<String> organizationsTitleList = new LinkedList<String>();
 
+        Organization privatEtalon = null;
 
         for (int i = 0; i < organizations.length; i++)
             if (city.equals(cities.get(organizations[i].getCityId()))) {
@@ -318,6 +319,32 @@ public class FinanceUA {
 
 
             }
+
+        //----------------------Add privat addresses from PrivatBank site
+        if (privatAdresses != null) {
+            Organization organizationEtalon = null;
+            //--------------remove all Old privat addresses------
+            for (int j = 0; j < organizationsList.size(); j++)
+                if (organizationsTitleList.get(j).contains(UAFConstansts.PRIVAT_LC)) {
+                    organizationEtalon = organizationsList.get(j);
+
+                    organizationsList.remove(organizationsList.get(j));//delete
+                    organizationsTitleList.remove(j);
+                }
+
+            if (organizationEtalon != null) {
+                for (int j=0;j<privatAdresses.size();j++){
+                    privatAdresses.get(j).setCityId(organizationEtalon.getCityId());
+                    privatAdresses.get(j).setCurrencies(organizationEtalon.getCurrencies());
+                    privatAdresses.get(j).setOrgType(organizationEtalon.getOrgType());
+                    privatAdresses.get(j).setRegionId(organizationEtalon.getRegionId());
+                    organizationsList.add(privatAdresses.get(j));
+                    organizationsTitleList.add(privatAdresses.get(j).getTitle().toLowerCase());
+                }
+            }
+
+        }
+
 
         Organization rootOrganization;
         for (int j = 0; j < organizationsList.size(); j++) {
@@ -334,6 +361,7 @@ public class FinanceUA {
                 organizationsTitleList.set(j, UAFConstansts.PRIVAT_LC);
                 rootOrganization.setTitle(UAFConstansts.PRIVAT);
             }
+
 
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
 

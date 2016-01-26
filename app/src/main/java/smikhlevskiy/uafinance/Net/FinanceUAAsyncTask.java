@@ -10,6 +10,10 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,9 +21,12 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import smikhlevskiy.uafinance.Utils.UAFConstansts;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
@@ -67,8 +74,104 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         this.scurrency = scurrency;
         this.isSortCurrency = isSortCurrency;
         this.askBid = askBid;
-        this.deviceLocation=deviceLocation;
+        this.deviceLocation = deviceLocation;
         //tempFile = context.getCacheDir().getPath() + "/" + "financeUA.txt";
+    }
+
+    //------------calck LatLong for all organization(if sortDistance)-----------------------------------------------------------
+    void setOrganizationsLatLon(FinanceUA financeUA, Context context, String city) {
+        GeoLocationDB geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+
+        HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(financeUA.getAllAddresses(city));
+        for (Organization organization : financeUA.getOrganizations()) {
+            String address = financeUA.getURLAddressByOrganization(organization);
+            if (latLngHashMap.containsKey(address))
+                organization.setLatLong(latLngHashMap.get(address));
+            if (organization.getOrganizationBrunches() != null) {
+                for (Organization branchOrganization : organization.getOrganizationBrunches()) {
+                    String branchAddress = financeUA.getURLAddressByOrganization(branchOrganization);
+                    if (latLngHashMap.containsKey(branchAddress))
+                        branchOrganization.setLatLong(latLngHashMap.get(branchAddress));
+
+                }
+
+            }
+
+        }
+
+    }
+
+    //
+    public ArrayList<Organization> getPrivatAdresses()   {
+
+Log.i(TAG,"getPrivatAdresses");
+        StringBuilder bulder = new StringBuilder("");
+        try {
+            //  from URL
+            InputStreamReader isr;
+
+            URL url = new URL("https://api.privatbank.ua/p24api/pboffice?json&city=" + URLEncoder.encode(city, "utf-8"));
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            isr = new InputStreamReader(con.getInputStream());
+
+
+            BufferedReader reader = new BufferedReader(isr);
+            String str = null;
+
+            do {
+                str = reader.readLine();
+                if (str != null) {
+                    bulder.append(str);
+                    //Log.i(TAG, str);
+                }
+            } while (str != null);
+
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+            return null;
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            return null;
+
+        }
+
+
+
+        ArrayList<Organization> privatAdresses=new ArrayList<Organization>();
+        try {
+            Log.i(TAG,"getPrivatAdresses");
+
+
+
+            JSONArray array = new JSONArray(bulder.toString());
+
+            if (array.length()<=0) return null;
+
+            for (int i=0;i<array.length();i++){
+                JSONObject item = array.getJSONObject(i);
+                String pcity=item.getString("city");
+                if (pcity.equals(city)){
+                    Organization organization=new Organization();
+                    organization.setTitle(UAFConstansts.PRIVAT+" :"+ item.getString("name"));
+                    organization.setAddress(item.getString("address"));
+                    organization.setPhone(item.getString("phone"));
+                    privatAdresses.add(organization);
+
+
+                }
+
+
+            }
+
+        } catch (JSONException e) {
+
+
+           return null;
+        }
+
+
+        Log.i(TAG, "PrivatAddressesLenght="+privatAdresses.size());
+        return privatAdresses;
     }
 
     @Override
@@ -76,7 +179,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         StringBuilder bulder = new StringBuilder("");
         try {
 
-            // Thread.sleep(10000);//simulate lon read
+
             //  from URL
             InputStreamReader isr;
             if (true) {
@@ -85,7 +188,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
                 isr = new InputStreamReader(con.getInputStream());
 
             } else {
-                //***  Test from assets
+                //***  Demo mode
 
                 if (context.get() != null) {
 
@@ -110,50 +213,24 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
             e1.printStackTrace();
             return null;
 
-        }   /* catch (InterruptedException e) {
-
-            e.printStackTrace();
-            return null;
         }
-        */
 
         Gson gson = new Gson();
-        //saveToCache();
+
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
-        if (!isLowWork) {
-            financeUA.optimizeOrganizationList(city);
-
-
-
+        if (!isLowWork) {//LoWork - without sort & optimization(form BigMap)
+            ArrayList<Organization> privatAdresses=getPrivatAdresses();
+            //-------------delete other city,move brunches organization to brunch-------
+            financeUA.optimizeOrganizationList(city,privatAdresses);
             //------------calck LatLong for all organization(if sortDistance)---
-            if ((!isSortCurrency) && (context.get() != null) && (deviceLocation!=null)) {
-                GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
-
-                HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(financeUA.getAllAddresses(city));
-                for (Organization organization : financeUA.getOrganizations()) {
-                    String address = financeUA.getURLAddressByOrganization(organization);
-                    if (latLngHashMap.containsKey(address))
-                        organization.setLatLong(latLngHashMap.get(address));
-                    if (organization.getOrganizationBrunches() != null) {
-                        for (Organization branchOrganization : organization.getOrganizationBrunches()) {
-                            String branchAddress = financeUA.getURLAddressByOrganization(branchOrganization);
-                            if (latLngHashMap.containsKey(branchAddress))
-                                branchOrganization.setLatLong(latLngHashMap.get(branchAddress));
-
-                        }
-
-                    }
-
-                }
-
+            if ((!isSortCurrency) && (context.get() != null) && (deviceLocation != null)) {
+                setOrganizationsLatLon(financeUA, (Context) context.get(), city);
             }
-
             //----Sort------
             financeUA.sort(askBid,
                     isSortCurrency,
                     city, scurrency, deviceLocation);
-
         }
         return financeUA;
     }
