@@ -99,7 +99,7 @@ public class OrganizationListAdapter extends BaseAdapter {
         if (deviceLocation != null) {
             Location locationOrganization = new Location(organization.getTitle());
 
-            LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
+            LatLng latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
             if (latLng != null) {
                 locationOrganization.setLongitude(latLng.longitude);
                 locationOrganization.setLatitude(latLng.latitude);

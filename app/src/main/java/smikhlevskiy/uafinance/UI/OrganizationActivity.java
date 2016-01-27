@@ -31,6 +31,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
@@ -201,7 +202,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         mMap.setMyLocationEnabled(true);
         GeoLocationDB geoLocationDB = new GeoLocationDB(OrganizationActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
         //--------Main Brunch
-        LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(city, organization.getAddress()));
+        LatLng latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(city, organization.getAddress()));
         if (latLng != null) {
             mMap.addMarker(new MarkerOptions()
                             .position(latLng)
@@ -214,7 +215,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         //-------------other Brunches----
         if (organization.getOrganizationBrunches()!=null)
         for  (Organization organizationBrunch:organization.getOrganizationBrunches()){
-            latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(city, organizationBrunch.getAddress()));
+            latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(city, organizationBrunch.getAddress()));
             if (latLng != null)
                 mMap.addMarker(new MarkerOptions()
                         .position(latLng)

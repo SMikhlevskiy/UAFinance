@@ -23,9 +23,12 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 
+import smikhlevskiy.uafinance.Net.PrivatAddresesAsyncTask;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
 import smikhlevskiy.uafinance.model.GeoLocationDB;
@@ -41,7 +44,7 @@ import smikhlevskiy.uafinance.model.UAFPreferences;
 public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = LocationMapActivity.class.getSimpleName();
     private FinanceUA financeUA;
-    private Location deviceLocation=null;
+    private Location deviceLocation = null;
     UAFPreferences UAFPreferences;
     Handler mapHandler;
 
@@ -54,7 +57,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        deviceLocation=(Location) getIntent().getExtras().getParcelable(Location.class.getSimpleName());
+        deviceLocation = (Location) getIntent().getExtras().getParcelable(Location.class.getSimpleName());
         setContentView(R.layout.activity_locationmap);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -80,6 +83,50 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
 
     }
 
+    void setFinanceUAMarkers(FinanceUA financeUA) {
+        GeoLocationDB geoLocationDB = new GeoLocationDB(LocationMapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
+        if (geoLocationDB == null) return;
+        for (Organization organization : financeUA.getOrganizations()) {
+            LatLng latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
+            if (latLng != null) {
+                mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(organization.getTitle())
+                );
+
+
+            } else Log.i(TAG, "Do not find Location");
+        }
+                    /*
+                    //-------------other Brunches----
+                    if (organization.getOrganizationBrunches() != null)
+                        for (Organization organizationBrunch : organization.getOrganizationBrunches()) {
+                            latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(financeUA.getCities().get(organizationBrunch.getCityId()), organizationBrunch.getAddress()));
+                            if (latLng != null)
+                                mMap.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .title(organizationBrunch.getTitle()));
+                        }
+                        */
+
+    }
+
+    private void setPrivatMarkers(ArrayList<Organization> privatAdressesList) {
+        for (Organization organization : privatAdressesList) {
+            LatLng latLng = organization.getLatLong();
+            if (latLng != null) {
+                mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(organization.getTitle())
+
+                );
+                Log.i(TAG, organization.getTitle());
+
+
+            }
+        }
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -90,11 +137,11 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         mMap.setMyLocationEnabled(true);
 
 
-
-        if (deviceLocation!=null)
+        if (deviceLocation != null)
             mMap.moveCamera(CameraUpdateFactory
-                    .newLatLngZoom(new LatLng(deviceLocation.getLatitude(),deviceLocation.getLongitude()), 17)); else
-            Log.i(TAG,"deviceLocation is null");
+                    .newLatLngZoom(new LatLng(deviceLocation.getLatitude(), deviceLocation.getLongitude()), 17));
+        else
+            Log.i(TAG, "deviceLocation is null");
 
 
         mapHandler = new Handler() {
@@ -102,37 +149,38 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-
-                Log.i(TAG, "On handleMessage");
-
-                financeUA = (FinanceUA) msg.obj;
-                GeoLocationDB geoLocationDB = new GeoLocationDB(LocationMapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
-                if (geoLocationDB == null) return;
-                for (Organization organization : financeUA.getOrganizations()) {
-                    LatLng latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
-                    if (latLng != null) {
-                        mMap.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(organization.getTitle())
-                        );
+                if (msg.what == 1) {//FinanceUA
 
 
-                    } else Log.i(TAG, "Do not find Location");
+                    financeUA = (FinanceUA) msg.obj;
+                    setFinanceUAMarkers(financeUA);
+/* is off becouse speed updates was slow
+                    (new PrivatAddresesAsyncTask(
+                            mapHandler,
+                            LocationMapActivity.this)).execute();
+*/
 
-                    //-------------other Brunches----
-                    if (organization.getOrganizationBrunches() != null)
-                        for (Organization organizationBrunch : organization.getOrganizationBrunches()) {
-                            latLng = geoLocationDB.getLocation(FinanceUA.getAddressbyAdressCity(financeUA.getCities().get(organizationBrunch.getCityId()), organizationBrunch.getAddress()));
-                            if (latLng != null)
-                                mMap.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(organizationBrunch.getTitle()));
-                        }
+                } else if (msg.what == 10) {//FinanceUA
+
+
+                    ArrayList<Organization> privatAdressesList = (ArrayList<Organization>) msg.obj;
+                    if (privatAdressesList != null)
+                        Log.i(TAG, "Get Privat datas. length=" + privatAdressesList.size());
+                    setPrivatMarkers(privatAdressesList);
 
                 }
+
+
             }
-        };
-        (new FinanceUAAsyncTask(
+
+
+        }
+
+        ;
+
+        (new
+
+                FinanceUAAsyncTask(
                 this,
                 "",
                 "",
@@ -142,7 +190,13 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
                 null,
                 mapHandler
 
-        )).execute(getString(R.string.financeua_json_path));
+        )
+
+        ).
+
+                execute(getString(R.string.financeua_json_path)
+
+                );
 
     }
 

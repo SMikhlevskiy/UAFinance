@@ -180,4 +180,9 @@ public class UAFConst {
         }
         return "";
     }
+
+    public static String getAddressbyAdressCity(String city, String address) {
+        return ("Украина, " + city + ", " + address).replace(' ', '+');
+
+    }
 }

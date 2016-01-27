@@ -265,16 +265,13 @@ public class FinanceUA {
     }
 
 
-    public static String getAddressbyAdressCity(String city, String address) {
-        return ("Украина, " + city + ", " + address).replace(' ', '+');
 
-    }
 
     public String getURLAddressByOrganization(Organization organization) {
         if (cities.containsKey(organization.getCityId())) {
             String mcity = cities.get(organization.getCityId());
 
-            return getAddressbyAdressCity(mcity, organization.getAddress());
+            return UAFConst.getAddressbyAdressCity(mcity, organization.getAddress());
 
 
         }

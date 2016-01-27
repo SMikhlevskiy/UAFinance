@@ -10,10 +10,6 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,11 +17,9 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
@@ -100,76 +94,6 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
     }
 
-    //
-    public ArrayList<Organization> getPrivatAdresses() {
-
-        Log.i(TAG, "getPrivatAdresses");
-        StringBuilder bulder = new StringBuilder("");
-        try {
-            //  from URL
-            InputStreamReader isr;
-
-            URL url = new URL("https://api.privatbank.ua/p24api/pboffice?json&city=" + URLEncoder.encode(city, "utf-8"));
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            isr = new InputStreamReader(con.getInputStream());
-
-
-            BufferedReader reader = new BufferedReader(isr);
-            String str = null;
-
-            do {
-                str = reader.readLine();
-                if (str != null) {
-                    bulder.append(str);
-                    //Log.i(TAG, str);
-                }
-            } while (str != null);
-
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-            return null;
-        } catch (IOException e1) {
-            e1.printStackTrace();
-            return null;
-
-        }
-
-
-        ArrayList<Organization> privatAdresses = new ArrayList<Organization>();
-        try {
-            Log.i(TAG, "getPrivatAdresses");
-
-
-            JSONArray array = new JSONArray(bulder.toString());
-
-            if (array.length() <= 0) return null;
-
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject item = array.getJSONObject(i);
-                String pcity = item.getString("city");
-                if ((city.length() == 0) || (pcity.contains(city))) {
-                    Organization organization = new Organization();
-                    organization.setTitle(UAFConst.banks[UAFConst.PRIVAT_ID] + " :" + item.getString("name"));
-                    organization.setAddress(item.getString("address"));
-                    organization.setPhone(item.getString("phone"));
-                    privatAdresses.add(organization);
-
-
-                }
-
-
-            }
-
-        } catch (JSONException e) {
-
-
-            return null;
-        }
-
-
-        Log.i(TAG, "PrivatAddressesLenght=" + privatAdresses.size());
-        return privatAdresses;
-    }
 
     @Override
     protected FinanceUA doInBackground(String... params) {
@@ -220,10 +144,11 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
         if (!isLowWork) {//LoWork - without sort & optimization(form BigMap)
 
-
-            ArrayList<Organization> privatAdresses = getPrivatAdresses();
+            PrivatAddresses privatAddresses=new PrivatAddresses();
+            privatAddresses.read(city);
+            ArrayList<Organization> privatAdressesList = privatAddresses.getPrivatAdressesList();
             //-------------delete other city,move brunches organization to brunch-------
-            financeUA.optimizeOrganizationList(city, privatAdresses);
+            financeUA.optimizeOrganizationList(city, privatAdressesList);
             //------------calck LatLong for all organization(if sortDistance)---
             if ((!isSortCurrency) && (context.get() != null) && (deviceLocation != null)) {
                 setOrganizationsLatLon(financeUA, (Context) context.get(), city);
