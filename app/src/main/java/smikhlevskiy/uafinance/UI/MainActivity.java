@@ -46,7 +46,7 @@ import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
 import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
-import smikhlevskiy.uafinance.Utils.UAFConstansts;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.Currencie;
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements
         startRefresh = true;
         setContentView(R.layout.activity_main);
 
-        setTabs(UAFConstansts.CURRENCY_FRAGMENT_COUNT);
+        setTabs(UAFConst.CURRENCY_FRAGMENT_COUNT);
 
 
         setupTolbarNavigationView();

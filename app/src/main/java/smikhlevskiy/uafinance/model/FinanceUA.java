@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import smikhlevskiy.uafinance.Utils.UAFConstansts;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 
 /**
  * Created by tcont98 on 07-Nov-15.
@@ -320,12 +320,12 @@ public class FinanceUA {
 
             }
 
-        //----------------------Add privat addresses from PrivatBank site
+        //----------------------Add privat addresses from PrivatBank site-----
         if (privatAdresses != null) {
             Organization organizationEtalon = null;
             //--------------remove all Old privat addresses------
             for (int j = 0; j < organizationsList.size(); j++)
-                if (organizationsTitleList.get(j).contains(UAFConstansts.PRIVAT_LC)) {
+                if (organizationsTitleList.get(j).contains(UAFConst.banksLc[UAFConst.PRIVAT_ID])) {
                     organizationEtalon = organizationsList.get(j);
 
                     organizationsList.remove(organizationsList.get(j));//delete
@@ -333,7 +333,7 @@ public class FinanceUA {
                 }
 
             if (organizationEtalon != null) {
-                for (int j=0;j<privatAdresses.size();j++){
+                for (int j = 0; j < privatAdresses.size(); j++) {
                     privatAdresses.get(j).setCityId(organizationEtalon.getCityId());
                     privatAdresses.get(j).setCurrencies(organizationEtalon.getCurrencies());
                     privatAdresses.get(j).setOrgType(organizationEtalon.getOrgType());
@@ -347,36 +347,24 @@ public class FinanceUA {
 
 
         Organization rootOrganization;
+        String titleLC;
         for (int j = 0; j < organizationsList.size(); j++) {
             rootOrganization = organizationsList.get(j);
 
-            if (organizationsTitleList.get(j).contains(UAFConstansts.UKRSOC_LC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.UKRSOC_LC))) {
-                organizationsTitleList.set(j, UAFConstansts.UKRSOC_LC);
-                rootOrganization.setTitle(UAFConstansts.UKRSOC);
-            }
+            //-----------detect Bank-----------------
+            titleLC =organizationsTitleList.get(j);
+            for (int n = 0; n < UAFConst.banksLc.length; n++)
+                if (titleLC.contains(UAFConst.banksLc[n]))
+                    titleLC = UAFConst.banksLc[n];
 
-            if (organizationsTitleList.get(j).contains(UAFConstansts.PRIVAT_LC) &&
-                    (!organizationsTitleList.get(j).equals(UAFConstansts.PRIVAT_LC))) {
-                organizationsTitleList.set(j, UAFConstansts.PRIVAT_LC);
-                rootOrganization.setTitle(UAFConstansts.PRIVAT);
-            }
-
-
+            /*-----move brunches of bank  to brunch------*/
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
-
-                if (
-                        (organizationsTitleList.get(i).contains(organizationsTitleList.get(j))) &&
-                                /*organizationsList.get(i).getCityId().equals(rootOrganization.getCityId()) &&*/
-                                (!organizationsList.get(i).getTitle().equalsIgnoreCase(rootOrganization.getTitle()))
-
-
-                        ) {
+                if (organizationsTitleList.get(i).contains(titleLC)) {
                     Log.i("Optimization", "Remove" + organizationsList.get(i).getTitle());
-
 
                     if (rootOrganization.getOrganizationBrunches() == null)
                         rootOrganization.setOrganizationBrunches(new ArrayList<Organization>());
+
                     //move organization from root to brunch
                     rootOrganization.getOrganizationBrunches().add(organizationsList.get(i));//add
                     organizationsList.remove(organizationsList.get(i));//delete

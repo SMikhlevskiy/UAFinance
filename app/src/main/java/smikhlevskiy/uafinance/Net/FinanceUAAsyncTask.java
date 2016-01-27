@@ -24,9 +24,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import smikhlevskiy.uafinance.Utils.UAFConstansts;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
@@ -152,7 +151,7 @@ Log.i(TAG,"getPrivatAdresses");
                 String pcity=item.getString("city");
                 if (pcity.equals(city)){
                     Organization organization=new Organization();
-                    organization.setTitle(UAFConstansts.PRIVAT+" :"+ item.getString("name"));
+                    organization.setTitle(UAFConst.banks[UAFConst.PRIVAT_ID]+" :"+ item.getString("name"));
                     organization.setAddress(item.getString("address"));
                     organization.setPhone(item.getString("phone"));
                     privatAdresses.add(organization);

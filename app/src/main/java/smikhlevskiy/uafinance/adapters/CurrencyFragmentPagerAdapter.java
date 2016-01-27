@@ -13,7 +13,7 @@ import smikhlevskiy.uafinance.UI.fragments.CurrencyCashFragment;
 import smikhlevskiy.uafinance.UI.fragments.InterBankFragment;
 import smikhlevskiy.uafinance.UI.fragments.NBUFragment;
 import smikhlevskiy.uafinance.UI.fragments.PreciousMetalsFragment;
-import smikhlevskiy.uafinance.Utils.UAFConstansts;
+import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
@@ -62,20 +62,20 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
 
 
         switch (position) {
-            case UAFConstansts.CURRENCY_CASH:
+            case UAFConst.CURRENCY_CASH:
                 CurrencyCashFragment currencyCashFragment= new CurrencyCashFragment();
                 currencyCashFragment.setDatas(financeUA);
                 return currencyCashFragment;
-            case UAFConstansts.INTERBANK:
+            case UAFConst.INTERBANK:
                 InterBankFragment interBankFragment=new InterBankFragment();
                 interBankFragment.setDatas(interBank);
                 return interBankFragment;
-            case UAFConstansts.NBU:
+            case UAFConst.NBU:
                 NBUFragment nbuFragment= new NBUFragment();
                 nbuFragment.setDatas(privat);
                 return nbuFragment;
 
-            case UAFConstansts.PRECIOUS_METALS:
+            case UAFConst.PRECIOUS_METALS:
                 PreciousMetalsFragment preciousMetalsFragment= new PreciousMetalsFragment();
                 preciousMetalsFragment.setDatas(privat);
                 return preciousMetalsFragment;
@@ -90,13 +90,13 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {
-            case UAFConstansts.CURRENCY_CASH:
+            case UAFConst.CURRENCY_CASH:
                 return context.getString(R.string.CurrencyCash);
-            case UAFConstansts.NBU:
+            case UAFConst.NBU:
                 return context.getString(R.string.NBU);
-            case UAFConstansts.INTERBANK:
+            case UAFConst.INTERBANK:
                 return context.getString(R.string.InterBank);
-            case UAFConstansts.PRECIOUS_METALS:
+            case UAFConst.PRECIOUS_METALS:
                 return context.getString(R.string.PreciousMetals);
         }
         return "TAB" + " " + String.valueOf(position + 1);
