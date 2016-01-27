@@ -1,5 +1,8 @@
 package smikhlevskiy.uafinance.Utils;
 
+import java.util.Map;
+import java.util.Objects;
+
 import smikhlevskiy.uafinance.R;
 
 /**
@@ -37,6 +40,7 @@ public class UAFConst {
             "ТАСкомбанк",
             "Райффайзен Банк Аваль",
             "СБЕРБАНК"
+
     };
 
 
@@ -166,5 +170,14 @@ public class UAFConst {
     else if (lowertitle.contains("сбербанк"))
             imageView.setImageResource(R.mipmap.bank_sberbank);
     */
+    }
+
+    public static String getKeyByValue(Map<String, String> map, String value) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return "";
     }
 }

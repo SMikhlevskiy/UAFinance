@@ -101,9 +101,9 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
     }
 
     //
-    public ArrayList<Organization> getPrivatAdresses()   {
+    public ArrayList<Organization> getPrivatAdresses() {
 
-Log.i(TAG,"getPrivatAdresses");
+        Log.i(TAG, "getPrivatAdresses");
         StringBuilder bulder = new StringBuilder("");
         try {
             //  from URL
@@ -135,23 +135,21 @@ Log.i(TAG,"getPrivatAdresses");
         }
 
 
-
-        ArrayList<Organization> privatAdresses=new ArrayList<Organization>();
+        ArrayList<Organization> privatAdresses = new ArrayList<Organization>();
         try {
-            Log.i(TAG,"getPrivatAdresses");
-
+            Log.i(TAG, "getPrivatAdresses");
 
 
             JSONArray array = new JSONArray(bulder.toString());
 
-            if (array.length()<=0) return null;
+            if (array.length() <= 0) return null;
 
-            for (int i=0;i<array.length();i++){
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject item = array.getJSONObject(i);
-                String pcity=item.getString("city");
-                if (pcity.equals(city)){
-                    Organization organization=new Organization();
-                    organization.setTitle(UAFConst.banks[UAFConst.PRIVAT_ID]+" :"+ item.getString("name"));
+                String pcity = item.getString("city");
+                if ((city.length() == 0) || (pcity.contains(city))) {
+                    Organization organization = new Organization();
+                    organization.setTitle(UAFConst.banks[UAFConst.PRIVAT_ID] + " :" + item.getString("name"));
                     organization.setAddress(item.getString("address"));
                     organization.setPhone(item.getString("phone"));
                     privatAdresses.add(organization);
@@ -165,11 +163,11 @@ Log.i(TAG,"getPrivatAdresses");
         } catch (JSONException e) {
 
 
-           return null;
+            return null;
         }
 
 
-        Log.i(TAG, "PrivatAddressesLenght="+privatAdresses.size());
+        Log.i(TAG, "PrivatAddressesLenght=" + privatAdresses.size());
         return privatAdresses;
     }
 
@@ -218,10 +216,14 @@ Log.i(TAG,"getPrivatAdresses");
 
         FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
+        if (financeUA == null) return null;
+
         if (!isLowWork) {//LoWork - without sort & optimization(form BigMap)
-            ArrayList<Organization> privatAdresses=getPrivatAdresses();
+
+
+            ArrayList<Organization> privatAdresses = getPrivatAdresses();
             //-------------delete other city,move brunches organization to brunch-------
-            financeUA.optimizeOrganizationList(city,privatAdresses);
+            financeUA.optimizeOrganizationList(city, privatAdresses);
             //------------calck LatLong for all organization(if sortDistance)---
             if ((!isSortCurrency) && (context.get() != null) && (deviceLocation != null)) {
                 setOrganizationsLatLon(financeUA, (Context) context.get(), city);

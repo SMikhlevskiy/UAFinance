@@ -454,6 +454,8 @@ public class MainActivity extends AppCompatActivity implements
 
                 intent.putExtra("organization", organization);
                 intent.putExtra("city", financeUA.getCities().get(organization.getCityId()));
+                if (organization.getRegionId().equals(""))
+                 intent.putExtra("region", ""); else
                 intent.putExtra("region", financeUA.getRegions().get(organization.getRegionId()));
 
 

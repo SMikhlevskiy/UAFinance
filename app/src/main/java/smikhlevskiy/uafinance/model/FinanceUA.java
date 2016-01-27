@@ -308,21 +308,30 @@ public class FinanceUA {
 
         LinkedList<String> organizationsTitleList = new LinkedList<String>();
 
-        Organization privatEtalon = null;
+
+
+        Organization organizationEtalon = null;
 
         for (int i = 0; i < organizations.length; i++)
+        {
+
+            if ((organizationEtalon==null) && (organizations[i].getTitle().toLowerCase().contains(UAFConst.banksLc[UAFConst.PRIVAT_ID])))
+                organizationEtalon=organizations[i];
+
             if (city.equals(cities.get(organizations[i].getCityId()))) {
 
 
                 organizationsList.add(organizations[i]);
                 organizationsTitleList.add(organizations[i].getTitle().toLowerCase());
 
-
+            }
             }
 
         //----------------------Add privat addresses from PrivatBank site-----
         if (privatAdresses != null) {
-            Organization organizationEtalon = null;
+
+            String cityID=UAFConst.getKeyByValue(cities,city);
+
             //--------------remove all Old privat addresses------
             for (int j = 0; j < organizationsList.size(); j++)
                 if (organizationsTitleList.get(j).contains(UAFConst.banksLc[UAFConst.PRIVAT_ID])) {
@@ -334,10 +343,12 @@ public class FinanceUA {
 
             if (organizationEtalon != null) {
                 for (int j = 0; j < privatAdresses.size(); j++) {
-                    privatAdresses.get(j).setCityId(organizationEtalon.getCityId());
+                    privatAdresses.get(j).setCityId(cityID);
                     privatAdresses.get(j).setCurrencies(organizationEtalon.getCurrencies());
                     privatAdresses.get(j).setOrgType(organizationEtalon.getOrgType());
-                    privatAdresses.get(j).setRegionId(organizationEtalon.getRegionId());
+                    //privatAdresses.get(j).setRegionId(organizationEtalon.getRegionId());
+                    privatAdresses.get(j).setRegionId("");
+
                     organizationsList.add(privatAdresses.get(j));
                     organizationsTitleList.add(privatAdresses.get(j).getTitle().toLowerCase());
                 }
