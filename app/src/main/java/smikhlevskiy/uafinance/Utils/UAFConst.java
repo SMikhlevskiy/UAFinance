@@ -1,5 +1,10 @@
 package smikhlevskiy.uafinance.Utils;
 
+import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -183,6 +188,15 @@ public class UAFConst {
 
     public static String getAddressbyAdressCity(String city, String address) {
         return ("Украина, " + city + ", " + address).replace(' ', '+');
+
+    }
+
+    public static Spannable getSpanTitle(Context context){
+        String titleString = context.getString(R.string.title_activity_finance);
+        Spannable span = new SpannableString(titleString);
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        return span;
 
     }
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">UAFinance</string>
     <string name="title_activity_finance">UAFinance</string>
-    <string name="financeua_json_path">http://resources.finance.ua/ru/public/currency-cash.json</string>
+
     <string-array name="askbid">
         <item>Покупка</item>
         <item>Продажа</item>

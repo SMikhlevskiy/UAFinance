@@ -29,7 +29,7 @@ import smikhlevskiy.uafinance.model.Organization;
  */
 
 
-public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
+public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
 
 
     WeakReference<Context> context;
@@ -96,56 +96,17 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
 
 
     @Override
-    protected FinanceUA doInBackground(String... params) {
-        StringBuilder bulder = new StringBuilder("");
-        try {
+    protected FinanceUA doInBackground(Void... params) {
 
+        FinanceUA financeUA=FinanceUA.readFromJSON();//read from Finace.UA
 
-            //  from URL
-            InputStreamReader isr;
-            if (true) {
-                URL url = new URL(params[0]);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                isr = new InputStreamReader(con.getInputStream());
-
-            } else {
-                //***  Demo mode
-
-                if (context.get() != null) {
-
-                    isr = new InputStreamReader(((Context) context.get()).getAssets().open("currency-cash.json"));
-                } else return null;
-            }
-            //***
-
-            BufferedReader reader = new BufferedReader(isr);
-            String str = null;
-
-            do {
-                str = reader.readLine();
-                if (str != null)
-                    bulder.append(str);
-            } while (str != null);
-
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-            return null;
-        } catch (IOException e1) {
-            e1.printStackTrace();
-            return null;
-
-        }
-
-        Gson gson = new Gson();
-
-        FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
         if (financeUA == null) return null;
 
         if (!isLowWork) {//LoWork - without sort & optimization(form BigMap)
 
             PrivatAddresses privatAddresses=new PrivatAddresses();
-            privatAddresses.read(city);
+            privatAddresses.read(city);//read from Privat.UA
             ArrayList<Organization> privatAdressesList = privatAddresses.getPrivatAdressesList();
             //-------------delete other city,move brunches organization to brunch-------
             financeUA.optimizeOrganizationList(city, privatAdressesList);
@@ -160,6 +121,7 @@ public class FinanceUAAsyncTask extends AsyncTask<String, Void, FinanceUA> {
         }
         return financeUA;
     }
+
 
     @Override
     protected void onPostExecute(FinanceUA financeUA) {

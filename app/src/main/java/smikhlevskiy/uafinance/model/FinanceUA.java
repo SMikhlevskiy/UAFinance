@@ -3,6 +3,14 @@ package smikhlevskiy.uafinance.model;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,7 +23,9 @@ import smikhlevskiy.uafinance.Utils.UAFConst;
  * Created by tcont98 on 07-Nov-15.
  */
 public class FinanceUA {
+
     static final String TAG = FinanceUA.class.getSimpleName();
+    static final String FINANCE_UA_URL="http://resources.finance.ua/ru/public/currency-cash.json";
     private String sourceId;
     private String date;
     private Organization[] organizations;
@@ -395,6 +405,55 @@ public class FinanceUA {
 
     public FinanceUA() {
         fu_index = new ArrayList<Integer>();
+    }
+
+
+    public static FinanceUA readFromJSON(){
+        StringBuilder bulder = new StringBuilder("");
+        try {
+
+
+            //  from URL
+            InputStreamReader isr;
+            if (true) {
+                URL url = new URL(FINANCE_UA_URL);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                isr = new InputStreamReader(con.getInputStream());
+
+            }
+//            else {
+//                //***  Demo mode
+//
+//                if (context.get() != null) {
+//
+//                    isr = new InputStreamReader(((Context) context.get()).getAssets().open("currency-cash.json"));
+//                } else return null;
+//            }
+            //***
+
+            BufferedReader reader = new BufferedReader(isr);
+            String str = null;
+
+            do {
+                str = reader.readLine();
+                if (str != null)
+                    bulder.append(str);
+            } while (str != null);
+
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+            return null;
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            return null;
+
+        }
+
+        Gson gson = new Gson();
+
+        return  (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
+
+
     }
 
 }

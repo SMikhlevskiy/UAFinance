@@ -25,6 +25,7 @@
         <activity
             android:name="smikhlevskiy.uafinance.UI.MainActivity"
             android:label="UAFinance"
+            android:exported="true"
             android:allowTaskReparenting="false"
         android:screenOrientation="portrait">
             <intent-filter>
@@ -58,6 +59,13 @@
                 android:value=".UI.LocationMapActivity" />
 
         </activity>
+
+        <service
+            android:name=".services.NotificationService"
+            android:exported="false"
+            android:label="UAFinace notifications"
+            android:icon="@mipmap/currency_exchange">
+        </service>
 
 
     </application>

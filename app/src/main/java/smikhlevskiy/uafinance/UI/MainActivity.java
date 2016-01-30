@@ -53,6 +53,7 @@ import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
+import smikhlevskiy.uafinance.services.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements
                 deviceLocation,
                 mainActivityHandler
 
-        )).execute(getString(R.string.financeua_json_path));
+        )).execute();
 
         (new PrivatAsyncTask(mainActivityHandler)).execute();
 
@@ -168,11 +169,8 @@ public class MainActivity extends AppCompatActivity implements
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
-        String titleString = getResources().getString(R.string.title_activity_finance);
-        Spannable span = new SpannableString(titleString);
-        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        actionBar.setTitle(span);
+
+        actionBar.setTitle(UAFConst.getSpanTitle(this));
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
@@ -595,7 +593,12 @@ public class MainActivity extends AppCompatActivity implements
 
 
             case R.id.showMapButton:
-                showLocationMapActivity();
+                /*!!!!  test Notifications service-----*/
+                Intent intent=new Intent(MainActivity.this,NotificationService.class);
+                Log.i(TAG, "onCLick");
+                startService(intent);
+
+                /*!!!!  test Notifications service ---showLocationMapActivity();*/
                 break;
 
 
