@@ -6,10 +6,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -32,7 +34,7 @@ public class NotificationService extends IntentService {
         super(TAG);
     }
 
-    public void sendNotification(String title, String text, Bitmap bigBitmap) {
+    public void sendNotification() {
 
         FinanceUA financeUA = FinanceUA.readFromJSON();
 
@@ -44,21 +46,34 @@ public class NotificationService extends IntentService {
                         getString(R.string.RUB)},
                 getString(R.string.default_city));
         if (minMaxCurrencies == null) return;
-        resultString = "Покупка USD:" + minMaxCurrencies.get(getString(R.string.USD)).getBid();
+        resultString = "Покупка: "+
+                getString(R.string.USD)+" " + minMaxCurrencies.get(getString(R.string.USD)).getBid()+", "+
+                getString(R.string.EUR)+" " + minMaxCurrencies.get(getString(R.string.EUR)).getBid();
+
+
 
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//for one activity work
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//one activity work
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        Notification noti = new Notification.Builder(this)
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(UAFConst.getSpanTitle(this))
                 .setContentText(resultString)
                 .setSmallIcon(R.mipmap.currency_exchange)
-                .setContentIntent(pIntent)
-                .build();
+                .setContentIntent(pIntent);
+
+
+
+        Notification noti=mBuilder.build();
+
+
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        // hide the notification after its selected
-        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;// hide the notification after its selected
+
 
         notificationManager.notify(0, noti);
 
@@ -70,6 +85,6 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        sendNotification("", "", null);
+        sendNotification();
     }
 }
