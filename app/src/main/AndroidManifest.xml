@@ -57,14 +57,22 @@
             android:label="@string/kerbstone_market" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UI.LocationMapActivity" />
+                android:value=".UI.KerbstoneActivity" />
+
+        </activity>
+        <activity
+            android:name=".UI.UAFPreferencesActivity"
+            android:label="@string/preferences_label" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.UAFPreferencesActivity" />
 
         </activity>
 
         <service
             android:name=".services.NotificationService"
             android:exported="false"
-            android:label="UAFinace notifications"
+            android:label="@string/notification_service"
             android:icon="@mipmap/currency_exchange">
         </service>
 
@@ -77,6 +85,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
 
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".resivers.AlarmBroadcastReciver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
             </intent-filter>
         </receiver>
 

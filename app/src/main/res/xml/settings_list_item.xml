@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+
+    <CheckBoxPreference
+        android:key="every_day_notification"
+        android:title="Ежедневное оповещение"
+        android:summary="Ежедневное оповещение о курсах валюты"
+        android:defaultValue="true"/>
+    <CheckBoxPreference
+        android:key="jump_exchange_rates"
+
+        android:title="Резкие изменения курса"
+        android:summary="Оповещение о резких изменениях курса"
+        android:defaultValue="true"/>
+
+
+
+</PreferenceScreen>

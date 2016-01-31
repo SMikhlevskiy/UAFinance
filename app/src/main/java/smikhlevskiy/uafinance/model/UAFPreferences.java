@@ -15,6 +15,13 @@ public class UAFPreferences {
     static final String CITY_KEY = "city_pref";
     static final String SORTCUR_KEY = "sortcur_pref";
 
+
+
+
+
+    static final String EVERY_DAY_NOTIFICATION = "every_day_notification";
+    static final String JUMP_NOTIFICATION = "jump_exchange_rates";
+
     SharedPreferences sharedPreferences;
     Context context;
 
@@ -63,6 +70,15 @@ public class UAFPreferences {
     public boolean getSortCurrency() {
         return sharedPreferences.getBoolean(SORTCUR_KEY, true);
     }
+
+    public boolean isJumpNotificatiom() {
+        return sharedPreferences.getBoolean(JUMP_NOTIFICATION, true);
+    }
+
+    public boolean isEveryDayNotification() {
+        return sharedPreferences.getBoolean(EVERY_DAY_NOTIFICATION, true);
+    }
+
 
     public void setSortCurrency(boolean sortCurrency) {
         SharedPreferences.Editor ed=sharedPreferences.edit();

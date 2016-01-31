@@ -69,6 +69,8 @@
     <string name="kerbstone_market">Черный рынок валюты</string>
     <string name="kerbstone_finance_ua_URL">http://miniaylo.finance.ua/ru/</string>
     <string name="kerbstone_finance_i_URL">http://finance.i.ua/market/kiev/</string>
+    <string name="notification_service">UAFinance notifications</string>
+    <string name="preferences_label">Настройки</string>
 
 
 </resources>

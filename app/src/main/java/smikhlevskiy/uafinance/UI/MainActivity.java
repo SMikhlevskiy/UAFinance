@@ -53,6 +53,7 @@ import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
+import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
 import smikhlevskiy.uafinance.services.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements
@@ -205,10 +206,7 @@ public class MainActivity extends AppCompatActivity implements
                         startRefreshButtonAnimation();
                         startRefreshDatas();
                         break;
-                    case R.id.navmenu_opt:
-                        mDrawerLayout.closeDrawer(mNavigationView);
-                        //mCurrentSelectedPosition = 3;
-                        break;
+
                     case R.id.navmenu_kerbstone_finance_ua:
                         mDrawerLayout.closeDrawer(mNavigationView);
                         Intent intent=new Intent(MainActivity.this,KerbstoneActivity.class);
@@ -221,6 +219,14 @@ public class MainActivity extends AppCompatActivity implements
                         iintent.putExtra(KerbstoneActivity.URL_PAR_NAME,getString(R.string.kerbstone_finance_i_URL));
                         startActivity(iintent);
                         break;
+                    case R.id.navmenu_opt:
+                        mDrawerLayout.closeDrawer(mNavigationView);
+
+                        Intent optinent =new Intent(MainActivity.this,UAFPreferencesActivity.class);
+                        startActivity(optinent);
+
+                        break;
+
                     default:
                         mDrawerLayout.closeDrawer(mNavigationView);
                 }
@@ -512,6 +518,10 @@ public class MainActivity extends AppCompatActivity implements
                     .build();
             if (mGoogleApiClient == null) Log.i(TAG, "GoogleApiClient init false");
         }
+
+        //---------------
+        if (savedInstanceState==null)
+            AlarmBroadcastReciver.setAlarm(this);
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");
     }
