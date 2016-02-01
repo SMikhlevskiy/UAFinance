@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.services.NotificationService;
 
@@ -20,10 +22,18 @@ public class AlarmBroadcastReciver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent sintent = new Intent(context, NotificationService.class);
+        Calendar c = Calendar.getInstance();
+        int hour=c.get(Calendar.HOUR_OF_DAY);
+        int day=c.get(Calendar.DAY_OF_WEEK);
 
-        context.startService(sintent);
-        Toast.makeText(context, "Alarm!!!", Toast.LENGTH_LONG).show();
+        if ((hour<10) || (hour>18) || (day==Calendar.SUNDAY) || (day==Calendar.SATURDAY)) //do not disturb
+            return;
+
+
+
+        Intent sintent = new Intent(context, NotificationService.class);
+        context.startService(sintent);//Start notification currencies service
+
     }
 
     public static void setAlarm(Context context) {

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import smikhlevskiy.uafinance.R;
+import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
 
 /**
  * Created by tcont98 on 31-Jan-16.
@@ -58,6 +59,7 @@ public class UAFPreferencesActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                AlarmBroadcastReciver.setAlarm(UAFPreferencesActivity.this);//set Alarm
 
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {

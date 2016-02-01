@@ -15,6 +15,10 @@ public class UAFPreferences {
     static final String CITY_KEY = "city_pref";
     static final String SORTCUR_KEY = "sortcur_pref";
 
+    static final String LAST_DAY_NOTIFY_KEY = "lastday_notify";
+
+    static final String LAST_CURRANCIE = "last_currancie_";
+
 
 
 
@@ -83,6 +87,35 @@ public class UAFPreferences {
     public void setSortCurrency(boolean sortCurrency) {
         SharedPreferences.Editor ed=sharedPreferences.edit();
         ed.putBoolean(SORTCUR_KEY, sortCurrency);
+        ed.commit();
+
+    }
+
+
+
+    public int getLastDayNotification() {
+        return sharedPreferences.getInt(LAST_DAY_NOTIFY_KEY, -1);
+    }
+
+    public void setLastDayNotification(int day_of_year) {
+
+
+        SharedPreferences.Editor ed=sharedPreferences.edit();
+        ed.putInt(LAST_DAY_NOTIFY_KEY, day_of_year);
+        ed.commit();
+
+    }
+
+
+    public double getLastCurrancieVal(String Name) {
+        return sharedPreferences.getFloat(LAST_CURRANCIE + Name, (float) 0.0);
+    }
+
+    public void setLastCurrancieVal(String name, double val) {
+
+
+        SharedPreferences.Editor ed=sharedPreferences.edit();
+        ed.putFloat(LAST_CURRANCIE+name, (float)val);
         ed.commit();
 
     }
