@@ -206,20 +206,20 @@ public class MainActivity extends AppCompatActivity implements
 
                     case R.id.navmenu_kerbstone_finance_ua:
                         mDrawerLayout.closeDrawer(mNavigationView);
-                        Intent intent=new Intent(MainActivity.this,KerbstoneActivity.class);
-                        intent.putExtra(KerbstoneActivity.URL_PAR_NAME,getString(R.string.kerbstone_finance_ua_URL));
+                        Intent intent = new Intent(MainActivity.this, KerbstoneActivity.class);
+                        intent.putExtra(KerbstoneActivity.URL_PAR_NAME, getString(R.string.kerbstone_finance_ua_URL));
                         startActivity(intent);
                         break;
                     case R.id.navmenu_kerbstone_finance_i:
                         mDrawerLayout.closeDrawer(mNavigationView);
-                        Intent iintent=new Intent(MainActivity.this,KerbstoneActivity.class);
-                        iintent.putExtra(KerbstoneActivity.URL_PAR_NAME,getString(R.string.kerbstone_finance_i_URL));
+                        Intent iintent = new Intent(MainActivity.this, KerbstoneActivity.class);
+                        iintent.putExtra(KerbstoneActivity.URL_PAR_NAME, getString(R.string.kerbstone_finance_i_URL));
                         startActivity(iintent);
                         break;
                     case R.id.navmenu_opt:
                         mDrawerLayout.closeDrawer(mNavigationView);
 
-                        Intent optinent =new Intent(MainActivity.this,UAFPreferencesActivity.class);
+                        Intent optinent = new Intent(MainActivity.this, UAFPreferencesActivity.class);
                         startActivity(optinent);
 
                         break;
@@ -456,8 +456,9 @@ public class MainActivity extends AppCompatActivity implements
                 intent.putExtra("organization", organization);
                 intent.putExtra("city", financeUA.getCities().get(organization.getCityId()));
                 if (organization.getRegionId().equals(""))
-                 intent.putExtra("region", ""); else
-                intent.putExtra("region", financeUA.getRegions().get(organization.getRegionId()));
+                    intent.putExtra("region", "");
+                else
+                    intent.putExtra("region", financeUA.getRegions().get(organization.getRegionId()));
 
 
                 startActivity(intent);
@@ -517,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         //---------------
-        if (savedInstanceState==null)
+        if (savedInstanceState == null)
             AlarmBroadcastReciver.setAlarm(this);
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");
@@ -600,12 +601,12 @@ public class MainActivity extends AppCompatActivity implements
 
 
             case R.id.showMapButton:
-                /*!!!!  test Notifications service-----*/
-                Intent intent=new Intent(MainActivity.this,NotificationService.class);
-                Log.i(TAG, "onCLick");
-                startService(intent);
+//                /*!!!!  test Notifications service-----*/
+//                Intent intent=new Intent(MainActivity.this,NotificationService.class);
+//                Log.i(TAG, "onCLick");
+//                startService(intent);
 
-                /*!!!!  test Notifications service ---showLocationMapActivity();*/
+                showLocationMapActivity();
                 break;
 
 
