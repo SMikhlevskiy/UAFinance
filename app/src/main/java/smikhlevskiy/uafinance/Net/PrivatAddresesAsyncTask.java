@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 
 /** To DO
  * Sinhronize Address from Priavat
@@ -31,7 +32,13 @@ public class PrivatAddresesAsyncTask  extends AsyncTask<Void, Void, ArrayList<Or
     protected ArrayList<Organization> doInBackground(Void... params) {
         PrivatAddresses privatAddresses=new PrivatAddresses();
 
-        privatAddresses.read("");
+
+        if (context.get()==null) return null;
+        UAFPreferences uafPreferences=new UAFPreferences((Context)context.get());
+        privatAddresses.read(uafPreferences.getCity());////privatAddresses.read("");/* comment before optimization work with privat addresses */
+
+
+
         if (context.get()==null) return null;
         privatAddresses.setLatLon((Context)context.get());
         ArrayList<Organization> privatAdressesList=privatAddresses.getPrivatAdressesList();

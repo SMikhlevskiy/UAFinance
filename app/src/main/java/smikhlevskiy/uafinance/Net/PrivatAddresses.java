@@ -72,8 +72,9 @@ public class PrivatAddresses {
             URL url;
             if (city.length() != 0)
                 url = new URL("https://api.privatbank.ua/p24api/pboffice?json&city=" + URLEncoder.encode(city, "utf-8"));
+
             else
-                url = new URL("https://api.privatbank.ua/p24api/pboffice?json");
+              url = new URL("https://api.privatbank.ua/p24api/pboffice?json");
 
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -124,7 +125,7 @@ public class PrivatAddresses {
                     organization.setTitle(UAFConst.banks[UAFConst.PRIVAT_ID] + " :" + item.getString("name"));
                     organization.setAddress(item.getString("address"));
                     organization.setPhone(item.getString("phone"));
-                    if (city.length() == 0)
+                    //!!!!! if (city.length() == 0)
                         organization.setCityId(pcity);
 
                     privatAdressesList.add(organization);

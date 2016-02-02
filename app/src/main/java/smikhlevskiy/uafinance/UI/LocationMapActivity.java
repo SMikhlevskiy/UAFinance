@@ -95,19 +95,9 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
                 );
 
 
+
             } else Log.i(TAG, "Do not find Location");
         }
-                    /*
-                    //-------------other Brunches----
-                    if (organization.getOrganizationBrunches() != null)
-                        for (Organization organizationBrunch : organization.getOrganizationBrunches()) {
-                            latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(financeUA.getCities().get(organizationBrunch.getCityId()), organizationBrunch.getAddress()));
-                            if (latLng != null)
-                                mMap.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .title(organizationBrunch.getTitle()));
-                        }
-                        */
 
     }
 
@@ -154,11 +144,11 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
 
                     financeUA = (FinanceUA) msg.obj;
                     setFinanceUAMarkers(financeUA);
-/* is off becouse speed updates was slow
+
                     (new PrivatAddresesAsyncTask(
                             mapHandler,
                             LocationMapActivity.this)).execute();
-*/
+
 
                 } else if (msg.what == 10) {//FinanceUA
 
