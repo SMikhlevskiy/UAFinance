@@ -601,7 +601,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
             case R.id.showMapButton:
-//                /*!!!!  test Notifications service-----*/
+                /*!!!!  test Notifications service-----*/
+
 //                Intent intent=new Intent(MainActivity.this,NotificationService.class);
 //                Log.i(TAG, "onCLick");
 //                startService(intent);

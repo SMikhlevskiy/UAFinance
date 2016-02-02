@@ -100,9 +100,11 @@ public class NotificationService extends IntentService {
         int day_of_year = c.get(Calendar.DAY_OF_YEAR);
         int last_day_notify = uafPreferences.getLastDayNotification();
 
+
         if ((day_of_year == last_day_notify) &&
                 (Math.abs(valUSD - lastValUSD) < D_ALARM) &&
                 (Math.abs(valEUR - lastValEUR) < D_ALARM)) return;
+
 
 
         // once a day || currency jump
