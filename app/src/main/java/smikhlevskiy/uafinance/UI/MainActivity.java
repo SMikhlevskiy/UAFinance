@@ -1,6 +1,7 @@
 package smikhlevskiy.uafinance.UI;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
@@ -29,6 +30,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.google.android.gms.common.ConnectionResult;
@@ -606,6 +608,11 @@ public class MainActivity extends AppCompatActivity implements
 //                Intent intent=new Intent(MainActivity.this,NotificationService.class);
 //                Log.i(TAG, "onCLick");
 //                startService(intent);
+//                try {
+//                Toast.makeText(MainActivity.this, getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
+//        }           catch (PackageManager.NameNotFoundException e){
+//                    Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
+//                }
 
                 showLocationMapActivity();
                 break;
