@@ -32,18 +32,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
-import smikhlevskiy.uafinance.Net.PrivatAsyncTask;
+import smikhlevskiy.uafinance.Net.NBUDatasAsyncTask;
 import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
 import smikhlevskiy.uafinance.Utils.UAFConst;
 import smikhlevskiy.uafinance.model.UAFPreferences;
@@ -53,23 +48,26 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
 import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
-import smikhlevskiy.uafinance.services.NotificationService;
 
-public class MainActivity extends AppCompatActivity /*implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener */ {
-    //private EditText resultTextEdit;
+/*
+* Created by SMikhlevskiy
+*/
+
+public class MainActivity extends AppCompatActivity {
+
     final static String TAG = MainActivity.class.getSimpleName();
+
     private OrganizationListAdapter organizationListAdapter;
-    private UAFPreferences UAFPreferences;
+
+    private UAFPreferences uafPreferences;
     private ListView organizationListView;
 
     private Handler mainActivityHandler;
     private boolean startRefresh = true;
     private boolean prFirstMenuCreate = true;
+
     private Location deviceLocation = null;
     private LocationListener locationListener;
-
-    private GoogleApiClient mGoogleApiClient = null;
 
 
     private HashMap<String, Currencie> privatHashMap = null;
@@ -90,22 +88,26 @@ public class MainActivity extends AppCompatActivity /*implements
 
     private CurrencyFragmentPagerAdapter adapterViewPager = null;
 
-    /*------------------------------------------------------------------------------------------------*/
-    private void stopRefreshAnimation() {
-        //      if (true) return;
+    /**
+     * Stop Animation on RefreshButton
+     */
+    private void stopRefreshButtonAnimation() {
+
         animationStarted = false;
         if (animationImageView != null) {
             animationImageView.setVisibility(View.INVISIBLE);
             animationImageView.clearAnimation();
         }
-        //if ( refreshMenuItem.getActionView()!=null)   refreshMenuItem.getActionView().clearAnimation();
+
         refreshMenuItem.setActionView(null);
     }
 
-    /*------------------------------------------------------------------------------------------------*/
+    /**
+     * Start Animation on RefreshButton
+     * when datas was start reads
+     */
     private void startRefreshButtonAnimation() {
         animationStarted = true;
-        //    if (true) return;
         //--Start Animation---
         LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
         animationImageView = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
@@ -114,22 +116,43 @@ public class MainActivity extends AppCompatActivity /*implements
         animationImageView.startAnimation(rotation);
         refreshMenuItem.setActionView(animationImageView);
     }
-/*------------------------------------------------------------------------------------------------
------------------------------------Get Device Location---------------------------------------------
- ------------------------------------------------------------------------------------------------*/
-    void getDeviceLocation(){
+
+    /**
+     * Remove Location Listener(end getting GPS location)
+     */
+    void removeLocationListener() {
+        try {
+            if ((locationListener != null) && (locationManager != null)) {
+                locationManager.removeUpdates(locationListener);
+                Log.i(TAG, "Remove Location Listener");
+                locationListener = null;
+            }
+
+        } catch (SecurityException se) {
+
+            Log.i(TAG, "Program is not have permission");
+        }
+
+    }
+
+    /**
+     * get GPS location
+     */
+    void getDeviceLocation() {
         try {
 
 
             locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
 
+            removeLocationListener();//remove old listener
 
-            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);//get last location
             if (deviceLocation != null) {
                 Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
                 organizationListAdapter.setDeviceLocation(deviceLocation);
             }
 
+            //listener for current location
             locationListener = new LocationListener() {
 
 
@@ -138,13 +161,7 @@ public class MainActivity extends AppCompatActivity /*implements
                     deviceLocation = location;
                     organizationListAdapter.setDeviceLocation(deviceLocation);
                     organizationListAdapter.notifyDataSetChanged();
-                    try {
-                        locationManager.removeUpdates(locationListener);
-                    } catch (SecurityException se) {
-                        deviceLocation = null;
-                        Log.i(TAG, "Program is not have permission");
-                    }
-
+                    removeLocationListener();
 
                 }
 
@@ -163,7 +180,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
                 }
             };
-
+            //start getting current GPS location
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
@@ -175,27 +192,24 @@ public class MainActivity extends AppCompatActivity /*implements
             Log.i(TAG, "Program is not have permission");
         }
 
-        if (deviceLocation == null)
-            Log.i(TAG, "do not find location"); else
-        organizationListAdapter.setDeviceLocation(deviceLocation);
+
     }
 
 
-    /*--------------------------------------------------------------------------------------------
-    * --------------------------------Start Refresh Datas-----------------------------------------
-    * ------------------------------------------------------------------------------------------*/
+    /**
+     * Start getting datas from Internet
+     */
     public void startRefreshDatas() {
-
 
 
         getDeviceLocation();
 
         (new FinanceUAAsyncTask(
                 this,
-                UAFPreferences.getCity(),
-                UAFPreferences.getCurrancie(),
-                (UAFPreferences.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
-                UAFPreferences.getSortCurrency(),
+                uafPreferences.getCity(),
+                uafPreferences.getCurrancie(),
+                (uafPreferences.getAskBid().equals(MainActivity.this.getResources().getStringArray(R.array.askbid)[0])),
+                uafPreferences.getSortCurrency(),
 
                 false,
                 deviceLocation,
@@ -203,7 +217,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
         )).execute();
 
-        (new PrivatAsyncTask(mainActivityHandler)).execute();
+        (new NBUDatasAsyncTask(mainActivityHandler)).execute();
 
 
         (new InterBankAsyncTask(mainActivityHandler, new String[]{getString(R.string.USD),
@@ -213,32 +227,25 @@ public class MainActivity extends AppCompatActivity /*implements
 
     }
 
-    /* ------------*/
-    public void reDrawMainActivity() {
-
-        if (financeUA == null) return;
-
-
-        ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
-
-        adapterViewPager.setFinanceUA(financeUA);
-        adapterViewPager.notifyDataSetChanged();
-
-
-    }
-
+    /**
+     * start LocationMap Activty  - Big Map with all known organization
+     */
     private void showLocationMapActivity() {
         if (financeUA == null) return;
         Intent mapIntent = new Intent(MainActivity.this, LocationMapActivity.class);
         Log.i(TAG, "Start " + LocationMapActivity.TAG);
         mapIntent.putExtra(Location.class.getSimpleName(), deviceLocation);
         startActivity(mapIntent);
-        //mCurrentSelectedPosition = 0;
 
 
     }
 
-    private void setupTolbarNavigationView() {
+    /**
+     * Setup NavigationView
+     */
+    private void setupNavigationView() {
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -247,65 +254,65 @@ public class MainActivity extends AppCompatActivity /*implements
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
+
         actionBar.setTitle(UAFConst.getSpanTitle(this));
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-//        mNavigationView.setCheckedItem();
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
-                    case R.id.navmenu_map:
+                    case R.id.navmenu_map://start LocationMap Activity
                         mDrawerLayout.closeDrawer(mNavigationView);
 
                         showLocationMapActivity();
                         break;
-                    case R.id.navmenu_cur:
+                    case R.id.navmenu_cur:// set mode:  Sort By Best ExchangeRate
                         mDrawerLayout.closeDrawer(mNavigationView);
 
-                        UAFPreferences.setSortCurrency(true);
+                        uafPreferences.setSortCurrency(true);
 
                         Log.i(TAG, "Sort by Currency");
                         startRefreshButtonAnimation();
                         startRefreshDatas();
 
                         break;
-                    case R.id.navmenu_dist:
+                    case R.id.navmenu_dist:// set mode:  Sort By Distance
                         mDrawerLayout.closeDrawer(mNavigationView);
 
-                        UAFPreferences.setSortCurrency(false);
+                        uafPreferences.setSortCurrency(false);
 
                         Log.i(TAG, "Sort by Distance");
                         startRefreshButtonAnimation();
                         startRefreshDatas();
                         break;
 
-                    case R.id.navmenu_kerbstone_finance_ua:
+                    case R.id.navmenu_kerbstone_finance_ua:// BlackMarket by Finance.ua
                         mDrawerLayout.closeDrawer(mNavigationView);
                         Intent intent = new Intent(MainActivity.this, KerbstoneActivity.class);
                         intent.putExtra(KerbstoneActivity.URL_PAR_NAME, getString(R.string.kerbstone_finance_ua_URL));
                         startActivity(intent);
                         break;
-                    case R.id.navmenu_kerbstone_finance_i:
+                    case R.id.navmenu_kerbstone_finance_i:// BlackMarket by Finance.i.ua
                         mDrawerLayout.closeDrawer(mNavigationView);
                         Intent iintent = new Intent(MainActivity.this, KerbstoneActivity.class);
                         iintent.putExtra(KerbstoneActivity.URL_PAR_NAME, getString(R.string.kerbstone_finance_i_URL));
                         startActivity(iintent);
                         break;
-                    case R.id.navmenu_opt:
+                    case R.id.navmenu_opt:// Options
                         mDrawerLayout.closeDrawer(mNavigationView);
 
                         Intent optinent = new Intent(MainActivity.this, UAFPreferencesActivity.class);
                         startActivity(optinent);
 
                         break;
-                    case R.id.navmenu_about:
+                    case R.id.navmenu_about://about program(now is debbuging info)
 
                         try {
-                            Toast.makeText(MainActivity.this, getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.curVersion) + getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
                         } catch (PackageManager.NameNotFoundException e) {
                             Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
                         }
@@ -316,7 +323,6 @@ public class MainActivity extends AppCompatActivity /*implements
                         mDrawerLayout.closeDrawer(mNavigationView);
                 }
 
-                //setTabs(mCurrentSelectedPosition + 1);
 
                 return true;
             }
@@ -325,13 +331,13 @@ public class MainActivity extends AppCompatActivity /*implements
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.openNavView, R.string.closeNawView) {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //getSupportActionBar().setTitle(getString(R.string.drawer_opened));
+
                 invalidateOptionsMenu();
             }
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                //getSupportActionBar().setTitle(mActivityTitle);
+
                 invalidateOptionsMenu();
             }
         };
@@ -344,14 +350,16 @@ public class MainActivity extends AppCompatActivity /*implements
 
     }
 
-    public void setTabs(int count) {
+    /**
+     * Setup ViewPager in bottom hider for CurencyCashFragment,NBUFragment,InterbankFragment,PreciosMetalsFragment
+     */
+    public void setupButtomHiderViewPager() {
+        int count = UAFConst.CURRENCY_FRAGMENT_COUNT;
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new CurrencyFragmentPagerAdapter(getSupportFragmentManager(), this, count);
         vpPager.setAdapter(adapterViewPager);
-//////
+
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        //slidingTabLayout.setTextColor(getResources().getColor(R.color.tab_text_color));
-        //slidingTabLayout.setTextColorSelected(getResources().getColor(R.color.tab_text_color_selected));
         slidingTabLayout.setDistributeEvenly();
         slidingTabLayout.setViewPager(vpPager);
         slidingTabLayout.setTabSelected(0);
@@ -366,8 +374,10 @@ public class MainActivity extends AppCompatActivity /*implements
 
     }
 
-    /*------------------------------------------------------------------------------------------------*/
-    public void configureUpHiderSpenners() {
+    /**
+     * Setup Content of Spinners in Up Hider (SpinerCity, SpinnerCurrency & SpinnerAskBid )
+     */
+    public void setupContentUpHiderSpinners() {
 
         Spinner spinnerCity = (Spinner) findViewById(R.id.spinerCity);
         Spinner spinnerCurrency = (Spinner) findViewById(R.id.spinerCurrency);
@@ -379,7 +389,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
             String[] cities = new String[citiesArray.length + 2];
 
-            cities[0] = UAFPreferences.getCity();
+            cities[0] = uafPreferences.getCity();
             cities[1] = this.getResources().getString(R.string.default_city);
 
             for (int i = 0; i < citiesArray.length; i++)
@@ -388,7 +398,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
             ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
             spinnerCity.setAdapter(cityAdapter);
-            spinnerCity.setSelection(cityAdapter.getPosition(UAFPreferences.getCity()));
+            spinnerCity.setSelection(cityAdapter.getPosition(uafPreferences.getCity()));
         }
 
 
@@ -407,7 +417,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
             ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allCurrancies);
             spinnerCurrency.setAdapter(currencyAdapter);
-            spinnerCurrency.setSelection(currencyAdapter.getPosition(UAFPreferences.getCurrancie()));
+            spinnerCurrency.setSelection(currencyAdapter.getPosition(uafPreferences.getCurrancie()));
         }
 
         if (organizationListAdapter != null) {
@@ -417,9 +427,9 @@ public class MainActivity extends AppCompatActivity /*implements
 
     }
 
-    /*--------------------------------------------------------------------------------------------
+    /*---------------------------------------------------------------------------------------------
     * ------------------------------ON CREATE------------------------------------------------------
-    * -------------------------------------------------------------------------------------------*/
+    ---------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "Begin OnCreate");
@@ -430,20 +440,20 @@ public class MainActivity extends AppCompatActivity /*implements
         startRefresh = true;
         setContentView(R.layout.activity_main);
 
-        setTabs(UAFConst.CURRENCY_FRAGMENT_COUNT);
+        setupButtomHiderViewPager();
 
 
-        setupTolbarNavigationView();
+        setupNavigationView();
 
 
-        UAFPreferences = new UAFPreferences(this);
+        uafPreferences = new UAFPreferences(this);
 
 
         //---------CurrencieSpinner
 
         Spinner spinnerCurrencie = ((Spinner) findViewById(R.id.spinerCurrency));
 
-        ArrayAdapter<String> CurrencieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{UAFPreferences.getCurrancie()});
+        ArrayAdapter<String> CurrencieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uafPreferences.getCurrancie()});
         spinnerCurrencie.setAdapter(CurrencieAdapter);
 
 
@@ -452,9 +462,9 @@ public class MainActivity extends AppCompatActivity /*implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
 
-                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getCurrancie())) //  was changed)
+                if (!((String) parent.getAdapter().getItem(position)).equals(uafPreferences.getCurrancie())) //  was changed)
                 {
-                    UAFPreferences.setCurrancie((String) parent.getAdapter().getItem(position));
+                    uafPreferences.setCurrancie((String) parent.getAdapter().getItem(position));
 
 
                     startRefreshButtonAnimation();
@@ -474,19 +484,19 @@ public class MainActivity extends AppCompatActivity /*implements
 
         Spinner spinnerCity = ((Spinner) findViewById(R.id.spinerCity));
 
-        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{UAFPreferences.getCity()});
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uafPreferences.getCity()});
         spinnerCity.setAdapter(cityAdapter);
 
 
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //ArrayAdapter <String> a=parent;
 
-                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getCity())) {// city was changed
-                    UAFPreferences.setCity((String) parent.getAdapter().getItem(position));
 
-                    reDrawMainActivity();
+                if (!((String) parent.getAdapter().getItem(position)).equals(uafPreferences.getCity())) {// city was changed
+                    uafPreferences.setCity((String) parent.getAdapter().getItem(position));
+
+
                     Log.i(TAG, "City was changed");
 
                     startRefreshButtonAnimation();
@@ -506,15 +516,15 @@ public class MainActivity extends AppCompatActivity /*implements
         ArrayAdapter<String> askBidAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, askBid);
         spinnerAskBid.setAdapter(askBidAdapter);
 
-        spinnerAskBid.setSelection(askBidAdapter.getPosition(UAFPreferences.getAskBid()));
+        spinnerAskBid.setSelection(askBidAdapter.getPosition(uafPreferences.getAskBid()));
 
         spinnerAskBid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> a=parent;
-                if (!((String) parent.getAdapter().getItem(position)).equals(UAFPreferences.getAskBid())) //  was changed)
+                if (!((String) parent.getAdapter().getItem(position)).equals(uafPreferences.getAskBid())) //  was changed)
                 {
-                    UAFPreferences.setAskBid((String) parent.getAdapter().getItem(position));
+                    uafPreferences.setAskBid((String) parent.getAdapter().getItem(position));
 
                     startRefreshButtonAnimation();
                     startRefreshDatas();
@@ -530,9 +540,8 @@ public class MainActivity extends AppCompatActivity /*implements
             }
         });
 
-        //spinnerAskBid.setON`
 
-
+        //  ---- Setup OrganizationListView(Main ListView in the center of activity)
         organizationListAdapter = new OrganizationListAdapter(this);
         organizationListView = (ListView) findViewById(R.id.listViewBanks);
         organizationListView.setAdapter(organizationListAdapter);
@@ -556,7 +565,7 @@ public class MainActivity extends AppCompatActivity /*implements
             }
         });
 
-
+        //------------------------Main Handler of Activity-------------------
         mainActivityHandler = new Handler() {
 
             @Override
@@ -564,11 +573,17 @@ public class MainActivity extends AppCompatActivity /*implements
                 switch (msg.what) {
                     case 1://on Read finance datas
                         financeUA = (FinanceUA) msg.obj;
-                        reDrawMainActivity();
 
-                        configureUpHiderSpenners();
+
+                        if (financeUA != null) {
+                            ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
+                            adapterViewPager.setFinanceUA(financeUA);
+                            adapterViewPager.notifyDataSetChanged();
+
+                        }
+                        setupContentUpHiderSpinners();
                         // Remove the animation.
-                        stopRefreshAnimation();
+                        stopRefreshButtonAnimation();
 
                         break;
                     case 2:
@@ -591,16 +606,7 @@ public class MainActivity extends AppCompatActivity /*implements
         };
 
 
-//        if (mGoogleApiClient == null) {
-//            mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                    .addConnectionCallbacks(this)
-//                    .addOnConnectionFailedListener(this)
-//                    .addApi(LocationServices.API)
-//                    .build();
-//            if (mGoogleApiClient == null) Log.i(TAG, "GoogleApiClient init false");
-//        }
-
-        //---------------
+        //--------------- Start Alarm for out Notifiction----------
         if (savedInstanceState == null)
             AlarmBroadcastReciver.setAlarm(this);
 
@@ -612,9 +618,9 @@ public class MainActivity extends AppCompatActivity /*implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        if (animationStarted) {
-            stopRefreshAnimation();
+
+        if (animationStarted) {//StopAnimation to avoid double Animation
+            stopRefreshButtonAnimation();
             animationStarted = true;
         }
         //if (!prFirstMenuCreate) return true;
@@ -625,7 +631,7 @@ public class MainActivity extends AppCompatActivity /*implements
 
 
         refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
-        if (prFirstMenuCreate || animationStarted) {
+        if (prFirstMenuCreate || animationStarted) {//Start Animation
             startRefreshButtonAnimation();
             prFirstMenuCreate = false;
         }
@@ -635,32 +641,28 @@ public class MainActivity extends AppCompatActivity /*implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
 
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
 
         switch (item.getItemId()) {
-            case R.id.refreshmenuitem:
+            case R.id.refreshmenuitem://Refresh data Item
                 startRefreshButtonAnimation();
                 startRefreshDatas();
 
                 break;
-            case android.R.id.home:
+            case android.R.id.home://start NavigationView
                 if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
                     mDrawerLayout.closeDrawer(mNavigationView);
                 } else {
                     mDrawerLayout.openDrawer(mNavigationView);
 
-                    if (mNavigationView.getMenu().getItem(0).isChecked() != UAFPreferences.getSortCurrency())
-                        mNavigationView.getMenu().getItem(0).setChecked(UAFPreferences.getSortCurrency());
+                    if (mNavigationView.getMenu().getItem(0).isChecked() != uafPreferences.getSortCurrency())
+                        mNavigationView.getMenu().getItem(0).setChecked(uafPreferences.getSortCurrency());
 
-                    if (mNavigationView.getMenu().getItem(1).isChecked() == UAFPreferences.getSortCurrency())
-                        mNavigationView.getMenu().getItem(1).setChecked(!UAFPreferences.getSortCurrency());
+                    if (mNavigationView.getMenu().getItem(1).isChecked() == uafPreferences.getSortCurrency())
+                        mNavigationView.getMenu().getItem(1).setChecked(!uafPreferences.getSortCurrency());
 
                 }
                 return true;
@@ -676,7 +678,7 @@ public class MainActivity extends AppCompatActivity /*implements
             startRefreshDatas();
 
         startRefresh = false;
-//        if (mGoogleApiClient != null) mGoogleApiClient.connect();
+
 
     }
 
@@ -694,7 +696,7 @@ public class MainActivity extends AppCompatActivity /*implements
 //                Log.i(TAG, "onCLick");
 //                startService(intent);
 
-                showLocationMapActivity();
+                showLocationMapActivity();// Show BigMAp with all known organizations
                 break;
 
 
@@ -702,63 +704,6 @@ public class MainActivity extends AppCompatActivity /*implements
 
     }
 
-//    @Override
-//    public void onConnected(Bundle bundle) {
-//        Log.i(TAG, "Google API client: On connected");
-//
-//        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-//
-//        try {//SecurityException
-//            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-//            if (deviceLocation != null) {
-//                Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
-//                organizationListAdapter.setDeviceLocation(deviceLocation);
-//            }
-//
-//            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 50, new LocationListener() {
-//
-//
-//                @Override
-//                public void onLocationChanged(Location location) {
-//                    deviceLocation = location;
-//                    organizationListAdapter.setDeviceLocation(deviceLocation);
-//                    organizationListAdapter.notifyDataSetChanged();
-//
-//                }
-//
-//                @Override
-//                public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//                }
-//
-//                @Override
-//                public void onProviderEnabled(String provider) {
-//
-//                }
-//
-//                @Override
-//                public void onProviderDisabled(String provider) {
-//
-//                }
-//            });
-//
-//        } catch (SecurityException se) {
-//
-//            Log.i(TAG, "Program is not have permission");
-//        }
-//
-//
-//    }
-//
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(ConnectionResult connectionResult) {
-//
-//    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -772,5 +717,11 @@ public class MainActivity extends AppCompatActivity /*implements
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPause() {
+        removeLocationListener();// for Power economy
+        super.onPause();
     }
 }

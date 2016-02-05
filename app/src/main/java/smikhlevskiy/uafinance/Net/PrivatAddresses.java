@@ -25,22 +25,27 @@ import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 /**
- * Created by tcont98 on 27-Jan-16.
+ * Created by SMikhlevskiy on 27-Jan-16.
+ * Getting addresses of PrivatBank for www.Privat.ua
  */
 public class PrivatAddresses {
     public static final String TAG = PrivatAddresses.class.getSimpleName();
 
     private ArrayList<Organization> privatAdressesList;
 
-    //---------------------------------------
+    /*
+    * Return Addresses of PrivatBank in ArrayList
+     */
     public ArrayList<Organization> getPrivatAdressesList() {
         return privatAdressesList;
 
     }
 
-    //---------------------------------------------------------
+    /*
+    * Get Latatitude & Longtitude for Addresses from Privat.ua
+     */
     public void setLatLon(Context context) {
-        if (privatAdressesList==null) return;
+        if (privatAdressesList == null) return;
         GeoLocationDB geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
         List<String> textAddress = new ArrayList<String>();
@@ -60,7 +65,9 @@ public class PrivatAddresses {
         }
     }
 
-    //----------------------------------------------------------------------------------------------
+    /**
+     * Read addresses from www.privat.ua in JSON file
+     */
 
     public void read(String city) {
 
@@ -74,7 +81,7 @@ public class PrivatAddresses {
                 url = new URL("https://api.privatbank.ua/p24api/pboffice?json&city=" + URLEncoder.encode(city, "utf-8"));
 
             else
-              url = new URL("https://api.privatbank.ua/p24api/pboffice?json");
+                url = new URL("https://api.privatbank.ua/p24api/pboffice?json");
 
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -126,7 +133,7 @@ public class PrivatAddresses {
                     organization.setAddress(item.getString("address"));
                     organization.setPhone(item.getString("phone"));
                     //!!!!! if (city.length() == 0)
-                        organization.setCityId(pcity);
+                    organization.setCityId(pcity);
 
                     privatAdressesList.add(organization);
 

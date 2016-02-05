@@ -22,7 +22,8 @@ import java.net.URLEncoder;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by tcont98 on 05-Dec-15.
+ * Created by SMikhlevskiy on 05-Dec-15.
+ * Utils for work with Geocoding Locations
  */
 public class GeoLocationUtils {
 
@@ -30,8 +31,11 @@ public class GeoLocationUtils {
     //private Geocoder geocoder;
 
 
-
-
+    /**
+     * Get Latitude&Longtitude from Google Map by request
+     * @param locationAddress  - adress in request format
+     * @return
+     */
     public LatLng getAddressFromLocationByURL(final String locationAddress) {
 
         //LatLng address=new LatLng();

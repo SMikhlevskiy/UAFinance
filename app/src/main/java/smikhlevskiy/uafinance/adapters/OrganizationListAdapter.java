@@ -21,7 +21,9 @@ import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 /**
- * Created by tcont98 on 09-Nov-15.
+ * Created by SMikhlevskiy on 09-Nov-15.
+ * Adapter for work with OrganizationsListView in MainActivity
+ * Now There are 4 Fragmets: CurencyCashFragment,NBUFragment,InterbankFragment,PreciosMetalsFragment
  */
 public class OrganizationListAdapter extends BaseAdapter {
     private FinanceUA financeUA = null;

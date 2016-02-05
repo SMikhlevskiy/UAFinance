@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by tcont98 on 08-Nov-15.
+ * Created by SMikhlevskiy on 08-Nov-15.
+ * exchange rate
  */
 public class Currencie implements Parcelable {
 

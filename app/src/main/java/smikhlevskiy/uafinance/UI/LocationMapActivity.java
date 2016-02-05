@@ -39,7 +39,8 @@ import smikhlevskiy.uafinance.model.UAFPreferences;
 
 
 /**
- * Created by tcont98 on 10-Jan-16.
+ * Created by SMikhlevskiy on 10-Jan-16.
+ * Big Map of All known addreses organizations
  */
 public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String TAG = LocationMapActivity.class.getSimpleName();

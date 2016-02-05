@@ -20,7 +20,9 @@ import smikhlevskiy.uafinance.model.UAFPreferences;
 
 
 /**
- * Created by tcont98 on 25-Jan-16.
+ * Created by SMikhlevskiy on 25-Jan-16.
+ * Service for out Notification about exchange rates(once a day) or Notification about exchange rates jump(control every two hours)
+ * Notification do not out in  rest day&time
  */
 
 public class NotificationService extends IntentService {
@@ -61,7 +63,7 @@ public class NotificationService extends IntentService {
 
         String resultString = "";
         if (financeUA == null) return;
-        HashMap<String, Currencie> minMaxCurrencies = financeUA.calckMinMaxCurrencies(new String[]{
+        HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies(new String[]{
                         getString(R.string.USD),
                         getString(R.string.EUR),
                         getString(R.string.RUB)},

@@ -1,5 +1,6 @@
 package smikhlevskiy.uafinance.Utils;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -11,9 +12,11 @@ import java.util.Objects;
 import smikhlevskiy.uafinance.R;
 
 /**
- * Created by tcont98 on 13-Jan-16.
+ * Created by Smikhlevskiy on 13-Jan-16.
+ * Constant & Utils static functions for UAFinance application
  */
 public class UAFConst {
+    //list of Main banks
     public static final int PRIVAT_ID = 0;
     public static final int UKRSOC_ID = 1;
     public static final int PRAVEKS_ID = 2;
@@ -63,70 +66,75 @@ public class UAFConst {
             banks[10].toLowerCase(),
             banks[11].toLowerCase(),
             banks[12].toLowerCase()
-            };
+    };
 
-
+    // number of fragment in PageView
     public static final int CURRENCY_FRAGMENT_COUNT = 4;
     public static final int CURRENCY_CASH = 0;
     public static final int INTERBANK = 1;
     public static final int NBU = 2;
     public static final int PRECIOUS_METALS = 3;
 
+
+    /**
+     * get Image for organization by title
+     * @param orgType  type=1 is bank, type=0 is exchange_shop
+     * @param title of organization
+     * @return
+     */
     public static int getBankImage(int orgType, String title) {
 
         int result;
 
 
-        int bankID=-1;
+        int bankID = -1;
 
         for (int n = 0; n < UAFConst.banksLc.length; n++)
             if (title.toLowerCase().contains(UAFConst.banksLc[n]))
                 bankID = n;
 
-        switch (bankID){
+        switch (bankID) {
 
             case PRIVAT_ID:
-                result=R.mipmap.bank_privat;
-            break;
+                result = R.mipmap.bank_privat;
+                break;
 
             case UKRSOC_ID:
-                result=R.mipmap.bank_ukrsoc;
+                result = R.mipmap.bank_ukrsoc;
                 break;
             case PRAVEKS_ID:
-                result=R.mipmap.bank_praveks;
+                result = R.mipmap.bank_praveks;
                 break;
             case PUMB_ID:
-                result=R.mipmap.bank_pumb;
+                result = R.mipmap.bank_pumb;
                 break;
             case UKRGAZ_ID:
-                result=R.mipmap.bank_ukrgazbank;
+                result = R.mipmap.bank_ukrgazbank;
                 break;
             case ALFA_ID:
-                result=R.mipmap.bank_alfa;
+                result = R.mipmap.bank_alfa;
                 break;
             case OTP_ID:
-                result=R.mipmap.bank_otp;
+                result = R.mipmap.bank_otp;
                 break;
             case AGRICOL_ID:
-                result=R.mipmap.bank_agricol;
+                result = R.mipmap.bank_agricol;
                 break;
             case OSCHAD_ID:
-                result=R.mipmap.bank_oschad;
+                result = R.mipmap.bank_oschad;
                 break;
             case UKRSIB_ID:
-                result=R.mipmap.bank_ukrsib;
+                result = R.mipmap.bank_ukrsib;
                 break;
             case TAS_ID:
-                result=R.mipmap.bank_tas;
+                result = R.mipmap.bank_tas;
                 break;
             case AVAL_ID:
-                result=R.mipmap.bank_aval;
+                result = R.mipmap.bank_aval;
                 break;
             case SBER_ID:
-                result=R.mipmap.bank_sberbank;
+                result = R.mipmap.bank_sberbank;
                 break;
-
-
 
 
             default:
@@ -139,44 +147,11 @@ public class UAFConst {
 
         return result;
 
-    /*
-    if (organization.getOrgType() == 1)
-        imageView.setImageResource(R.mipmap.bank);
-    else
-        imageView.setImageResource(R.mipmap.exchange_shop);
-}
-    String lowertitle = organization.getTitle().toLowerCase();
-    if (lowertitle.contains(UAFConst.banksLc[UAFConst.PRIVAT_ID]))
-            imageView.setImageResource(R.mipmap.bank_privat);
-    else if (lowertitle.contains("правэкс"))
-            imageView.setImageResource(R.mipmap.bank_praveks);
-    else if (lowertitle.contains("пумб"))
-            imageView.setImageResource(R.mipmap.bank_pumb);
-    else if (lowertitle.contains("укргазбанк"))
-            imageView.setImageResource(R.mipmap.bank_ukrgazbank);
-    else if (lowertitle.contains("альфа"))
-            imageView.setImageResource(R.mipmap.bank_alfa);
-    else if (lowertitle.contains(UAFConst.banksLc[UAFConst.UKRSOC_ID]))
-            imageView.setImageResource(R.mipmap.bank_ukrsoc);
-    else if (lowertitle.contains("отп банк"))
-            imageView.setImageResource(R.mipmap.bank_otp);
-    else if (lowertitle.contains("агриколь"))
-            imageView.setImageResource(R.mipmap.bank_agricol);
-    else if (lowertitle.contains("укрсиб"))
-            imageView.setImageResource(R.mipmap.bank_ukrsib);
-    else if (lowertitle.contains("ощад"))
-            imageView.setImageResource(R.mipmap.bank_oschad);
-    else if (lowertitle.contains("таскомбанк"))
-            imageView.setImageResource(R.mipmap.bank_tas);
-    else if (lowertitle.contains("укрсиб"))
-            imageView.setImageResource(R.mipmap.bank_ukrsib);
-    else if (lowertitle.contains("авал"))
-            imageView.setImageResource(R.mipmap.bank_aval);
-    else if (lowertitle.contains("сбербанк"))
-            imageView.setImageResource(R.mipmap.bank_sberbank);
-    */
     }
 
+    /**
+     * get Key by Value  from Map<String, String>
+     */
     public static String getKeyByValue(Map<String, String> map, String value) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if (value.equals(entry.getValue())) {
@@ -186,12 +161,18 @@ public class UAFConst {
         return "";
     }
 
+    /**
+     * Make Address String for Google MAP IPI request
+     * @param city        city of object
+     * @param address   address of object
+     * @return String for Google MAP IPI request
+     */
     public static String getAddressbyAdressCity(String city, String address) {
         return ("Украина, " + city + ", " + address).replace(' ', '+');
 
     }
 
-    public static Spannable getSpanTitle(Context context){
+    public static Spannable getSpanTitle(Context context) {
         String titleString = context.getString(R.string.title_activity_finance);
         Spannable span = new SpannableString(titleString);
         span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -199,4 +180,5 @@ public class UAFConst {
         return span;
 
     }
+
 }

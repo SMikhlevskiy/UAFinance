@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by tcont98 on 07-Nov-15.
+ * Created by SMikhlevskiy on 07-Nov-15.
+ * class describes organiztation and it exange rates
  */
 public class Organization implements Parcelable {
     private String id;

@@ -8,15 +8,8 @@ import android.os.Message;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +18,8 @@ import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
 /**
- * Created by tcont98 on 11-Nov-15.
+ * Created by SMikhlevskiy on 11-Nov-15.
+ * Getting Main finance datas from finance.ua & Privat.ua &  processing(Sort,Move to Brunch..) this datas
  */
 
 
@@ -46,7 +40,18 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
     boolean isSortCurrency;
     Location deviceLocation;
 
-
+    /**
+     *
+     * @param context
+     * @param city  current city
+     * @param scurrency   id current Currency(USD,EUR...)
+     * @param askBid  Ask or Bid
+     * @param isSortCurrency true - SortBuy exchange rate,  false - sort by distance
+     * @param isLowWork  true - no Privat datas, no sort, no further processing  used for LocationMap&NitificationService,
+     *                   false used for ListView in MAinActivity
+     * @param deviceLocation  current deviceLocation used for Sort by Distance
+     * @param resultHandler  Handler for out result
+     */
     public FinanceUAAsyncTask(
             Context context,
             String city,
@@ -71,7 +76,10 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
         //tempFile = context.getCacheDir().getPath() + "/" + "financeUA.txt";
     }
 
-    //------------calck LatLong for all organization(if sortDistance)-----------------------------------------------------------
+    /**
+     *
+     * calck LatLong for all organization(if sortDistance)
+     */
     void setOrganizationsLatLon(FinanceUA financeUA, Context context, String city) {
         GeoLocationDB geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
@@ -109,7 +117,7 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
             privatAddresses.read(city);//read from Privat.UA
             ArrayList<Organization> privatAdressesList = privatAddresses.getPrivatAdressesList();
             //-------------delete other city,move brunches organization to brunch-------
-            financeUA.optimizeOrganizationList(city, privatAdressesList);
+            financeUA.processingOrganizations(city, privatAdressesList);
             //------------calck LatLong for all organization(if sortDistance)---
             if ((!isSortCurrency) && (context.get() != null) && (deviceLocation != null)) {
                 setOrganizationsLatLon(financeUA, (Context) context.get(), city);

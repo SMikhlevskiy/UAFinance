@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import smikhlevskiy.uafinance.R;
 
 /**
- * Created by tcont98 on 16-Nov-15.
+ * Created by SMikhlevskiy on 16-Nov-15.
  */
 public class UAFPreferences {
     static final String ASK_BID_KEY = "ask_bid_pref";

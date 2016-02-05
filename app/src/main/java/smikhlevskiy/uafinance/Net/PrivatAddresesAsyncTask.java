@@ -13,9 +13,10 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 
-/** To DO
- * Sinhronize Address from Priavat
- * Created by tcont98 on 15-Jan-16.
+/**
+ * Created by SMikhlevskiy on 15-Jan-16.
+ * Get addres of privat organizations for BigMap of organizations
+ * now datas gets for Current city becouse speed of update is slovly(TO-do gets All datas with cached)
  */
 public class PrivatAddresesAsyncTask  extends AsyncTask<Void, Void, ArrayList<Organization>>{
 

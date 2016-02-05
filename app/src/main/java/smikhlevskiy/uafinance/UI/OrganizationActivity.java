@@ -38,6 +38,11 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 
+/**
+ * Created by SMikhlevskiy
+ * Activity out parameters(title,address,phone...) of organizatation & out map of locations organizations
+ * and out Exchange calculator
+ */
 public class OrganizationActivity extends AppCompatActivity implements OnMapReadyCallback {
     public String TAG = OrganizationActivity.class.getSimpleName();
     UAFPreferences UAFPreferences;

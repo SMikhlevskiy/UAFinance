@@ -20,17 +20,19 @@ import java.net.URL;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.model.Currencie;
-//https://privat24.privatbank.ua/p24/accountorder?oper=prp&JSON&apicour&country=ua&full
+
 
 /**
- * Created by tcont98 on 19-Dec-15.
+ * Created by SMikhlevskiy on 19-Dec-15.
+ * Get NBU Datas (Exchange Rates& Precious metals Rates) from www.privat.ua by XML
+ *
  */
-public class PrivatAsyncTask extends AsyncTask<Void, Void, HashMap<String, Currencie>> {
-    public static final String TAG = PrivatAsyncTask.class.getSimpleName();
+public class NBUDatasAsyncTask extends AsyncTask<Void, Void, HashMap<String, Currencie>> {
+    public static final String TAG = NBUDatasAsyncTask.class.getSimpleName();
     private static final String PrivatURL = "https://privat24.privatbank.ua/p24/accountorder?oper=prp&JSON&apicour&country=ua&full";
     private WeakReference<Handler> reDrawHandler;
 
-    public PrivatAsyncTask(Handler reDrawHandler) {
+    public NBUDatasAsyncTask(Handler reDrawHandler) {
         this.reDrawHandler = new WeakReference<Handler>(reDrawHandler);
     }
 

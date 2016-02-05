@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by tcont98 on 30-Jan-16.
+ * Created by SMikhlevskiy on 30-Jan-16.
+ * Reciver On start device
+ * used for start AlarmReciver
  */
 public class BootBroadcastResiver extends BroadcastReceiver {
     public static final String TAG = BootBroadcastResiver.class.getSimpleName();

@@ -20,12 +20,15 @@ import java.util.Map;
 import smikhlevskiy.uafinance.Utils.UAFConst;
 
 /**
- * Created by tcont98 on 07-Nov-15.
+ * Created by SMikhlevskiy on 07-Nov-15.
+ * class describes all organiztation in application and it exange rates
+ * and have main tools(processing,sorts...) for work with organizations
+ * Datas getting from Finance cites(Finance.ua,Privat) & putting in this class
  */
 public class FinanceUA {
 
     static final String TAG = FinanceUA.class.getSimpleName();
-    static final String FINANCE_UA_URL="http://resources.finance.ua/ru/public/currency-cash.json";
+    static final String FINANCE_UA_URL = "http://resources.finance.ua/ru/public/currency-cash.json";
     private String sourceId;
     private String date;
     private Organization[] organizations;
@@ -36,92 +39,23 @@ public class FinanceUA {
     private Map<String, String> cities;
 
 
-    private ArrayList<Integer> fu_index = new ArrayList<Integer>();
+    private ArrayList<Integer> fu_index = new ArrayList<Integer>();//calck index for sorting
 
 
-
-/*
-    public Set<String> getAllCurrencies() {
-        Set<String> currArr = new HashSet<String>();
-        currArr.add("aaa");
-
-
-        for (Organization organization : organizations) {
-
-
-            if (organization.getCurrencies() != null) {
-                Set<String> namesCurr = organization.getCurrencies().keySet();
-                for (String name : namesCurr) currArr.add(name);
-            }
-
-
-        }
-
-
-        return currArr;
-    }
-*/
-
-
-    public String getSourceId() {
-        return sourceId;
+    public FinanceUA() {
+        fu_index = new ArrayList<Integer>();
     }
 
-    public void setSourceId(String sourceId) {
-        this.sourceId = sourceId;
-    }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Organization[] getOrganizations() {
-        return organizations;
-    }
-
-    public void setOrganizations(Organization[] organizations) {
-        this.organizations = organizations;
-    }
-
-    public Map<String, String> getOrgTypes() {
-        return orgTypes;
-    }
-
-    public void setOrgTypes(Map<String, String> orgTypes) {
-        this.orgTypes = orgTypes;
-    }
-
-    public Map<String, String> getCurrancies() {
-        return currencies;
-    }
-
-    public void setCurrancies(Map<String, String> currancies) {
-        this.currencies = currancies;
-    }
-
-    public Map<String, String> getRegions() {
-        return regions;
-    }
-
-    public void setRegions(Map<String, String> regions) {
-        this.regions = regions;
-    }
-
-    public Map<String, String> getCities() {
-        return cities;
-    }
-
-    public void setCities(Map<String, String> cities) {
-        this.cities = cities;
-    }
-
-    public ArrayList<Integer> getFu_index() {
-        return fu_index;
-    }
+    /**
+     * Sort Organizations
+     *
+     * @param askByd         Ask or Bid
+     * @param sortCurrency   true - SortBuy exchange rate,  false - sort by distance
+     * @param city           current city
+     * @param currancie      current Currency(USD,EUR...)
+     * @param deviceLocation current deviceLocation used for Sort by Distance
+     */
 
     public void sort(boolean askByd, boolean sortCurrency, String city, String currancie, Location deviceLocation) {
 
@@ -220,23 +154,23 @@ public class FinanceUA {
 
                     }
 
-                    //   s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
 
                 }
 
             }
 
-/*
-        if (organization.currencies.containsKey(uaFinancePreference.getCurrancie()))
-            if (uaFinancePreference.getAskBid().equals(context.getResources().getStringArray(R.array.askbid)[0]))
-                s=organization.currencies.get(uaFinancePreference.getCurrancie()).getBid(); else
-                s=organization.currencies.get(uaFinancePreference.getCurrancie()).getAsk();
-                */
-
 
     }
 
-    public HashMap<String, Currencie> calckMinMaxCurrencies(String[] keyCurrencies, String city) {
+    /**
+     * Get HashMap with maximumum Bid & minimum Ask rates for base currencies
+     *
+     * @param keyCurrencies list of getting currencies
+     * @param city          current city
+     * @return
+     */
+
+    public HashMap<String, Currencie> getMinMaxCurrencies(String[] keyCurrencies, String city) {
         HashMap<String, Currencie> minMaxCurrencies = new HashMap<String, Currencie>();
 
         for (String key : keyCurrencies) {
@@ -274,9 +208,12 @@ public class FinanceUA {
         return minMaxCurrencies;
     }
 
-
-
-
+    /**
+     * Make String with address for URL reqouest  to get LatLon from Google MAP
+     *
+     * @param organization
+     * @return
+     */
     public String getURLAddressByOrganization(Organization organization) {
         if (cities.containsKey(organization.getCityId())) {
             String mcity = cities.get(organization.getCityId());
@@ -288,11 +225,16 @@ public class FinanceUA {
         return "";
     }
 
+    /**
+     * Make String List with All organizaion addresses for URL reqouest  to get LatLon from Google MAP
+     *
+     * @param prefCity
+     * @return
+     */
     public List<String> getAllAddresses(String prefCity) {
         ArrayList<String> list = new ArrayList<String>();
 
 
-//-----j==0  -> current City    j==1 other City---
         for (int j = 0; j <= 1; j++) {
             for (Organization organization : organizations) {
                 if (cities.containsKey(organization.getCityId())) {
@@ -309,21 +251,25 @@ public class FinanceUA {
         return list;
     }
 
-    public void optimizeOrganizationList(String city, ArrayList<Organization> privatAdresses) {
+    /**
+     * Processing organizations datas: add privat addresses, move suborganizations to brunch
+     *
+     * @param city           current city
+     * @param privatAdresses List of PrivatBank addresses
+     */
+    public void processingOrganizations(String city, ArrayList<Organization> privatAdresses) {
 
         LinkedList<Organization> organizationsList = new LinkedList<Organization>();
 
         LinkedList<String> organizationsTitleList = new LinkedList<String>();
 
 
-
         Organization organizationEtalon = null;
 
-        for (int i = 0; i < organizations.length; i++)
-        {
+        for (int i = 0; i < organizations.length; i++) {
 
-            if ((organizationEtalon==null) && (organizations[i].getTitle().toLowerCase().contains(UAFConst.banksLc[UAFConst.PRIVAT_ID])))
-                organizationEtalon=organizations[i];
+            if ((organizationEtalon == null) && (organizations[i].getTitle().toLowerCase().contains(UAFConst.banksLc[UAFConst.PRIVAT_ID])))
+                organizationEtalon = organizations[i];
 
             if (city.equals(cities.get(organizations[i].getCityId()))) {
 
@@ -332,12 +278,12 @@ public class FinanceUA {
                 organizationsTitleList.add(organizations[i].getTitle().toLowerCase());
 
             }
-            }
+        }
 
         //----------------------Add privat addresses from PrivatBank site-----
         if (privatAdresses != null) {
 
-            String cityID=UAFConst.getKeyByValue(cities,city);
+            String cityID = UAFConst.getKeyByValue(cities, city);
 
             //--------------remove all Old privat addresses------
             for (int j = 0; j < organizationsList.size(); j++)
@@ -370,7 +316,7 @@ public class FinanceUA {
             rootOrganization = organizationsList.get(j);
 
             //-----------detect Bank-----------------
-            titleLC =organizationsTitleList.get(j);
+            titleLC = organizationsTitleList.get(j);
             for (int n = 0; n < UAFConst.banksLc.length; n++)
                 if (titleLC.contains(UAFConst.banksLc[n]))
                     titleLC = UAFConst.banksLc[n];
@@ -403,12 +349,10 @@ public class FinanceUA {
     }
 
 
-    public FinanceUA() {
-        fu_index = new ArrayList<Integer>();
-    }
-
-
-    public static FinanceUA readFromJSON(){
+    /**
+     * Get datas from Finance.ua by JSON
+     */
+    public static FinanceUA readFromJSON() {
         StringBuilder bulder = new StringBuilder("");
         try {
 
@@ -451,9 +395,70 @@ public class FinanceUA {
 
         Gson gson = new Gson();
 
-        return  (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
+        return (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
 
 
+    }
+
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Organization[] getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(Organization[] organizations) {
+        this.organizations = organizations;
+    }
+
+    public Map<String, String> getOrgTypes() {
+        return orgTypes;
+    }
+
+    public void setOrgTypes(Map<String, String> orgTypes) {
+        this.orgTypes = orgTypes;
+    }
+
+    public Map<String, String> getCurrancies() {
+        return currencies;
+    }
+
+    public void setCurrancies(Map<String, String> currancies) {
+        this.currencies = currancies;
+    }
+
+    public Map<String, String> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(Map<String, String> regions) {
+        this.regions = regions;
+    }
+
+    public Map<String, String> getCities() {
+        return cities;
+    }
+
+    public void setCities(Map<String, String> cities) {
+        this.cities = cities;
+    }
+
+    public ArrayList<Integer> getFu_index() {
+        return fu_index;
     }
 
 }

@@ -18,7 +18,9 @@ import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
 /**
- * Created by tcont98 on 18-Dec-15.
+ * Created by SMikhlevskiy on 18-Dec-15.
+ * Fragment for ViewPager MainActivty in Bottom header
+ * Out rates of Cash
  */
 public class CurrencyCashFragment extends Fragment {
 private Activity mainActivity;
@@ -50,7 +52,7 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
         if (financeUA==null) return;
         UAFPreferences UAFPreferences =new UAFPreferences(fragmentView.getContext());
 
-        HashMap<String, Currencie> minMaxCurrencies =financeUA.calckMinMaxCurrencies(
+        HashMap<String, Currencie> minMaxCurrencies =financeUA.getMinMaxCurrencies(
                 new String[]{
                         getString(R.string.USD),
                         getString(R.string.EUR),

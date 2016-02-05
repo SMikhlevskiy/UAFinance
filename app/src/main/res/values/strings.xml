@@ -73,6 +73,7 @@
     <string name="preferences_label">Настройки</string>
     <string name="phone_is_not_available">Телефон не доступен</string>
     <string name="navmenu_about">Описание</string>
+    <string name="curVersion">"Текущая версия программы: "</string>
 
 
 </resources>

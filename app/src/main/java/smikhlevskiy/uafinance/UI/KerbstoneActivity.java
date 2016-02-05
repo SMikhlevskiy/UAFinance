@@ -15,7 +15,8 @@ import android.webkit.WebViewClient;
 import smikhlevskiy.uafinance.R;
 
 /**
- * Created by tcont98 on 24-Jan-16.
+ * Created by SMikhlevskiy on 24-Jan-16.
+ * Activty BlackMarket by WebView
  */
 public class KerbstoneActivity extends AppCompatActivity {
     public static final String TAG = KerbstoneActivity.class.getSimpleName();

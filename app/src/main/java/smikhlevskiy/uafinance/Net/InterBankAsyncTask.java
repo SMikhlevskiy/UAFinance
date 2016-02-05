@@ -20,7 +20,8 @@ import java.util.HashMap;
 import smikhlevskiy.uafinance.model.Currencie;
 
 /**
- * Created by tcont98 on 22-Dec-15.
+ * Created by SMikhlevskiy on 22-Dec-15.
+ * Getting InterBank Rates of Main currancies (USD,EUR,RUB)
  */
 public class InterBankAsyncTask extends AsyncTask<Void, Void, HashMap<String, Currencie>> {
     public static final String TAG = InterBankAsyncTask.class.getSimpleName();
@@ -28,6 +29,11 @@ public class InterBankAsyncTask extends AsyncTask<Void, Void, HashMap<String, Cu
     WeakReference<Handler> handler;
     String[] mainCurrencies;
 
+    /**
+     *
+     * @param handler  Handler for out result
+     * @param mainCurrencies  list of getting Currenciees USD,EUR,RUB)
+     */
 
     public InterBankAsyncTask(Handler handler, String[] mainCurrencies) {
         this.handler = new WeakReference<Handler>(handler);

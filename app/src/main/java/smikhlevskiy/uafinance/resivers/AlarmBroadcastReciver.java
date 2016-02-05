@@ -14,7 +14,9 @@ import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.services.NotificationService;
 
 /**
- * Created by tcont98 on 31-Jan-16.
+ * Created by SMikhlevskiy on 31-Jan-16.
+ * Resiver used for start NotificationService
+ * work every 2 hours
  */
 public class AlarmBroadcastReciver extends BroadcastReceiver {
     public static int ALARM_CYCLE = 120;//minutes
@@ -23,12 +25,11 @@ public class AlarmBroadcastReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Calendar c = Calendar.getInstance();
-        int hour=c.get(Calendar.HOUR_OF_DAY);
-        int day=c.get(Calendar.DAY_OF_WEEK);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int day = c.get(Calendar.DAY_OF_WEEK);
 
-        if ((hour<10) || (hour>18) || (day==Calendar.SUNDAY) || (day==Calendar.SATURDAY)) //do not disturb
+        if ((hour < 10) || (hour > 18) || (day == Calendar.SUNDAY) || (day == Calendar.SATURDAY)) //do not disturb
             return;
-
 
 
         Intent sintent = new Intent(context, NotificationService.class);
@@ -36,6 +37,11 @@ public class AlarmBroadcastReciver extends BroadcastReceiver {
 
     }
 
+    /**
+     * Setup AlarmReciver
+     *
+     * @param context
+     */
     public static void setAlarm(Context context) {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -43,12 +49,18 @@ public class AlarmBroadcastReciver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         UAFPreferences uafPreferences = new UAFPreferences(context);
         if ((uafPreferences.isJumpNotificatiom()) || (uafPreferences.isEveryDayNotification()))
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * ALARM_CYCLE, pendingIntent); else // Millisec * Second * Minute
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * ALARM_CYCLE, pendingIntent);
+        else // Millisec * Second * Minute
             alarmManager.cancel(pendingIntent);
 
         //Log.i(TAG, "Start Alarm");
     }
 
+    /**
+     * Cancel AlarmReciver
+     *
+     * @param context
+     */
     public static void cancelAlarm(Context context) {
         Intent intent = new Intent(context, AlarmBroadcastReciver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);

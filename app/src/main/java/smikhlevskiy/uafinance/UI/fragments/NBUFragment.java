@@ -15,7 +15,9 @@ import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.model.Currencie;
 
 /**
- * Created by tcont98 on 19-Dec-15.
+ * Created by SMikhlevskiy on 19-Dec-15.
+ * Fragment for ViewPager MainActivty in Bottom header
+ * Out NBU rates
  */
 public class NBUFragment extends Fragment {
     public static String TAG = NBUFragment.class.getSimpleName();

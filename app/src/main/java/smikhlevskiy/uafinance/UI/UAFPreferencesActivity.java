@@ -15,8 +15,12 @@ import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
 
 /**
- * Created by tcont98 on 31-Jan-16.
+ * Created by SMikhlevskiy on 31-Jan-16.
+ *  Activty for set base parameters of program
+ *  Now That are parameters of notifications
+ *  parameters save in Prefernces
  */
+
 public class UAFPreferencesActivity extends AppCompatActivity {
 
     @Override
