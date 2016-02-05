@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="smikhlevskiy.uafinance" >
+    package="smikhlevskiy.uafinance">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="22" />
@@ -18,17 +22,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/currency_exchange"
         android:label="UAFinance"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBLeHyfQO_kh13jsSE7iLUSGXrzZh9CUys" />
 
         <activity
             android:name="smikhlevskiy.uafinance.UI.MainActivity"
-            android:label="UAFinance"
-            android:exported="true"
             android:allowTaskReparenting="false"
-        android:screenOrientation="portrait">
+            android:exported="true"
+            android:label="UAFinance"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +41,7 @@
         </activity>
         <activity
             android:name=".UI.OrganizationActivity"
-            android:label="@string/title_activity_organization" >
+            android:label="@string/title_activity_organization">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="smikhlevskiy.uafinance.UI.OrganizationActivity" />
@@ -45,7 +49,7 @@
         </activity>
         <activity
             android:name=".UI.LocationMapActivity"
-            android:label="@string/mapActivityName" >
+            android:label="@string/mapActivityName">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.LocationMapActivity" />
@@ -54,7 +58,7 @@
 
         <activity
             android:name=".UI.KerbstoneActivity"
-            android:label="@string/kerbstone_market" >
+            android:label="@string/kerbstone_market">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.KerbstoneActivity" />
@@ -62,7 +66,7 @@
         </activity>
         <activity
             android:name=".UI.UAFPreferencesActivity"
-            android:label="@string/preferences_label" >
+            android:label="@string/preferences_label">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.UAFPreferencesActivity" />
@@ -72,14 +76,13 @@
         <service
             android:name=".services.NotificationService"
             android:exported="false"
-            android:label="@string/notification_service"
-            android:icon="@mipmap/currency_exchange">
-        </service>
+            android:icon="@mipmap/currency_exchange"
+            android:label="@string/notification_service"></service>
 
-        <receiver android:name=".resivers.BootBroadcastResiver"
+        <receiver
+            android:name=".resivers.BootBroadcastResiver"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
                 <category android:name="android.intent.category.DEFAULT" />

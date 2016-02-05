@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -116,8 +117,12 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onClick(View v) {
                 //Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "Your Phone_number"));
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", organization.getPhone(), null));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", organization.getPhone(), null));
+                    startActivity(intent);
+                } catch (Exception e){
+                    Toast.makeText(OrganizationActivity.this, R.string.phone_is_not_available,Toast.LENGTH_LONG).show();
+                }
             }
         });
         //---Calculator----------

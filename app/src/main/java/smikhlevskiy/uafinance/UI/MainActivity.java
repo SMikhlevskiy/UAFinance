@@ -55,8 +55,8 @@ import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
 import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
 import smikhlevskiy.uafinance.services.NotificationService;
 
-public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity /*implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener */ {
     //private EditText resultTextEdit;
     final static String TAG = MainActivity.class.getSimpleName();
     private OrganizationListAdapter organizationListAdapter;
@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements
     private boolean startRefresh = true;
     private boolean prFirstMenuCreate = true;
     private Location deviceLocation = null;
+    private LocationListener locationListener;
+
     private GoogleApiClient mGoogleApiClient = null;
 
 
@@ -82,10 +84,13 @@ public class MainActivity extends AppCompatActivity implements
 
     private MenuItem refreshMenuItem = null;
 
+    private LocationManager locationManager;
+
     private boolean animationStarted = false;
 
     private CurrencyFragmentPagerAdapter adapterViewPager = null;
 
+    /*------------------------------------------------------------------------------------------------*/
     private void stopRefreshAnimation() {
         //      if (true) return;
         animationStarted = false;
@@ -97,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         refreshMenuItem.setActionView(null);
     }
 
+    /*------------------------------------------------------------------------------------------------*/
     private void startRefreshButtonAnimation() {
         animationStarted = true;
         //    if (true) return;
@@ -108,10 +114,81 @@ public class MainActivity extends AppCompatActivity implements
         animationImageView.startAnimation(rotation);
         refreshMenuItem.setActionView(animationImageView);
     }
+/*------------------------------------------------------------------------------------------------
+-----------------------------------Get Device Location---------------------------------------------
+ ------------------------------------------------------------------------------------------------*/
+    void getDeviceLocation(){
+        try {
 
-    /*-----------*/
+
+            locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
+
+            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            if (deviceLocation != null) {
+                Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
+                organizationListAdapter.setDeviceLocation(deviceLocation);
+            }
+
+            locationListener = new LocationListener() {
+
+
+                @Override
+                public void onLocationChanged(Location location) {
+                    deviceLocation = location;
+                    organizationListAdapter.setDeviceLocation(deviceLocation);
+                    organizationListAdapter.notifyDataSetChanged();
+                    try {
+                        locationManager.removeUpdates(locationListener);
+                    } catch (SecurityException se) {
+                        deviceLocation = null;
+                        Log.i(TAG, "Program is not have permission");
+                    }
+
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            };
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+
+            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            if (deviceLocation == null)
+                deviceLocation = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+        } catch (SecurityException se) {
+            deviceLocation = null;
+            Log.i(TAG, "Program is not have permission");
+        }
+
+        if (deviceLocation == null)
+            Log.i(TAG, "do not find location"); else
+        organizationListAdapter.setDeviceLocation(deviceLocation);
+    }
+
+
+    /*--------------------------------------------------------------------------------------------
+    * --------------------------------Start Refresh Datas-----------------------------------------
+    * ------------------------------------------------------------------------------------------*/
     public void startRefreshDatas() {
 
+
+
+        getDeviceLocation();
 
         (new FinanceUAAsyncTask(
                 this,
@@ -225,6 +302,15 @@ public class MainActivity extends AppCompatActivity implements
                         startActivity(optinent);
 
                         break;
+                    case R.id.navmenu_about:
+
+                        try {
+                            Toast.makeText(MainActivity.this, getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
+                        } catch (PackageManager.NameNotFoundException e) {
+                            Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
+                        }
+
+                        break;
 
                     default:
                         mDrawerLayout.closeDrawer(mNavigationView);
@@ -331,7 +417,9 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    /*--------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------
+    * ------------------------------ON CREATE------------------------------------------------------
+    * -------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "Begin OnCreate");
@@ -502,26 +590,21 @@ public class MainActivity extends AppCompatActivity implements
             }
         };
 
-        try {
-            LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-        } catch (SecurityException se) {
-            deviceLocation = null;
-            Log.i(TAG, "Program is not have permission");
-        }
 
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-            if (mGoogleApiClient == null) Log.i(TAG, "GoogleApiClient init false");
-        }
+//        if (mGoogleApiClient == null) {
+//            mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                    .addConnectionCallbacks(this)
+//                    .addOnConnectionFailedListener(this)
+//                    .addApi(LocationServices.API)
+//                    .build();
+//            if (mGoogleApiClient == null) Log.i(TAG, "GoogleApiClient init false");
+//        }
 
         //---------------
         if (savedInstanceState == null)
             AlarmBroadcastReciver.setAlarm(this);
+
+
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");
     }
@@ -593,11 +676,13 @@ public class MainActivity extends AppCompatActivity implements
             startRefreshDatas();
 
         startRefresh = false;
-        if (mGoogleApiClient != null) mGoogleApiClient.connect();
+//        if (mGoogleApiClient != null) mGoogleApiClient.connect();
 
     }
 
-
+    /*---------------------------------------------------------------------
+    --------------------------- On Click----------------------------------
+    ---------------------------------------------------------------------- */
     public void onclick(View v) {
         switch (v.getId()) {
 
@@ -608,11 +693,6 @@ public class MainActivity extends AppCompatActivity implements
 //                Intent intent=new Intent(MainActivity.this,NotificationService.class);
 //                Log.i(TAG, "onCLick");
 //                startService(intent);
-//                try {
-//                Toast.makeText(MainActivity.this, getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
-//        }           catch (PackageManager.NameNotFoundException e){
-//                    Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
-//                }
 
                 showLocationMapActivity();
                 break;
@@ -622,63 +702,63 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(TAG, "Google API client: On connected");
-
-        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-
-        try {//SecurityException
-            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-            if (deviceLocation != null) {
-                Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
-                organizationListAdapter.setDeviceLocation(deviceLocation);
-            }
-
-            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 50, new LocationListener() {
-
-
-                @Override
-                public void onLocationChanged(Location location) {
-                    deviceLocation = location;
-                    organizationListAdapter.setDeviceLocation(deviceLocation);
-                    organizationListAdapter.notifyDataSetChanged();
-
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
-
-        } catch (SecurityException se) {
-
-            Log.i(TAG, "Program is not have permission");
-        }
-
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
+//    @Override
+//    public void onConnected(Bundle bundle) {
+//        Log.i(TAG, "Google API client: On connected");
+//
+//        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+//
+//        try {//SecurityException
+//            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+//            if (deviceLocation != null) {
+//                Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
+//                organizationListAdapter.setDeviceLocation(deviceLocation);
+//            }
+//
+//            locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 50, new LocationListener() {
+//
+//
+//                @Override
+//                public void onLocationChanged(Location location) {
+//                    deviceLocation = location;
+//                    organizationListAdapter.setDeviceLocation(deviceLocation);
+//                    organizationListAdapter.notifyDataSetChanged();
+//
+//                }
+//
+//                @Override
+//                public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//                }
+//
+//                @Override
+//                public void onProviderEnabled(String provider) {
+//
+//                }
+//
+//                @Override
+//                public void onProviderDisabled(String provider) {
+//
+//                }
+//            });
+//
+//        } catch (SecurityException se) {
+//
+//            Log.i(TAG, "Program is not have permission");
+//        }
+//
+//
+//    }
+//
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(ConnectionResult connectionResult) {
+//
+//    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

@@ -71,6 +71,8 @@
     <string name="kerbstone_finance_i_URL">http://finance.i.ua/market/kiev/</string>
     <string name="notification_service">UAFinance notifications</string>
     <string name="preferences_label">Настройки</string>
+    <string name="phone_is_not_available">Телефон не доступен</string>
+    <string name="navmenu_about">Описание</string>
 
 
 </resources>

@@ -96,7 +96,7 @@ public class UAFConst {
                 result=R.mipmap.bank_praveks;
                 break;
             case PUMB_ID:
-                result=R.mipmap.bank_praveks;
+                result=R.mipmap.bank_pumb;
                 break;
             case UKRGAZ_ID:
                 result=R.mipmap.bank_ukrgazbank;

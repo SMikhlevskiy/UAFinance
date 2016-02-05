@@ -34,6 +34,11 @@
             android:id="@+id/navmenu_opt"
 
             android:title="@string/navmenu_opt" />
+        <item
+            android:id="@+id/navmenu_about"
+
+            android:title="@string/navmenu_about" />
+
         <!--
         <item android:title="List 1">
             <menu>
