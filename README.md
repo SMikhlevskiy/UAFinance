@@ -1,5 +1,5 @@
 # UAFinance
-Application for Android for quick &  easy search  of the nearest currency exchange with the best rate.
+Application for Android to quick &  easy search  the nearest currency exchange with the best rate.
 The application gets finance datas from Net and provides the user, sorted by course or by distance. 
 Also, the application provides information about rate of National Bank Ukraine, the InterBank and courses of precious metals. 
 Application is available on Yandex Store, and now is preparing for publication on Google PlayMarket.
