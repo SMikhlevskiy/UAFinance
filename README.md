@@ -11,6 +11,7 @@ Main Screen
 ![Main Screen](doc/Screenshot_2016-02-02-12-55-37.png)
 
 Navigation View
+
 ![Navigation View](doc/Screenshot_2016-02-02-13-06-28.png)
 
 The application provides information about black market currency exchange
@@ -18,6 +19,7 @@ Black Market
 ![Black Market](doc/Screenshot_2016-02-02-13-07-26.png)
 
 The application provides all the contact information of banks and their branches. The application also provides a currency calculator.
+
 ![Banks](doc/Screenshot_2016-02-02-13-09-37.png)
 
 Map displaying all nearby exchangers.
