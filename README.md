@@ -8,6 +8,7 @@ In the application I used Goole MAP API, LocationManager, FragmentViewPAger, Ala
 HttpURLConnection, NavigationView, Handlers, FloatingActionButton, DrawerLayout, Animation, WebView, GSON, JACKSON, XmlPullParser, PreferenceFragment.
   
 Main Screen  
+
 ![Main Screen](doc/Screenshot_2016-02-02-12-55-37.png)
 
 Navigation View
@@ -22,10 +23,13 @@ The application provides all the contact information of banks and their branches
 
 ![Banks](doc/Screenshot_2016-02-02-13-09-37.png)
 
+
 Map displaying all nearby exchangers.
+
 ![Map](doc/Screenshot_2016-02-02-13-08-59.png)
 
 The application every day inform the user about the current courses and indicates if courses was jump using Notification.
+
 ![Notifications](doc/Screenshot_2016-02-02-13-19-28.png)
 
 
