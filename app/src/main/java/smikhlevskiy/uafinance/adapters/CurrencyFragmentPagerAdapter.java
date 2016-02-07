@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 
 import java.util.HashMap;
 
@@ -20,13 +22,14 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 /**
  * Created by SMikhlevskiy
  * Adapter for work with Fragment ViewPager in bottom Header of MainActivity
- *
  */
 
 
 public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
+    public static final String TAG = CurrencyFragmentPagerAdapter.class.getSimpleName();
     private static int NUM_ITEMS = 1;
     private Context context;
+    private FragmentManager fragmentManager;
 
 
     private FinanceUA financeUA = null;
@@ -36,8 +39,11 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public CurrencyFragmentPagerAdapter(FragmentManager fragmentManager, Context context, int item_count) {
         super(fragmentManager);
+        this.fragmentManager=fragmentManager;
         NUM_ITEMS = item_count;
         this.context = context;
+
+
     }
 
     // Returns total number of pages
@@ -47,27 +53,34 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     // Returns the fragment to display for that page
+    public Fragment getFragmentByPosition(int position,ViewPager viewPager){
+
+        return fragmentManager.findFragmentByTag(
+                "android:switcher:" + viewPager.getId() + ":"
+                        + getItemId(position));
+    }
+
     @Override
     public Fragment getItem(int position) {
         //return ContentFragment.newInstance(position);
-
+        Log.i(TAG, "Build Position:" + position);
 
         switch (position) {
             case UAFConst.CURRENCY_CASH:
-                CurrencyCashFragment currencyCashFragment= new CurrencyCashFragment();
+                CurrencyCashFragment currencyCashFragment = new CurrencyCashFragment();
                 currencyCashFragment.setDatas(financeUA);
                 return currencyCashFragment;
             case UAFConst.INTERBANK:
-                InterBankFragment interBankFragment=new InterBankFragment();
+                InterBankFragment interBankFragment = new InterBankFragment();
                 interBankFragment.setDatas(interBank);
                 return interBankFragment;
             case UAFConst.NBU:
-                NBUFragment nbuFragment= new NBUFragment();
+                NBUFragment nbuFragment = new NBUFragment();
                 nbuFragment.setDatas(privat);
                 return nbuFragment;
 
             case UAFConst.PRECIOUS_METALS:
-                PreciousMetalsFragment preciousMetalsFragment= new PreciousMetalsFragment();
+                PreciousMetalsFragment preciousMetalsFragment = new PreciousMetalsFragment();
                 preciousMetalsFragment.setDatas(privat);
                 return preciousMetalsFragment;
 
@@ -80,6 +93,7 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
     // Returns the page title for the top indicator
     @Override
     public CharSequence getPageTitle(int position) {
+
         switch (position) {
             case UAFConst.CURRENCY_CASH:
                 return context.getString(R.string.CurrencyCash);
@@ -96,6 +110,8 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
+        Log.i(TAG, object.getClass().getSimpleName());
+
         if (object instanceof CurrencyCashFragment) {
             ((CurrencyCashFragment) object).setDatas(financeUA);
             ((CurrencyCashFragment) object).draw();
@@ -103,10 +119,11 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
             ((InterBankFragment) object).setDatas(interBank);
             ((InterBankFragment) object).draw();
         } else if (object instanceof NBUFragment) {
-            if (privat==null)  Log.i("Privat", "Privat is null"); else Log.i("Privat", "Privat is not null");
+            if (privat == null) Log.i("Privat", "Privat is null");
+            else Log.i("Privat", "Privat is not null");
             ((NBUFragment) object).setDatas(privat);
             ((NBUFragment) object).draw();
-        }  else if (object instanceof PreciousMetalsFragment) {
+        } else if (object instanceof PreciousMetalsFragment) {
             ((PreciousMetalsFragment) object).setDatas(privat);
             ((PreciousMetalsFragment) object).draw();
         }

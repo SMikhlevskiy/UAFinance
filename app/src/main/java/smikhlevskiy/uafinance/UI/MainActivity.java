@@ -1,5 +1,6 @@
 package smikhlevskiy.uafinance.UI;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler mainActivityHandler;
     private boolean startRefresh = true;
     private boolean prFirstMenuCreate = true;
+
+    private ViewPager vpPager;
 
     private Location deviceLocation = null;
     private LocationListener locationListener;
@@ -355,9 +358,34 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setupButtomHiderViewPager() {
         int count = UAFConst.CURRENCY_FRAGMENT_COUNT;
-        ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
+        vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new CurrencyFragmentPagerAdapter(getSupportFragmentManager(), this, count);
+
+
         vpPager.setAdapter(adapterViewPager);
+
+         // Hack to set datas to Fragment(becouse trouble when restore fragment)
+        vpPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i(adapterViewPager.TAG, "Position=" + position);
+                android.support.v4.app.Fragment fragment = adapterViewPager.getFragmentByPosition(position, vpPager);
+                if (fragment != null)
+                    adapterViewPager.getItemPosition(fragment);//for set datas to Fragment
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly();

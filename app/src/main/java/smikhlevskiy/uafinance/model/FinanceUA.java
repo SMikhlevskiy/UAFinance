@@ -21,9 +21,9 @@ import smikhlevskiy.uafinance.Utils.UAFConst;
 
 /**
  * Created by SMikhlevskiy on 07-Nov-15.
- * class describes all organiztation in application and it exange rates
+ * class describes all organizatation in application and it exange rates
  * and have main tools(processing,sorts...) for work with organizations
- * Datas getting from Finance cites(Finance.ua,Privat) & putting in this class
+ * Datas getting from Net & putting in this class
  */
 public class FinanceUA {
 
