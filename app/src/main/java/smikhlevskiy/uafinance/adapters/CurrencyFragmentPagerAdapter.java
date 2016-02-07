@@ -59,7 +59,6 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
                 "android:switcher:" + viewPager.getId() + ":"
                         + getItemId(position));
     }
-
     @Override
     public Fragment getItem(int position) {
         //return ContentFragment.newInstance(position);

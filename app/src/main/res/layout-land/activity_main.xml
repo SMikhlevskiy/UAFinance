@@ -55,70 +55,75 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/viewPagerLayout"
-            style="@style/hiderStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="0dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/spinnerLayout"
+            android:orientation="horizontal">
 
-            android:paddingLeft="1dp"
-            android:paddingRight="1dp"
-            android:paddingTop="0dp">
+            <ListView
 
+                android:id="@+id/listViewBanks"
+                style="@style/mainStyle"
+                android:layout_width="0dp"
+                android:layout_weight="0.55"
+                android:layout_height="match_parent"     >
+            </ListView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical">
-
-
-
-
-
+            <RelativeLayout
+                android:id="@+id/viewPagerLayout"
+                style="@style/hiderStyle"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:layout_height="match_parent"
 
 
-                <smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout
-                    android:id="@+id/sliding_tabs"
+
+
+                android:paddingBottom="0dp"
+
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingTop="0dp">
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
 
-                    android:background="@color/uafhiderback" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/vpPager"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@color/uaflighthiderback"
-
-                    />
-            </LinearLayout>
+                    android:layout_alignParentLeft="true"
+                    android:orientation="vertical">
 
 
+                    <smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout
+                        android:id="@+id/sliding_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+
+                        android:background="@color/uafhiderback" />
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vpPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/uaflighthiderback"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
 
 
 
 
-        </RelativeLayout>
-
-        <ListView
-
-            android:id="@+id/listViewBanks"
-            style="@style/mainStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/viewPagerLayout"
-            android:layout_below="@id/spinnerLayout">
 
 
-        </ListView>
+        </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/showMapButton"
@@ -126,13 +131,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:paddingBottom="0dp"
-            android:paddingRight="0dp"
+            android:layout_margin="3dp"
             android:minHeight="0dp"
             android:minWidth="0dp"
-
-            android:layout_margin="3dp"
             android:onClick="onclick"
+
+            android:paddingBottom="0dp"
+            android:paddingRight="0dp"
             android:src="@mipmap/map"
             app:backgroundTint="@color/uafmainback"
             app:elevation="6dp"
