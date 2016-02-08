@@ -33,7 +33,7 @@
     <string name="bid">Продажа</string>
     <string name="nullvall">0.0</string>
     <string name="telephone">Телефон</string>
-    <string name="grivna">Гривны</string>
+    <string name="grivna">ГРН</string>
     <string name="FindLatLonError">\n Unable to get Latitude and Longitude for this address location.</string>
     <string name="serverKey">AIzaSyCN-atwyMdbfyAW3FKeHlCGb7aSn8sY4Ew</string>
     <string name="NBU_metall">Металл</string>

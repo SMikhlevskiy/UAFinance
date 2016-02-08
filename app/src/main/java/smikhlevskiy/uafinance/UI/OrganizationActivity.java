@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,6 +115,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
 
         ((TextView) findViewById(R.id.organization_adress)).setText(organization.getAddress());
 
+        if (findViewById(R.id.organization_link)!=null)
         ((TextView) findViewById(R.id.organization_link)).setText(organization.getLink());
 
         ((TextView) findViewById(R.id.organization_telephone)).setText(organization.getPhone());
@@ -125,11 +127,15 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
                 try {
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", organization.getPhone(), null));
                     startActivity(intent);
-                } catch (Exception e){
-                    Toast.makeText(OrganizationActivity.this, R.string.phone_is_not_available,Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(OrganizationActivity.this, R.string.phone_is_not_available, Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        ImageView imageView = (ImageView) findViewById(R.id.image);
+        imageView.setImageResource(UAFConst.getBankImage(organization.getOrgType(), organization.getTitle()));
+
         //---Calculator----------
         ((TextView) findViewById(R.id.calckSum)).setText(UAFPreferences.getAskBid());
         ((TextView) findViewById(R.id.calckCurr)).setText(UAFPreferences.getCurrancie());

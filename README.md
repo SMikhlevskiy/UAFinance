@@ -5,7 +5,7 @@ Also, the application provides information about rate of National Bank Ukraine, 
 Application is available on Yandex Store, and now is preparing for publication on Google PlayMarket.
 
 In the application I used Goole MAP API, LocationManager, FragmentViewPAger, AlarmManager, Services, BroadcastReciver(with start On Boot Device), AsyncTask,
-HttpURLConnection, NavigationView, Handlers, FloatingActionButton, DrawerLayout, Animation, WebView, GSON, JACKSON, XmlPullParser, PreferenceFragment.
+HttpURLConnection, NavigationView, Handlers, FloatingActionButton, DrawerLayout, Animation, WebView, GSON, JACKSON, XmlPullParser, PreferenceFragment, SQLiteOpenHelper,Parcelable, Intent.
   
 Main Screen  
 

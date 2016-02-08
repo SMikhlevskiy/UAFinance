@@ -55,58 +55,43 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+
+        <LinearLayout
             android:id="@+id/viewPagerLayout"
             style="@style/hiderStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingBottom="0dp"
 
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+
+            android:orientation="vertical"
+            android:paddingBottom="0dp"
             android:paddingLeft="1dp"
+
+
             android:paddingRight="1dp"
             android:paddingTop="0dp">
 
 
-            <LinearLayout
+            <smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout
+                android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
 
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical">
+                android:background="@color/uafhiderback" />
 
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vpPager"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/uaflighthiderback"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
 
+                />
+        </LinearLayout>
 
-
-
-
-
-                <smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout
-                    android:id="@+id/sliding_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-
-                    android:background="@color/uafhiderback" />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/vpPager"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@color/uaflighthiderback"
-
-                    />
-            </LinearLayout>
-
-
-
-
-
-
-
-        </RelativeLayout>
 
         <ListView
 
@@ -126,13 +111,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:paddingBottom="0dp"
-            android:paddingRight="0dp"
+            android:layout_margin="3dp"
             android:minHeight="0dp"
             android:minWidth="0dp"
-
-            android:layout_margin="3dp"
             android:onClick="onclick"
+
+            android:paddingBottom="0dp"
+            android:paddingRight="0dp"
+
+
             android:src="@mipmap/map"
             app:backgroundTint="@color/uafmainback"
             app:elevation="6dp"

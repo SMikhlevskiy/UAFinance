@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * Created by SMikhlevskiy on 07-Nov-15.
- * class describes organiztation and it exange rates
+ * class describes organizatation and it exchange rates
  */
 public class Organization implements Parcelable {
     private String id;
