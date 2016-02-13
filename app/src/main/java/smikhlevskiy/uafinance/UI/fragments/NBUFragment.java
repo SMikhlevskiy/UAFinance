@@ -22,27 +22,35 @@ import smikhlevskiy.uafinance.model.Currencie;
 public class NBUFragment extends Fragment {
     public static String TAG = NBUFragment.class.getSimpleName();
     private View fragmentView;
-    private HashMap<String, Currencie> privatHashMap=null;
+    private HashMap<String, Currencie> privatHashMap = null;
 
 
-    public void setDatas(HashMap<String, Currencie> privatHashMap){
-        this.privatHashMap=privatHashMap;
+    public void setDatas(HashMap<String, Currencie> privatHashMap) {
+        this.privatHashMap = privatHashMap;
     }
 
-    public void draw(){
-if (privatHashMap!=null) {
-    ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(privatHashMap.get(getString(R.string.USD)).getAsk());
-    ((TextView) fragmentView.findViewById(R.id.USD_bid)).setVisibility(View.INVISIBLE);
+    public void draw() {
+        try {
+            if (privatHashMap != null) {
+                ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(privatHashMap.get(getString(R.string.USD)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.USD_bid)).setVisibility(View.INVISIBLE);
 
-        ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(privatHashMap.get(getString(R.string.EUR)).getAsk());
-        ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setVisibility(View.INVISIBLE);
+                ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(privatHashMap.get(getString(R.string.EUR)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setVisibility(View.INVISIBLE);
 
-        ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(privatHashMap.get(getString(R.string.RUR)).getAsk());
-        ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setVisibility(View.INVISIBLE);
+                ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(privatHashMap.get(getString(R.string.RUR)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setVisibility(View.INVISIBLE);
 
-    ((TextView) fragmentView.findViewById(R.id.ask)).setVisibility(View.INVISIBLE);
-    ((TextView) fragmentView.findViewById(R.id.bid)).setVisibility(View.INVISIBLE);
-} else Log.i(TAG,"PRIVAT hash is null");
+                ((TextView) fragmentView.findViewById(R.id.ask)).setVisibility(View.INVISIBLE);
+                ((TextView) fragmentView.findViewById(R.id.bid)).setVisibility(View.INVISIBLE);
+            } else Log.i(TAG, "PRIVAT hash is null");
+        } catch (IllegalStateException e) {
+            //IllegalStateException: Fragment  not attached to Activity
+            // I do not find another solution
+            Log.i(TAG, "Fragment not attached to Activity");
+
+            return;
+        }
     }
 
 

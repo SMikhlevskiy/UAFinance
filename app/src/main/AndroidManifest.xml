@@ -25,7 +25,11 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBLeHyfQO_kh13jsSE7iLUSGXrzZh9CUys" />
+            android:value="AIzaSyCPFE8KBSoJloV3MtI5ISbyNgiFgcCtMH8" />
+        <!--
+        AIzaSyCPFE8KBSoJloV3MtI5ISbyNgiFgcCtMH8  //debug
+        AIzaSyBLeHyfQO_kh13jsSE7iLUSGXrzZh9CUys // release
+        -->
 
         <activity
             android:name="smikhlevskiy.uafinance.UI.MainActivity"
@@ -56,6 +60,7 @@
                 android:value=".UI.LocationMapActivity" />
 
         </activity>
+
 
         <activity
             android:name=".UI.KerbstoneActivity"

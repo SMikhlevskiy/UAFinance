@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,12 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
 
 
     public void draw() {
+        try {
+        Log.i(TAG,"draw:start");
 
-        if (financeUA==null) return;
+            if (!isAdded() || (financeUA == null) || (fragmentView.getContext() == null)) return;
+
+        Log.i(TAG,"draw:prefernces ");
         UAFPreferences UAFPreferences =new UAFPreferences(fragmentView.getContext());
 
         HashMap<String, Currencie> minMaxCurrencies =financeUA.getMinMaxCurrencies(
@@ -58,7 +63,7 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
                         getString(R.string.EUR),
                         getString(R.string.RUB)},
                 UAFPreferences.getCity());
-
+            Log.i(TAG, "draw:findViewById");
         ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(minMaxCurrencies.get(getString(R.string.USD)).getAsk());
         ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(minMaxCurrencies.get(getString(R.string.USD)).getBid());
 
@@ -68,7 +73,13 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
         ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(minMaxCurrencies.get(getString(R.string.RUB)).getAsk());
         ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setText(minMaxCurrencies.get(getString(R.string.RUB)).getBid());
 
+        } catch (IllegalStateException e){
+            //IllegalStateException: Fragment  not attached to Activity
+            // I do not find another solution
+            Log.i(TAG,"Fragment not attached to Activity");
 
+            return;
+        }
     }
 
     public void setDatas(FinanceUA financeUA){

@@ -3,6 +3,7 @@ package smikhlevskiy.uafinance.UI.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,23 @@ public class InterBankFragment extends Fragment {
     public void draw()
 
     {
-if (ibHashMap==null) return;
-        ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(ibHashMap.get(getString(R.string.USD)).getAsk());
-        ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(ibHashMap.get(getString(R.string.USD)).getBid());
+        try {
+            if (ibHashMap == null) return;
+            ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(ibHashMap.get(getString(R.string.USD)).getAsk());
+            ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(ibHashMap.get(getString(R.string.USD)).getBid());
 
-        ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(ibHashMap.get(getString(R.string.EUR)).getAsk());
-        ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setText(ibHashMap.get(getString(R.string.EUR)).getBid());
+            ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(ibHashMap.get(getString(R.string.EUR)).getAsk());
+            ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setText(ibHashMap.get(getString(R.string.EUR)).getBid());
 
-        ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(ibHashMap.get(getString(R.string.RUB)).getAsk());
-        ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setText(ibHashMap.get(getString(R.string.RUB)).getBid());
+            ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(ibHashMap.get(getString(R.string.RUB)).getAsk());
+            ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setText(ibHashMap.get(getString(R.string.RUB)).getBid());
+        } catch (IllegalStateException e) {
+            //IllegalStateException: Fragment  not attached to Activity
+            // I do not find another solution
+            Log.i(TAG, "Fragment not attached to Activity");
 
+            return;
+        }
     }
 
     public void setDatas(HashMap<String, Currencie> ibHashMap) {
