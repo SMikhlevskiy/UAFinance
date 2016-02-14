@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/hiderLightStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <!-- USD -->
+    <TextView
+        android:id="@+id/USD_bid"
+        style="@style/hiderBlackTextStyle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/nullvall" />
+
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/USD_iv"
+            android:layout_width="@dimen/midl_text_size"
+            android:layout_height="@dimen/midl_text_size"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+
+
+            android:src="@mipmap/usapng" />
+
+        <TextView
+            android:id="@+id/USD_cur_name"
+            style="@style/hiderRedTextStyle"
+            android:layout_alignParentRight="true"
+
+            android:text="@string/USD" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/USD_ask"
+        style="@style/hiderBlackTextStyle"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+        android:text="@string/nullvall" />
+
+
+    <!--   EUR   -->
+    <TextView
+        android:id="@+id/EUR_bid"
+        style="@style/hiderBlackTextStyle"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/nullvall" />
+
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/EUR_iv"
+            android:layout_width="@dimen/midl_text_size"
+            android:layout_height="@dimen/midl_text_size"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+
+
+            android:src="@mipmap/europapng" />
+
+        <TextView
+            android:id="@+id/EUR_cur_name"
+            style="@style/hiderRedTextStyle"
+            android:layout_alignParentRight="true"
+
+            android:text="@string/EUR" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/EUR_ask"
+        style="@style/hiderBlackTextStyle"
+
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+        android:text="@string/nullvall" />
+
+    <!--RUB -->
+    <TextView
+        android:id="@+id/RUB_bid"
+        style="@style/hiderBlackTextStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/nullvall" />
+
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/RUB_iv"
+            android:layout_width="@dimen/midl_text_size"
+            android:layout_height="@dimen/midl_text_size"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+
+
+            android:src="@mipmap/russiapng" />
+
+        <TextView
+            android:id="@+id/RUB_cur_name"
+            style="@style/hiderRedTextStyle"
+            android:layout_alignParentRight="true"
+
+            android:text="@string/RUB" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/RUB_ask"
+        style="@style/hiderBlackTextStyle"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+        android:text="@string/nullvall" />
+
+
+    <!--TextView
+        android:id="@+id/widgettext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+
+        android:textColor="#000000" /-->
+
+
+</RelativeLayout>
