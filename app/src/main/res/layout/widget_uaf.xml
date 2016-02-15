@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/hiderLightStyle"
+
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
 
-    <!-- USD -->
+    android:background="@drawable/layout_bg"
+    android:padding="@dimen/activity_horizontal_margin">
+    <!-- USD  android:background="@color/uaflighthiderback" -->
     <TextView
         android:id="@+id/USD_bid"
-        style="@style/hiderBlackTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/nullvall" />
+        android:text="@string/nullvall"
+
+        android:textSize="@dimen/midl_text_size" />
 
     <RelativeLayout
         android:layout_width="50dp"
@@ -31,39 +35,43 @@
 
         <TextView
             android:id="@+id/USD_cur_name"
-            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/midl_text_size"
             android:layout_alignParentRight="true"
+            android:textColor="@color/uafredtext"
 
             android:text="@string/USD" />
 
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/USD_ask"
-        style="@style/hiderBlackTextStyle"
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="@string/nullvall"
+        android:textSize="@dimen/midl_text_size" />
 
-        android:text="@string/nullvall" />
 
-
-    <!--   EUR   -->
+    <!-- EUR -->
     <TextView
         android:id="@+id/EUR_bid"
-        style="@style/hiderBlackTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:text="@string/nullvall" />
+        android:text="@string/nullvall"
+
+        android:textSize="@dimen/midl_text_size" />
 
     <RelativeLayout
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/EUR_iv"
@@ -77,32 +85,37 @@
 
         <TextView
             android:id="@+id/EUR_cur_name"
-            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/midl_text_size"
             android:layout_alignParentRight="true"
+            android:textColor="@color/uafredtext"
 
             android:text="@string/EUR" />
 
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/EUR_ask"
-        style="@style/hiderBlackTextStyle"
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:text="@string/nullvall"
+        android:textSize="@dimen/midl_text_size" />
 
-        android:text="@string/nullvall" />
 
-    <!--RUB -->
+    <!-- RUB -->
     <TextView
         android:id="@+id/RUB_bid"
-        style="@style/hiderBlackTextStyle"
-        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:text="@string/nullvall" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/nullvall"
+
+        android:textSize="@dimen/midl_text_size" />
 
     <RelativeLayout
         android:layout_width="50dp"
@@ -122,34 +135,33 @@
 
         <TextView
             android:id="@+id/RUB_cur_name"
-            style="@style/hiderRedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/midl_text_size"
             android:layout_alignParentRight="true"
-
+            android:textColor="@color/uafredtext"
             android:text="@string/RUB" />
 
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/RUB_ask"
-        style="@style/hiderBlackTextStyle"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-
-        android:text="@string/nullvall" />
-
-
-    <!--TextView
-        android:id="@+id/widgettext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:text="@string/nullvall"
+        android:textSize="@dimen/midl_text_size" />
 
-        android:textColor="#000000" /-->
+
+
+
+    <!--
+    style="@style/hiderLightStyle"
+    android:background="@drawable/layout_bg"-->
+
+
 
 
 </RelativeLayout>

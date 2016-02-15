@@ -32,12 +32,10 @@ The application every day inform the user about the current courses and indicate
 
 ![Notifications](doc/Screenshot_2016-02-02-13-19-28.png)
 
+Widget for HomeScreen with ExchangeRates
+![Widget](doc/widget.png)
 
-To-Do
 
-1) Increase the database of banks and exchangers, with the optimization of its update rate.
-2) A widget for desktop.
-3) Optimization time of first start.
 
 
 

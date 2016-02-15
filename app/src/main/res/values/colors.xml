@@ -17,6 +17,7 @@
     <color name="uaflighthiderback">#CCBB44</color>
 
 
-
+    <color name="uafwidgetborder">#B1BCBE</color>
+    <color name="uafwidgetbody">#DDDDAA</color>
 
 </resources>

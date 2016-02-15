@@ -19,7 +19,7 @@ import smikhlevskiy.uafinance.model.FinanceUA;
 /**
  * Created by "SMikhlevskiy" on 14-Feb-16.
  */
-public class UAFWidget extends AppWidgetProvider{
+public class UAFWidget extends AppWidgetProvider {
     private static SimpleDateFormat formatter = new SimpleDateFormat(
             "dd MMM yyyy  hh:mm:ss a");
     static String strWidgetText = "";
@@ -28,21 +28,21 @@ public class UAFWidget extends AppWidgetProvider{
     public void onDeleted(Context context, int[] appWidgetIds) {
         // TODO Auto-generated method stub
         // super.onDeleted(context, appWidgetIds);
-        Toast.makeText(context, "onDeleted()", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "onDeleted()", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDisabled(Context context) {
         // TODO Auto-generated method stub
         // super.onDisabled(context);
-        Toast.makeText(context, "onDisabled()", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "onDisabled()", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onEnabled(Context context) {
         // TODO Auto-generated method stub
         // super.onEnabled(context);
-        Toast.makeText(context, "onEnabled()", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "onEnabled()", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -56,11 +56,11 @@ public class UAFWidget extends AppWidgetProvider{
             int appWidgetId = appWidgetIds[i];
             updateAppWidget(context, appWidgetManager, appWidgetId);
 
-            Toast.makeText(
-                    context,
-                    "onUpdate(): " + String.valueOf(i) + " : "
-                            + String.valueOf(appWidgetId), Toast.LENGTH_LONG)
-                    .show();
+//            Toast.makeText(
+//                    context,
+//                    "onUpdate(): " + String.valueOf(i) + " : "
+//                            + String.valueOf(appWidgetId), Toast.LENGTH_LONG)
+//                    .show();
         }
 
     }
@@ -77,19 +77,20 @@ public class UAFWidget extends AppWidgetProvider{
                 "[" + String.valueOf(appWidgetId) + "]" + strWidgetText);
         appWidgetManager.updateAppWidget(appWidgetId, updateViews);
         */
-        (new AsyncTask<Void,Void,FinanceUA>(){
+        (new AsyncTask<Void, Void, FinanceUA>() {
             private WeakReference<Context> context;
             AppWidgetManager appWidgetManager;
             int appWidgetId;
 
-            public AsyncTask<Void,Void,FinanceUA>  initialise(Context context,AppWidgetManager appWidgetManager,int appWidgetId){
-                this.context=new WeakReference<Context>(context);
-                this.appWidgetManager=appWidgetManager;
-                this.appWidgetId=appWidgetId;
+            public AsyncTask<Void, Void, FinanceUA> initialise(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+                this.context = new WeakReference<Context>(context);
+                this.appWidgetManager = appWidgetManager;
+                this.appWidgetId = appWidgetId;
                 return this;
 
                 //this.context = context;
             }
+
             @Override
             protected FinanceUA doInBackground(Void... params) {
 
@@ -99,7 +100,7 @@ public class UAFWidget extends AppWidgetProvider{
 
             @Override
             protected void onPostExecute(FinanceUA financeUA) {
-                if ((financeUA == null) || (context.get()==null)) return;
+                if ((financeUA == null) || (context.get() == null)) return;
 
                 HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies(new String[]{
                                 ((Context) context.get()).getString(R.string.USD),
@@ -110,7 +111,7 @@ public class UAFWidget extends AppWidgetProvider{
                 if (minMaxCurrencies == null) return;
 
 
-                RemoteViews updateViews = new RemoteViews( ((Context) context.get()).getPackageName(),
+                RemoteViews updateViews = new RemoteViews(((Context) context.get()).getPackageName(),
                         R.layout.widget_uaf);
 
                 updateViews.setTextViewText(R.id.USD_ask,
@@ -131,26 +132,20 @@ public class UAFWidget extends AppWidgetProvider{
                         minMaxCurrencies.get(((Context) context.get()).getString(R.string.RUB)).getBid());
 
 
-
                 appWidgetManager.updateAppWidget(appWidgetId, updateViews);
-
-
 
 
                 super.onPostExecute(financeUA);
             }
 
 
-        }).initialise(context,appWidgetManager,appWidgetId).execute();
+        }).initialise(context, appWidgetManager, appWidgetId).execute();
 
 
-
-
-
-        Toast.makeText(
-                context,
-                "updateAppWidget(): " + String.valueOf(appWidgetId) + " "
-                        + strWidgetText, Toast.LENGTH_LONG).show();
+//        Toast.makeText(
+//                context,
+//                "updateAppWidget(): " + String.valueOf(appWidgetId) + " "
+//                        + strWidgetText, Toast.LENGTH_LONG).show();
 
     }
 
