@@ -488,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerCurrencie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //ArrayAdapter <String> a=parent;
+                //ArrayAdapter <String> aaaa=parent;
 
                 if (!((String) parent.getAdapter().getItem(position)).equals(uafPreferences.getCurrancie())) //  was changed)
                 {
@@ -549,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerAskBid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //ArrayAdapter <String> a=parent;
+                //ArrayAdapter <String> aaaa=parent;
                 if (!((String) parent.getAdapter().getItem(position)).equals(uafPreferences.getAskBid())) //  was changed)
                 {
                     uafPreferences.setAskBid((String) parent.getAdapter().getItem(position));

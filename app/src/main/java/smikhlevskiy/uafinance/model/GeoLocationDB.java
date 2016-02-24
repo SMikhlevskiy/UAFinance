@@ -137,7 +137,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
 
     }
 
-    public HashMap<String, LatLng> updteLocationBase(final List<String> textAddress) {
+    public HashMap<String, LatLng> updteLocationBase(final List<String> textAddress,boolean isUpdate) {
         Log.i(TAG,"Start UPDATE");
 
         GeoLocationUtils geoLocationUtils = new GeoLocationUtils();
@@ -189,7 +189,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-
+        if (isUpdate) // updateBaseofAddresses
         for (String text : textAddress)
             if (!latLonMap.containsKey(text)) {//Coordinates is absent in BD
 
@@ -232,7 +232,7 @@ public class GeoLocationDB extends SQLiteOpenHelper {
             @Override
             public void run() {
 
-                updteLocationBase(textAddress);
+                updteLocationBase(textAddress,true);
 
 
 

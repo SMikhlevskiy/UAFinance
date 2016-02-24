@@ -57,12 +57,7 @@ public static String TAG=CurrencyCashFragment.class.getSimpleName();
         Log.i(TAG,"draw:prefernces ");
         UAFPreferences UAFPreferences =new UAFPreferences(fragmentView.getContext());
 
-        HashMap<String, Currencie> minMaxCurrencies =financeUA.getMinMaxCurrencies(
-                new String[]{
-                        getString(R.string.USD),
-                        getString(R.string.EUR),
-                        getString(R.string.RUB)},
-                UAFPreferences.getCity());
+        HashMap<String, Currencie> minMaxCurrencies =financeUA.getMinMaxCurrencies();
             Log.i(TAG, "draw:findViewById");
         ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(minMaxCurrencies.get(getString(R.string.USD)).getAsk());
         ((TextView) fragmentView.findViewById(R.id.USD_bid)).setText(minMaxCurrencies.get(getString(R.string.USD)).getBid());

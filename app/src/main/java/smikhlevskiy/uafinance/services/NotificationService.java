@@ -21,7 +21,7 @@ import smikhlevskiy.uafinance.model.UAFPreferences;
 
 /**
  * Created by SMikhlevskiy on 25-Jan-16.
- * Service for out Notification about exchange rates(once a day) or Notification about exchange rates jump(control every two hours)
+ * Service for out Notification about exchange rates(once aaaa day) or Notification about exchange rates jump(control every two hours)
  * Notification do not out in  rest day&time
  */
 
@@ -56,21 +56,17 @@ public class NotificationService extends IntentService {
 
     public void sendNotification() {
 
-        //long time= System.currentTimeMillis();
 
 
-        FinanceUA financeUA = FinanceUA.readFromJSON();
+        UAFPreferences uafPreferences=new UAFPreferences(this);
+        FinanceUA financeUA = FinanceUA.readFromJSON(uafPreferences.getCity());
 
         String resultString = "";
         if (financeUA == null) return;
-        HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies(new String[]{
-                        getString(R.string.USD),
-                        getString(R.string.EUR),
-                        getString(R.string.RUB)},
-                getString(R.string.default_city));
+        HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies();
         if (minMaxCurrencies == null) return;
 
-        UAFPreferences uafPreferences = new UAFPreferences(NotificationService.this);
+
 
         double valUSD;
         double lastValUSD;
@@ -109,7 +105,7 @@ public class NotificationService extends IntentService {
 
 
 
-        // once a day || currency jump
+        // once aaaa day || currency jump
 
 
         uafPreferences.setLastDayNotification(day_of_year);

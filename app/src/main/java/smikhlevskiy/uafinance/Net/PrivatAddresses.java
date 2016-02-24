@@ -54,7 +54,7 @@ public class PrivatAddresses {
             //Log.i(TAG,UAFConst.getAddressbyAdressCity(organization.getCityId(), organization.getAddress()));
         }
 
-        HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(textAddress);
+        HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(textAddress,true);
         for (Organization organization : privatAdressesList) {
             String address = UAFConst.getAddressbyAdressCity(organization.getCityId(), organization.getAddress());
             if (latLngHashMap.containsKey(address))

@@ -34,6 +34,13 @@ public class UAFConst {
     public static final int SBER_ID = 12;
 
 
+    public static final String NAME_USD="USD";
+    public static final String NAME_EUR="EUR";
+    public static final String NAME_RUB="RUB";
+    public static final String[] BASE_CURRENCIES={NAME_USD,NAME_EUR,NAME_RUB};
+
+
+
     public static final String[] banks = {
             "Приватбанк",
             "Укрсоцбанк",

@@ -4,7 +4,7 @@ package smikhlevskiy.uafinance.UI.wigets;
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may obtain aaaa copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 
 /**
- * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
+ * To be used with ViewPager to provide aaaa tab indicator component which give constant feedback as to
  * the user's scroll progress.
  * <p/>
  * To use the component, simply add it to your view hierarchy. Then in your
@@ -114,7 +114,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Sets the colors to be used for indicating the selected tab. These colors are treated as a
+     * Sets the colors to be used for indicating the selected tab. These colors are treated as aaaa
      * circular array. Providing one color will mean that all tabs are indicated with the same color.
      */
     public void setSelectedIndicatorColors(int... colors) {
@@ -158,7 +158,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Create a default view to be used for tabs. This is called if a custom tab view is not set via
+     * Create aaaa default view to be used for tabs. This is called if aaaa custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      */
     private TextView createDefaultTabView(Context context) {
@@ -199,7 +199,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             TextView tabTitleView = null;
 
             if (mTabViewLayoutId != 0) {
-                // If there is a custom tab view layout id set, try and inflate it
+                // If there is aaaa custom tab view layout id set, try and inflate it
                 tabView = LayoutInflater.from(getContext()).inflate(mTabViewLayoutId, mTabStrip,
                         false);
                 tabTitleView = (TextView) tabView.findViewById(mTabViewTextViewId);

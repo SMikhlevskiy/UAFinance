@@ -15,13 +15,14 @@ import java.util.HashMap;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 
 /**
  * Created by "SMikhlevskiy" on 14-Feb-16.
  */
 public class UAFWidget extends AppWidgetProvider {
     private static SimpleDateFormat formatter = new SimpleDateFormat(
-            "dd MMM yyyy  hh:mm:ss a");
+            "dd MMM yyyy  hh:mm:ss");
     static String strWidgetText = "";
 
     @Override
@@ -81,11 +82,15 @@ public class UAFWidget extends AppWidgetProvider {
             private WeakReference<Context> context;
             AppWidgetManager appWidgetManager;
             int appWidgetId;
+            String city;
 
             public AsyncTask<Void, Void, FinanceUA> initialise(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
                 this.context = new WeakReference<Context>(context);
                 this.appWidgetManager = appWidgetManager;
                 this.appWidgetId = appWidgetId;
+                UAFPreferences uafprefences=new UAFPreferences(context);
+                city=uafprefences.getCity();
+
                 return this;
 
                 //this.context = context;
@@ -93,20 +98,14 @@ public class UAFWidget extends AppWidgetProvider {
 
             @Override
             protected FinanceUA doInBackground(Void... params) {
-
-
-                return FinanceUA.readFromJSON();
+                return FinanceUA.readFromJSON(city);
             }
 
             @Override
             protected void onPostExecute(FinanceUA financeUA) {
                 if ((financeUA == null) || (context.get() == null)) return;
 
-                HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies(new String[]{
-                                ((Context) context.get()).getString(R.string.USD),
-                                ((Context) context.get()).getString(R.string.EUR),
-                                ((Context) context.get()).getString(R.string.RUB)},
-                        ((Context) context.get()).getString(R.string.default_city));
+                HashMap<String, Currencie> minMaxCurrencies = financeUA.getMinMaxCurrencies();
 
                 if (minMaxCurrencies == null) return;
 
@@ -130,6 +129,7 @@ public class UAFWidget extends AppWidgetProvider {
                         minMaxCurrencies.get(((Context) context.get()).getString(R.string.RUB)).getAsk());
                 updateViews.setTextViewText(R.id.RUB_bid,
                         minMaxCurrencies.get(((Context) context.get()).getString(R.string.RUB)).getBid());
+
 
 
                 appWidgetManager.updateAppWidget(appWidgetId, updateViews);

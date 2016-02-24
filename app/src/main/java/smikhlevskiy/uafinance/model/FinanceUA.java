@@ -41,6 +41,8 @@ public class FinanceUA {
 
     private ArrayList<Integer> fu_index = new ArrayList<Integer>();//calck index for sorting
 
+    private HashMap<String, Currencie> minMaxCurrencies;
+
 
     public FinanceUA() {
         fu_index = new ArrayList<Integer>();
@@ -81,7 +83,10 @@ public class FinanceUA {
                     Organization maxOrg = null;
                     Location bLockation = null;
                     int n = 0;
-                    for (Organization bOrganization : organizations[i].getOrganizationBrunches())
+
+                    ArrayList<Organization> orgBrunch=organizations[i].getOrganizationBrunches();
+
+                    for (Organization bOrganization : orgBrunch)
                         if ((deviceLocation != null) && (bOrganization.getLatLong() != null)) {
                             bLocation.setLatitude(bOrganization.getLatLong().latitude);
                             bLocation.setLongitude(bOrganization.getLatLong().longitude);
@@ -100,11 +105,11 @@ public class FinanceUA {
 
                     //move nearby organization to root&and  old root move to brunch
                     if ((maxOrg != null) && (maxOrg.getDistance() < organizations[i].getDistance())) {
-                        Log.i(TAG, "OLD root " + organizations[i].getAddress() + " " + organizations[i].getDistance());
-                        Log.i(TAG, "NEW root " + maxOrg.getAddress() + " " + maxOrg.getDistance());
+                        Log.i(TAG, "OLD root " +organizations[i].getTitle()+" "+organizations[i].getAddress() + " " + organizations[i].getDistance());
+                        Log.i(TAG, "NEW root " +maxOrg.getTitle()+" "+ maxOrg.getAddress() + " " + maxOrg.getDistance());
 
                         organizations[i].getOrganizationBrunches().remove(maxOrg);//remove nearby organization from brunch
-                        maxOrg.setOrganizationBrunches(organizations[i].getOrganizationBrunches());//move brunch from old root to nearby organization
+                        maxOrg.setOrganizationBrunches(orgBrunch);//move brunch from old root to nearby organization
                         organizations[i].setOrganizationBrunches(null);//remove brunch from old root
                         maxOrg.getOrganizationBrunches().add(organizations[i]);//add old root to brunch of nearby organization
                         organizations[i] = maxOrg;//set nearby organization to root
@@ -162,18 +167,25 @@ public class FinanceUA {
 
     }
 
+
+    public HashMap<String, Currencie> getMinMaxCurrencies()
+
+    {
+        return minMaxCurrencies;
+    }
+
     /**
      * Get HashMap with maximumum Bid & minimum Ask rates for base currencies
      *
-     * @param keyCurrencies list of getting currencies
-     * @param city          current city
+     * @param city current city
      * @return
      */
 
-    public HashMap<String, Currencie> getMinMaxCurrencies(String[] keyCurrencies, String city) {
-        HashMap<String, Currencie> minMaxCurrencies = new HashMap<String, Currencie>();
+    public void cackMinMaxCurrencies(String city) {
 
-        for (String key : keyCurrencies) {
+        minMaxCurrencies = new HashMap<String, Currencie>();
+
+        for (String key : UAFConst.BASE_CURRENCIES) {
             if (!minMaxCurrencies.containsKey(key)) {
                 Currencie maxcur = new Currencie();
                 maxcur.setAsk("0.0");
@@ -205,7 +217,7 @@ public class FinanceUA {
 
         }
 
-        return minMaxCurrencies;
+
     }
 
     /**
@@ -317,13 +329,14 @@ public class FinanceUA {
 
             //-----------detect Bank-----------------
             titleLC = organizationsTitleList.get(j);
+
             for (int n = 0; n < UAFConst.banksLc.length; n++)
                 if (titleLC.contains(UAFConst.banksLc[n]))
                     titleLC = UAFConst.banksLc[n];
 
             /*-----move brunches of bank  to brunch------*/
             for (int i = organizationsList.size() - 1; i >= j + 1; i--) {
-                if (organizationsTitleList.get(i).contains(titleLC)) {
+                if (organizationsTitleList.get(i).contains(titleLC) && (!titleLC.equals("центр"))) {
                     Log.i("Optimization", "Remove" + organizationsList.get(i).getTitle());
 
                     if (rootOrganization.getOrganizationBrunches() == null)
@@ -352,7 +365,7 @@ public class FinanceUA {
     /**
      * Get datas from Finance.ua by JSON
      */
-    public static FinanceUA readFromJSON() {
+    public static FinanceUA readFromJSON(String city) {
         StringBuilder bulder = new StringBuilder("");
         try {
 
@@ -395,7 +408,12 @@ public class FinanceUA {
 
         Gson gson = new Gson();
 
-        return (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
+        FinanceUA financeUA = (FinanceUA) gson.fromJson(bulder.toString(), FinanceUA.class);
+
+        if (financeUA != null)
+            financeUA.cackMinMaxCurrencies(city);//calc MinMax exchange rate for base currencies
+
+        return financeUA;
 
 
     }

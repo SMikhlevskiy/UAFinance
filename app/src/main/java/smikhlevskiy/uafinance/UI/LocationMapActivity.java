@@ -85,12 +85,32 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     }
 
     void setFinanceUAMarkers(FinanceUA financeUA) {
-        GeoLocationDB geoLocationDB = new GeoLocationDB(LocationMapActivity.this, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
-        if (geoLocationDB == null) return;
+
+        double alfa;
+/*
+        UAFPreferences uafPreferences=new UAFPreferences(this);
+        String sCurrancie=uafPreferences.getCurrancie();
+
+        Double maxVal=1.0;
+        if  (financeUA.getMinMaxCurrencies().containsKey(sCurrancie))
+        maxVal=new Double(financeUA.getMinMaxCurrencies().get(sCurrancie).getAsk());
+*/
+
+
+
+
         for (Organization organization : financeUA.getOrganizations()) {
-            LatLng latLng = geoLocationDB.getLocation(UAFConst.getAddressbyAdressCity(financeUA.getCities().get(organization.getCityId()), organization.getAddress()));
+            LatLng latLng = organization.getLatLong();
             if (latLng != null) {
+                alfa=1.0;
+/*
+                if  (organization.getCurrencies().containsKey(sCurrancie) && (maxVal!=null))
+                    alfa=new Double(organization.getCurrencies().get(sCurrancie).getAsk())/maxVal;
+*/
+
+
                 mMap.addMarker(new MarkerOptions()
+                                .alpha((float)alfa)
                                 .position(latLng)
                                 .title(organization.getTitle())
                 );
@@ -103,9 +123,13 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void setPrivatMarkers(ArrayList<Organization> privatAdressesList) {
+        LatLng latLng;
+
+
         for (Organization organization : privatAdressesList) {
-            LatLng latLng = organization.getLatLong();
+            latLng = organization.getLatLong();
             if (latLng != null) {
+
                 mMap.addMarker(new MarkerOptions()
                                 .position(latLng)
                                 .title(organization.getTitle())
@@ -192,7 +216,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you specify aaaa parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
 
@@ -201,8 +225,8 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
 
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
+                    // This activity is NOT part of this app's task, so create aaaa new task
+                    // when navigating up, with aaaa synthesized back stack.
                     TaskStackBuilder.create(this)
                             // Add all of this activity's parents to the back stack
                             .addNextIntentWithParentStack(upIntent)

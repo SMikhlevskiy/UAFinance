@@ -67,7 +67,7 @@ public class KerbstoneActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you specify aaaa parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
 
@@ -76,8 +76,8 @@ public class KerbstoneActivity extends AppCompatActivity {
 
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                    // This activity is NOT part of this app's task, so create a new task
-                    // when navigating up, with a synthesized back stack.
+                    // This activity is NOT part of this app's task, so create aaaa new task
+                    // when navigating up, with aaaa synthesized back stack.
                     TaskStackBuilder.create(this)
                             // Add all of this activity's parents to the back stack
                             .addNextIntentWithParentStack(upIntent)

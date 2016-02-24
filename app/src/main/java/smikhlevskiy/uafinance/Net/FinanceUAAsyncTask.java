@@ -41,15 +41,14 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
     Location deviceLocation;
 
     /**
-     *
      * @param context
-     * @param city  current city
-     * @param scurrency   id current Currency(USD,EUR...)
-     * @param askBid  Ask or Bid
+     * @param city           current city
+     * @param scurrency      id current Currency(USD,EUR...)
+     * @param askBid         Ask or Bid
      * @param isSortCurrency true - SortBuy exchange rate,  false - sort by distance
-     * @param isLowWork  true - no Privat datas, no sort, no further processing  used for LocationMap&NitificationService,
-     *                   false used for ListView in MAinActivity
-     * @param deviceLocation  current deviceLocation used for Sort by Distance
+     * @param isLowWork      true - no Privat datas, no sort, no further processing  used for LocationMap&NitificationService,
+     *                       false used for ListView in MAinActivity
+     * @param deviceLocation current deviceLocation used for Sort by Distance
      * @param resultHandler  Handler for out result
      */
     public FinanceUAAsyncTask(
@@ -77,13 +76,12 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
     }
 
     /**
-     *
      * calck LatLong for all organization(if sortDistance)
      */
-    void setOrganizationsLatLon(FinanceUA financeUA, Context context, String city) {
+    void setOrganizationsLatLon(FinanceUA financeUA, Context context, String city,boolean isUpdate) {
         GeoLocationDB geoLocationDB = new GeoLocationDB(context, GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
-        HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(financeUA.getAllAddresses(city));
+        HashMap<String, LatLng> latLngHashMap = geoLocationDB.updteLocationBase(financeUA.getAllAddresses(city),isUpdate);
         for (Organization organization : financeUA.getOrganizations()) {
             String address = financeUA.getURLAddressByOrganization(organization);
             if (latLngHashMap.containsKey(address))
@@ -106,27 +104,35 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
     @Override
     protected FinanceUA doInBackground(Void... params) {
 
-        FinanceUA financeUA=FinanceUA.readFromJSON();//read from Finace.UA
+        FinanceUA financeUA = FinanceUA.readFromJSON(city);//read from Finace.UA
 
 
         if (financeUA == null) return null;
 
-        if (!isLowWork) {//LoWork - without sort & optimization(form BigMap)
+        if (!isLowWork) {//LoWork - without sort & optimization(BigMap)
 
-            PrivatAddresses privatAddresses=new PrivatAddresses();
+            PrivatAddresses privatAddresses = new PrivatAddresses();
             privatAddresses.read(city);//read from Privat.UA
             ArrayList<Organization> privatAdressesList = privatAddresses.getPrivatAdressesList();
             //-------------delete other city,move brunches organization to brunch-------
             financeUA.processingOrganizations(city, privatAdressesList);
-            //------------calck LatLong for all organization(if sortDistance)---
-            if ((!isSortCurrency) && (context.get() != null) && (deviceLocation != null)) {
-                setOrganizationsLatLon(financeUA, (Context) context.get(), city);
-            }
+        }
+
+        //------------calck LatLong for all organization(if sortDistance)---
+        if ((!isSortCurrency) && (context.get() != null)) {
+            setOrganizationsLatLon(financeUA, (Context) context.get(), city,!isLowWork);
+        }
+
+
+        if (!isLowWork) {//LoWork - without sort & optimization(BigMap)
             //----Sort------
             financeUA.sort(askBid,
                     isSortCurrency,
                     city, scurrency, deviceLocation);
         }
+
+
+
         return financeUA;
     }
 
