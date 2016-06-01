@@ -36,6 +36,7 @@
             android:allowTaskReparenting="false"
             android:exported="true"
             android:label="UAFinance"
+            android:theme="@style/AppTheme.NoActionBar"
              >
             <!--android:screenOrientation="portrait" -->
             <intent-filter>

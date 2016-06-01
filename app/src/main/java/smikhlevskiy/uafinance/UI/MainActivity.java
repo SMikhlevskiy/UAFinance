@@ -674,7 +674,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         //if (!prFirstMenuCreate) return true;
 
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
 
         Log.i(TAG, "onCreateOptionsMenu");
 

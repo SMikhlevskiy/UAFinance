@@ -74,6 +74,8 @@
     <string name="phone_is_not_available">Телефон не доступен</string>
     <string name="navmenu_about">Описание</string>
     <string name="curVersion">"Текущая версия программы: "</string>
+    <string name="course">Курс</string>
+    <string name="distance">Расстояние</string>
 
 
 </resources>

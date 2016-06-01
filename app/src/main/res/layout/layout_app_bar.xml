@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+
+            >
+
+            <!--<Switch-->
+            <!--android:id="@+id/mySwitch"-->
+            <!--style="@style/AppTheme"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textOff="OFF"-->
+            <!--android:switchMinWidth="56dp"-->
+
+
+            <!--android:textOn="ON"-->
+
+            <!--android:textSize="@dimen/midl_text_size"-->
+
+            <!--/>-->
+            <RelativeLayout
+                android:layout_width="@dimen/switch_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <TextView
+                    android:id="@+id/tvon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/small_padding"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="end"
+                    android:text="@string/distance"
+                    android:textColor="@color/black" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/mySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="@dimen/micro_padding"
+                    android:layout_toLeftOf="@id/tvon"
+                    android:checked="true"
+                    android:theme="@style/MySwitch" />
+
+                <TextView
+                    android:id="@+id/tvoff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toLeftOf="@id/mySwitch"
+                    android:text="@string/course"
+                    android:textColor="@color/black" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</LinearLayout>
