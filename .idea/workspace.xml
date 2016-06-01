@@ -11,31 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f43ac3c1-76b4-46c4-ab00-1aa1912f2854" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/anim/rotate_anim.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/actionbargradient.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout-land/activity_organization.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_toolbar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/animation_refresh.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/menu_organization_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/organization_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/KerbstoneActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/LocationMapActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/OrganizationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/adapters/OrganizationListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/adapters/OrganizationListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Utils/UAFConst.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/Utils/UAFConst.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/UAFPreferencesActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/UAFPreferencesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_kerbstone.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_kerbstone.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_locationmap.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_locationmap.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_organization.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_organization.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_uafprefernces.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_uafprefernces.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_app_bar_empty.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_app_bar_empty.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/navigationview_header.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/navigationview_header.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="UAFinance.old.iws" />
@@ -70,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4021164">
-              <caret line="53" column="8" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+            <state vertical-scroll-proportion="2.0689654">
+              <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -115,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5285235">
+              <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -1682,7 +1658,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/UAFPreferencesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_locationmap.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_uafprefernces.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/smikhlevskiy/uafinance/UI/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -1690,6 +1665,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_organization.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/navigationview_header.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -2131,12 +2107,18 @@
       <option name="project" value="LOCAL" />
       <updated>1464790307429</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add distance switcher">
+      <created>1464795186613</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1464795186613</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2175,7 +2157,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Code refactoring, design changes for material" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code refactoring, design changes for material" />
+    <MESSAGE value="Add distance switcher" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add distance switcher" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2388,14 +2371,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_navigation.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2467,8 +2442,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4021164">
-          <caret line="53" column="8" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="8" />
+        <state vertical-scroll-proportion="2.0689654">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5285235">
+          <caret line="90" column="48" selection-start-line="90" selection-start-column="48" selection-end-line="90" selection-end-column="48" />
           <folding />
         </state>
       </provider>
