@@ -25,7 +25,14 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCPFE8KBSoJloV3MtI5ISbyNgiFgcCtMH8" />
+            android:value="AIzaSyB2ULhHOixCcYwYZ26ifHVdDQGz4B_SPpY"/> <!-- debug -->
+        <!--android:value="AIzaSyB9&#45;&#45;2eGPC6nvOh-2-zm5xAF4Qy5O-TIIA" /> &lt;!&ndash;release &ndash;&gt;-->
+
+
+
+
+
+            <!--android:value="AIzaSyCPFE8KBSoJloV3MtI5ISbyNgiFgcCtMH8" />-->
         <!--
         AIzaSyCPFE8KBSoJloV3MtI5ISbyNgiFgcCtMH8  //debug
         AIzaSyBLeHyfQO_kh13jsSE7iLUSGXrzZh9CUys // release
@@ -47,6 +54,7 @@
         </activity>
         <activity
             android:name=".UI.OrganizationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/title_activity_organization">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -55,6 +63,7 @@
         </activity>
         <activity
             android:name=".UI.LocationMapActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/mapActivityName">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,6 +74,7 @@
 
         <activity
             android:name=".UI.KerbstoneActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/kerbstone_market">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,6 +83,7 @@
         </activity>
         <activity
             android:name=".UI.UAFPreferencesActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/preferences_label">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

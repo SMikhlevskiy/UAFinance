@@ -94,7 +94,7 @@ public class OrganizationActivity extends AppCompatActivity implements OnMapRead
         }
 
         ActionBar ab = getSupportActionBar();
-        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+       // ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
         ab.setDisplayHomeAsUpEnabled(true);
 

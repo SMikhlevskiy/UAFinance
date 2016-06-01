@@ -75,7 +75,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         }
 
         ActionBar ab = getSupportActionBar();
-        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+   //     ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
         ab.setDisplayHomeAsUpEnabled(true);
 

@@ -10,11 +10,11 @@
 
     <color name="uafredtext">#BB2222</color>
     <color name="uafmainback">#DDFFBB</color>
-    <color name="uafhiderback">#BBAA33</color>
+    <!--<color name="uafhiderback">#BBAA33</color>-->
 
     <color name="uafdarkhiderback">#776611</color>
     <color name="uafdarkhiderback2">#443300</color>
-    <color name="uaflighthiderback">#CCBB44</color>
+    <!--<color name="uaflighthiderback">#CCBB44</color>-->
 
 
     <color name="uafwidgetborder">#B1BCBE</color>
@@ -33,7 +33,7 @@
     <color name="red">#FF0000</color>
 
     <color name="colorPrimary">#CCBB44</color>
-    <color name="colorPrimaryDark">#998833</color>
+    <color name="colorPrimaryDark">#BBAA33</color>
     <color name="colorAccent">@color/colorPrimary</color>
 
 </resources>

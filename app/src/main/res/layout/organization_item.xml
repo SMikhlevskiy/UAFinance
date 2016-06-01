@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/midl_text_size"
+        android:layout_height="@dimen/midl_text_size"
+        android:layout_weight="0.05"
+        android:src="@mipmap/bank" />
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.65"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/micro_padding"
+        android:text="Приветбанк"
+
+
+        android:textSize="@dimen/midl_text_size" />
+
+
+    <TextView
+        android:id="@+id/itemCurrencie"
+
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_weight="0.15"
+        android:text="0.00" />
+
+    <TextView
+        android:id="@+id/itemDistance"
+
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/micro_padding"
+        android:layout_weight="0.15"
+        android:text="0 км" />
+
+
+</LinearLayout>

@@ -34,14 +34,14 @@
 
     <!-- Base application theme. -->
     <style name="hiderStyle" parent="Base.Theme.AppCompat.Light">
-        <item name="android:background">@color/uafhiderback</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:textColor">@color/uafblack</item>
 
     </style>
 
     <!-- Base application theme. -->
     <style name="hiderLightStyle" parent="Base.Theme.AppCompat.Light">
-        <item name="android:background">@color/uaflighthiderback</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/uafblack</item>
 
     </style>

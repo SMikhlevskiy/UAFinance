@@ -34,7 +34,7 @@ public class KerbstoneActivity extends AppCompatActivity {
         }
 
         ActionBar ab = getSupportActionBar();
-        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+//        ab.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
         ab.setDisplayHomeAsUpEnabled(true);
 

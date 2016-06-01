@@ -4,8 +4,8 @@
     <dimen name="activity_vertical_margin">10dp</dimen>
     <dimen name="custom_vertical_margin">3dp</dimen>
 
-    <dimen name="midl_text_size">16dp</dimen>
-    <dimen name="small_text_size">12dp</dimen>
+    <dimen name="midl_text_size">16sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
     <dimen name="switch_width">180dp</dimen>
     <dimen name="small_padding">8dp</dimen>
     <dimen name="micro_padding">4dp</dimen>

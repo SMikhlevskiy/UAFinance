@@ -2,19 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
 
-        <group
-            android:id="@+id/gr_cur_dist"
-            android:checkableBehavior="single">
-            <item
-                android:id="@+id/navmenu_cur"
-                android:checked="true"
 
-                android:title="@string/navmenu_cur" />
-            <item
-                android:id="@+id/navmenu_dist"
-                android:checked="false"
-                android:title="@string/navmenu_dist" />
-        </group>
 
         <item
             android:id="@+id/navmenu_kerbstone_finance_ua"
@@ -34,10 +22,10 @@
             android:id="@+id/navmenu_opt"
 
             android:title="@string/navmenu_opt" />
-        <item
-            android:id="@+id/navmenu_about"
+        <!--<item-->
+            <!--android:id="@+id/navmenu_about"-->
 
-            android:title="@string/navmenu_about" />
+            <!--android:title="@string/navmenu_about" />-->
 
         <!--
         <item android:title="List 1">

@@ -77,7 +77,7 @@ public class OrganizationListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater lInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            convertView = lInflater.inflate(R.layout.menu_organization_item, parent, false);
+            convertView = lInflater.inflate(R.layout.organization_item, parent, false);
 
 
         }

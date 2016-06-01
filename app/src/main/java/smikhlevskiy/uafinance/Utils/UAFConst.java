@@ -182,9 +182,9 @@ public class UAFConst {
     public static Spannable getSpanTitle(Context context) {
         String titleString = context.getString(R.string.title_activity_finance);
         Spannable span = new SpannableString(titleString);
-        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.colorPrimaryDark)), 0, titleString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.black)), 0, titleString.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myYellow)), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//        span.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.myBlu)), 1, 2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         return span;
 
     }

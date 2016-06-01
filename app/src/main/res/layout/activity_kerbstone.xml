@@ -10,12 +10,12 @@
     tools:context="smikhlevskiy.uafinance.UI.KerbstoneActivity">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/activity_toolbar" />
+        android:id="@+id/toolbars"
+        layout="@layout/layout_app_bar_empty" />
 
     <WebView
         android:id="@+id/kerbstone_webview"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbars"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

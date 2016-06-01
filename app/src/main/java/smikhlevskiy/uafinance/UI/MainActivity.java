@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -122,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.listViewBanks)
     ListView organizationListView;
+
+    @Bind(R.id.mySwitch)
+    protected SwitchCompat mySwitch;
 
 
 
@@ -282,25 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
                         showLocationMapActivity();
                         break;
-                    case R.id.navmenu_cur:// set mode:  Sort By Best ExchangeRate
-                        mDrawerLayout.closeDrawer(mNavigationView);
 
-                        uafPreferences.setSortCurrency(true);
-
-                        Log.i(TAG, "Sort by Currency");
-
-                        startRefreshDatas();
-
-                        break;
-                    case R.id.navmenu_dist:// set mode:  Sort By Distance
-                        mDrawerLayout.closeDrawer(mNavigationView);
-
-                        uafPreferences.setSortCurrency(false);
-
-                        Log.i(TAG, "Sort by Distance");
-
-                        startRefreshDatas();
-                        break;
 
                     case R.id.navmenu_kerbstone_finance_ua:// BlackMarket by Finance.ua
                         mDrawerLayout.closeDrawer(mNavigationView);
@@ -321,15 +308,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(optinent);
 
                         break;
-                    case R.id.navmenu_about://about program(now is debbuging info)
-
-                        try {
-                            Toast.makeText(MainActivity.this, getString(R.string.curVersion) + getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
-                        } catch (PackageManager.NameNotFoundException e) {
-                            Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
-                        }
-
-                        break;
+//                    case R.id.navmenu_about://about program(now is debbuging info)
+//
+//                        try {
+//                            Toast.makeText(MainActivity.this, getString(R.string.curVersion) + getPackageManager().getPackageInfo("smikhlevskiy.uafinance", 0).versionName, Toast.LENGTH_LONG).show();
+//                        } catch (PackageManager.NameNotFoundException e) {
+//                            Toast.makeText(MainActivity.this, "no version info", Toast.LENGTH_LONG).show();
+//                        }
+//
+//                        break;
 
                     default:
                         mDrawerLayout.closeDrawer(mNavigationView);
@@ -495,6 +482,16 @@ public class MainActivity extends AppCompatActivity {
 
                 startRefreshDatas();
                 Log.d(TAG, "OnSwipe to Refresh");
+            }
+        });
+
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                uafPreferences.setSortCurrency(b);
+                startRefreshDatas();
+
+
             }
         });
         //---------CurrencieSpinner
@@ -772,5 +769,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         removeLocationListener();// for Power economy
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        mySwitch.setChecked(uafPreferences.getSortCurrency());
+
+        super.onResume();
     }
 }
