@@ -1,30 +1,28 @@
 package smikhlevskiy.uafinance.UI;
 
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -36,18 +34,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import smikhlevskiy.uafinance.R;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
 import smikhlevskiy.uafinance.Net.NBUDatasAsyncTask;
+import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
 import smikhlevskiy.uafinance.Utils.UAFConst;
-import smikhlevskiy.uafinance.model.UAFPreferences;
+import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
-import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
+import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.resivers.AlarmBroadcastReciver;
 
 /*
@@ -61,13 +61,12 @@ public class MainActivity extends AppCompatActivity {
     private OrganizationListAdapter organizationListAdapter;
 
     private UAFPreferences uafPreferences;
-    private ListView organizationListView;
+
 
     private Handler mainActivityHandler;
-    private boolean startRefresh = true;
-    private boolean prFirstMenuCreate = true;
 
-    private ViewPager vpPager;
+
+
 
     private Location deviceLocation = null;
     private LocationListener locationListener;
@@ -78,47 +77,53 @@ public class MainActivity extends AppCompatActivity {
     private FinanceUA financeUA = null;
 
 
-    private DrawerLayout mDrawerLayout = null;
-    private NavigationView mNavigationView = null;
+
+
     private ActionBarDrawerToggle mDrawerToggle = null;
     private ImageView animationImageView = null;
 
-    private MenuItem refreshMenuItem = null;
+
 
     private LocationManager locationManager;
 
-    private boolean animationStarted = false;
+
 
     private CurrencyFragmentPagerAdapter adapterViewPager = null;
 
-    /**
-     * Stop Animation on RefreshButton
-     */
-    private void stopRefreshButtonAnimation() {
 
-        animationStarted = false;
-        if (animationImageView != null) {
-            animationImageView.setVisibility(View.INVISIBLE);
-            animationImageView.clearAnimation();
-        }
 
-        refreshMenuItem.setActionView(null);
-    }
 
-    /**
-     * Start Animation on RefreshButton
-     * when datas was start reads
-     */
-    private void startRefreshButtonAnimation() {
-        animationStarted = true;
-        //--Start Animation---
-        LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        animationImageView = (ImageView) inflater.inflate(R.layout.animation_refresh, null);
-        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
-        rotation.setRepeatCount(Animation.INFINITE);
-        animationImageView.startAnimation(rotation);
-        refreshMenuItem.setActionView(animationImageView);
-    }
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Bind(R.id.drawerlayout)
+    DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.navigation_view)
+    NavigationView mNavigationView;
+
+    @Bind(R.id.vpPager)
+    ViewPager vpPager;
+
+    @Bind(R.id.sliding_tabs)
+    SlidingTabLayout slidingTabLayout;
+
+    @Bind(R.id.spinerCity)
+    Spinner spinnerCity;
+
+    @Bind(R.id.spinerCurrency)
+    Spinner spinnerCurrency;
+
+    @Bind(R.id.spinerAskBid)
+    Spinner spinnerAskBid;
+
+    @Bind(R.id.listViewBanks)
+    ListView organizationListView;
+
+
 
     /**
      * Remove Location Listener(end getting GPS location)
@@ -204,6 +209,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startRefreshDatas() {
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+        swipeContainer.setProgressViewOffset(false, -200, height / 9);
+        swipeContainer.setRefreshing(true);
 
         getDeviceLocation();
 
@@ -249,20 +260,18 @@ public class MainActivity extends AppCompatActivity {
     private void setupNavigationView() {
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
+        setSupportActionBar(toolbar);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
+//        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
 
         actionBar.setTitle(UAFConst.getSpanTitle(this));
 
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -279,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                         uafPreferences.setSortCurrency(true);
 
                         Log.i(TAG, "Sort by Currency");
-                        startRefreshButtonAnimation();
+
                         startRefreshDatas();
 
                         break;
@@ -289,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
                         uafPreferences.setSortCurrency(false);
 
                         Log.i(TAG, "Sort by Distance");
-                        startRefreshButtonAnimation();
+
                         startRefreshDatas();
                         break;
 
@@ -358,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setupButtomHiderViewPager() {
         int count = UAFConst.CURRENCY_FRAGMENT_COUNT;
-        vpPager = (ViewPager) findViewById(R.id.vpPager);
+
         adapterViewPager = new CurrencyFragmentPagerAdapter(getSupportFragmentManager(), this, count);
 
 
@@ -387,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+
         slidingTabLayout.setDistributeEvenly();
         slidingTabLayout.setViewPager(vpPager);
         slidingTabLayout.setTabSelected(0);
@@ -407,8 +416,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setupContentUpHiderSpinners() {
 
-        Spinner spinnerCity = (Spinner) findViewById(R.id.spinerCity);
-        Spinner spinnerCurrency = (Spinner) findViewById(R.id.spinerCurrency);
+
 
         if (spinnerCity != null) {
 
@@ -464,9 +472,11 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-
-        startRefresh = true;
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+//        startRefresh = true;
 
         setupButtomHiderViewPager();
 
@@ -477,15 +487,25 @@ public class MainActivity extends AppCompatActivity {
         uafPreferences = new UAFPreferences(this);
 
 
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                startRefreshDatas();
+                Log.d(TAG, "OnSwipe to Refresh");
+            }
+        });
         //---------CurrencieSpinner
 
-        Spinner spinnerCurrencie = ((Spinner) findViewById(R.id.spinerCurrency));
+
 
         ArrayAdapter<String> CurrencieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uafPreferences.getCurrancie()});
-        spinnerCurrencie.setAdapter(CurrencieAdapter);
+        spinnerCurrency.setAdapter(CurrencieAdapter);
 
 
-        spinnerCurrencie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //ArrayAdapter <String> aaaa=parent;
@@ -495,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
                     uafPreferences.setCurrancie((String) parent.getAdapter().getItem(position));
 
 
-                    startRefreshButtonAnimation();
+
                     startRefreshDatas();
                 }
 
@@ -510,7 +530,7 @@ public class MainActivity extends AppCompatActivity {
 
         //---------CitySpinner
 
-        Spinner spinnerCity = ((Spinner) findViewById(R.id.spinerCity));
+
 
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{uafPreferences.getCity()});
         spinnerCity.setAdapter(cityAdapter);
@@ -527,7 +547,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.i(TAG, "City was changed");
 
-                    startRefreshButtonAnimation();
+
                     startRefreshDatas();
                 }
             }
@@ -539,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //--------askBidSpinner---------
         String askBid[] = getResources().getStringArray(R.array.askbid);
-        Spinner spinnerAskBid = ((Spinner) findViewById(R.id.spinerAskBid));
+
 
         ArrayAdapter<String> askBidAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, askBid);
         spinnerAskBid.setAdapter(askBidAdapter);
@@ -554,7 +574,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     uafPreferences.setAskBid((String) parent.getAdapter().getItem(position));
 
-                    startRefreshButtonAnimation();
+
                     startRefreshDatas();
                 }
 
@@ -571,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
 
         //  ---- Setup OrganizationListView(Main ListView in the center of activity)
         organizationListAdapter = new OrganizationListAdapter(this);
-        organizationListView = (ListView) findViewById(R.id.listViewBanks);
+
         organizationListView.setAdapter(organizationListAdapter);
         organizationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -598,6 +618,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void handleMessage(Message msg) {
+//                if (msg!=null)
                 switch (msg.what) {
                     case 1://on Read finance datas
                         financeUA = (FinanceUA) msg.obj;
@@ -611,7 +632,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         setupContentUpHiderSpinners();
                         // Remove the animation.
-                        stopRefreshButtonAnimation();
+                        swipeContainer.setRefreshing(false);
 
                         break;
                     case 2:
@@ -647,10 +668,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if (animationStarted) {//StopAnimation to avoid double Animation
-            stopRefreshButtonAnimation();
-            animationStarted = true;
-        }
+//        if (animationStarted) {//StopAnimation to avoid double Animation
+//            stopRefreshButtonAnimation();
+//            animationStarted = true;
+//        }
         //if (!prFirstMenuCreate) return true;
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -658,11 +679,11 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "onCreateOptionsMenu");
 
 
-        refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
-        if (prFirstMenuCreate || animationStarted) {//Start Animation
-            startRefreshButtonAnimation();
-            prFirstMenuCreate = false;
-        }
+//        refreshMenuItem = menu.findItem(R.id.refreshmenuitem);
+//        if (prFirstMenuCreate || animationStarted) {//Start Animation
+//            startRefreshButtonAnimation();
+//            prFirstMenuCreate = false;
+//        }
 
         return true;
     }
@@ -675,11 +696,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         switch (item.getItemId()) {
-            case R.id.refreshmenuitem://Refresh data Item
-                startRefreshButtonAnimation();
-                startRefreshDatas();
-
-                break;
+//            case R.id.refreshmenuitem://Refresh data Item
+//
+//                startRefreshDatas();
+//
+//                break;
             case android.R.id.home://start NavigationView
                 if (mDrawerLayout.isDrawerOpen(mNavigationView)) {
                     mDrawerLayout.closeDrawer(mNavigationView);
@@ -702,10 +723,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (startRefresh)
+//        if (startRefresh)
             startRefreshDatas();
-
-        startRefresh = false;
+//
+//        startRefresh = false;
 
 
     }
