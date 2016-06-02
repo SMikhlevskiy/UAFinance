@@ -140,28 +140,32 @@ public class FinanceUAAsyncTask extends AsyncTask<Void, Void, FinanceUA> {
     @Override
     protected void onPostExecute(FinanceUA financeUA) {
         if (financeUA == null) {
+
             Log.i(TAG, "datas not read");
-            return;
+            //return;
+
         }
 
 
         if (context.get() == null) {
+
             Log.i(TAG, "activity is destroy");
-            return;//
+            return;
+
         } else
             Log.i(TAG, "onPostExecute");
 
 
-        if (resultHandler.get() != null) {
+
 
             Message message = new Message();
             message.what = 1;
             message.obj = financeUA;
             ((Handler) resultHandler.get()).handleMessage(message);
             Log.i(TAG, "datas sucsessuful reads");
-        }
 
-        if ((!isLowWork) && (isSortCurrency)) {//Start GeoChaching Thread
+
+        if ((!isLowWork) && (isSortCurrency) && (financeUA!=null)) {//Start GeoChaching Thread
             GeoLocationDB geoLocationDB = new GeoLocationDB((Context) context.get(), GeoLocationDB.DB_NAME, null, GeoLocationDB.DB_VERSION);
 
             geoLocationDB.startUpdteLocationBase(financeUA.getAllAddresses(city));

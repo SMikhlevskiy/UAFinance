@@ -37,6 +37,7 @@
 
             <!--/>-->
             <RelativeLayout
+                android:id="@+id/swLayout"
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end">
@@ -49,7 +50,7 @@
                     android:layout_marginRight="@dimen/small_padding"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="end"
-                    android:text="@string/distance"
+                    android:text="@string/course"
                     android:textColor="@color/black" />
 
                 <android.support.v7.widget.SwitchCompat
@@ -68,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_toLeftOf="@id/mySwitch"
-                    android:text="@string/course"
+                    android:text="@string/distance"
                     android:textColor="@color/black" />
 
             </RelativeLayout>

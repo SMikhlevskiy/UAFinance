@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.MenuItem;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -148,5 +149,8 @@ public class UAFWidget extends AppWidgetProvider {
 //                        + strWidgetText, Toast.LENGTH_LONG).show();
 
     }
+
+
+
 
 }

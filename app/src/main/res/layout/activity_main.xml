@@ -148,7 +148,7 @@
 
 
                     android:src="@mipmap/map"
-                    app:backgroundTint="@color/uafmainback"
+                    app:backgroundTint="@color/colorAccent"
                     app:elevation="6dp"
                     app:pressedTranslationZ="12dp" />
 

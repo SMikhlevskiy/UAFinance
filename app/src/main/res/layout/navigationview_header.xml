@@ -21,6 +21,6 @@
         android:layout_toRightOf="@id/iv"
         android:layout_centerVertical="true"
         android:text="UAFinance"
-        android:textColor="@color/uafblack"
+        android:textColor="@color/black"
         android:textSize="30dp" />
 </RelativeLayout>

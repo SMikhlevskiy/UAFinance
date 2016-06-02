@@ -5,15 +5,15 @@
     <color name="myYellow">#FFFF00</color>
     <color name="white">#D0FFFFFF</color>
 
-    <color name="uafblack">#000000</color>
-    <color name="uafredblack">#330000</color>
+    <!--<color name="uafblack">#000000</color>-->
+    <!--<color name="uafredblack">#330000</color>-->
 
     <color name="uafredtext">#BB2222</color>
-    <color name="uafmainback">#DDFFBB</color>
+
     <!--<color name="uafhiderback">#BBAA33</color>-->
 
-    <color name="uafdarkhiderback">#776611</color>
-    <color name="uafdarkhiderback2">#443300</color>
+    <!--<color name="uafdarkhiderback">#776611</color>-->
+    <!--<color name="uafdarkhiderback2">#443300</color>-->
     <!--<color name="uaflighthiderback">#CCBB44</color>-->
 
 
@@ -34,6 +34,6 @@
 
     <color name="colorPrimary">#CCBB44</color>
     <color name="colorPrimaryDark">#BBAA33</color>
-    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="colorAccent">#FFFFDD</color>
 
 </resources>
