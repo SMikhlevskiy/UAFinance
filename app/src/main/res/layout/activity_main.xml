@@ -30,7 +30,7 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:paddingTop="0dp"
-            tools:context="smikhlevskiy.uafinance.UI.MainActivity"
+            tools:context=".ui.MainActivity"
             android:layout_below="@+id/upbarlayout">
 
             <RelativeLayout
@@ -94,7 +94,7 @@
                     android:paddingTop="0dp">
 
 
-                    <smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout
+                    <smikhlevskiy.uafinance.ui.wigets.SlidingTabLayout
                         android:id="@+id/sliding_tabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

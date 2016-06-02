@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Net;
+package smikhlevskiy.uafinance.net;
 
 import android.content.Context;
 import android.location.Location;

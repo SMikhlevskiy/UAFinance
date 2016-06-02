@@ -7,7 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="smikhlevskiy.uafinance.UI.KerbstoneActivity">
+    tools:context=".ui.KerbstoneActivity">
 
     <include
         android:id="@+id/toolbars"

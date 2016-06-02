@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.utils.UAFConst;
 
 /**
  * Created by SMikhlevskiy on 07-Nov-15.

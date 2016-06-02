@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Message;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -15,13 +14,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Handler;
 
-import smikhlevskiy.uafinance.Utils.GeoLocationUtils;
+import smikhlevskiy.uafinance.utils.GeoLocationUtils;
 
 /**
  * This class allows to speed up gets Latitude & Longitude for address of all organization used in application

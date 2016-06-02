@@ -12,8 +12,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.UI.MainActivity;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.ui.MainActivity;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.UAFPreferences;

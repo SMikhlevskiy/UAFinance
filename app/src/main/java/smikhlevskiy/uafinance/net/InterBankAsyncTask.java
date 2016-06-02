@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Net;
+package smikhlevskiy.uafinance.net;
 
 import android.os.AsyncTask;
 import android.os.Handler;

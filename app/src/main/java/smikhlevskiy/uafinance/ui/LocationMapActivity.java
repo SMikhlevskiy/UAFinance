@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.ui;
 
 import android.app.TaskStackBuilder;
 import android.content.Intent;
@@ -27,13 +27,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 
-import smikhlevskiy.uafinance.Net.PrivatAddresesAsyncTask;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.net.PrivatAddresesAsyncTask;
 import smikhlevskiy.uafinance.model.FinanceUA;
 
-import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
-import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
+import smikhlevskiy.uafinance.net.FinanceUAAsyncTask;
 import smikhlevskiy.uafinance.R;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 

@@ -6,16 +6,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
 
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.UI.fragments.CurrencyCashFragment;
-import smikhlevskiy.uafinance.UI.fragments.InterBankFragment;
-import smikhlevskiy.uafinance.UI.fragments.NBUFragment;
-import smikhlevskiy.uafinance.UI.fragments.PreciousMetalsFragment;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.ui.fragments.CurrencyCashFragment;
+import smikhlevskiy.uafinance.ui.fragments.InterBankFragment;
+import smikhlevskiy.uafinance.ui.fragments.NBUFragment;
+import smikhlevskiy.uafinance.ui.fragments.PreciousMetalsFragment;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.model.Currencie;
 import smikhlevskiy.uafinance.model.FinanceUA;
 

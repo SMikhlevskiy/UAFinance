@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.ui;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

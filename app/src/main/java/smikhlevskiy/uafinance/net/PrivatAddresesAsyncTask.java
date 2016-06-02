@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Net;
+package smikhlevskiy.uafinance.net;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,7 +9,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 
-import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.Organization;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 

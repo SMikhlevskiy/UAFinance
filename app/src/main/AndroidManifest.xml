@@ -39,7 +39,7 @@
         -->
 
         <activity
-            android:name="smikhlevskiy.uafinance.UI.MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:allowTaskReparenting="false"
             android:exported="true"
@@ -54,45 +54,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.OrganizationActivity"
+            android:name=".ui.OrganizationActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_organization">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="smikhlevskiy.uafinance.UI.OrganizationActivity" />
+                android:value=".ui.OrganizationActivity" />
 
         </activity>
         <activity
-            android:name=".UI.LocationMapActivity"
+            android:name=".ui.LocationMapActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:label="@string/mapActivityName">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UI.LocationMapActivity" />
+                android:value=".ui.LocationMapActivity" />
 
         </activity>
 
 
         <activity
-            android:name=".UI.KerbstoneActivity"
+            android:name=".ui.KerbstoneActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:label="@string/kerbstone_market">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UI.KerbstoneActivity" />
+                android:value=".ui.KerbstoneActivity" />
 
         </activity>
         <activity
-            android:name=".UI.UAFPreferencesActivity"
+            android:name=".ui.UAFPreferencesActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:label="@string/preferences_label">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UI.UAFPreferencesActivity" />
+                android:value=".ui.UAFPreferencesActivity" />
 
         </activity>
 
@@ -100,14 +100,14 @@
             android:name=".services.NotificationService"
             android:exported="false"
             android:icon="@mipmap/currency_exchange"
-            android:label="@string/notification_service"></service>
+            android:label="@string/notification_service"/>
 
         <receiver
             android:name=".resivers.BootBroadcastResiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
 
@@ -118,12 +118,12 @@
             android:name=".resivers.AlarmBroadcastReciver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </receiver>
 
 
-        <receiver android:name=".UI.UAFWidget" >
+        <receiver android:name=".ui.UAFWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

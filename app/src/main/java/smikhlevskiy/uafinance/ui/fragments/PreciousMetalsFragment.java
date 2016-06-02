@@ -1,4 +1,5 @@
-package smikhlevskiy.uafinance.UI.fragments;
+package smikhlevskiy.uafinance.ui.fragments;
+
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,10 +18,11 @@ import smikhlevskiy.uafinance.model.Currencie;
 /**
  * Created by SMikhlevskiy on 19-Dec-15.
  * Fragment for ViewPager MainActivty in Bottom header
- * Out NBU rates
+ * Out rates of PerciousMetals
  */
-public class NBUFragment extends Fragment {
-    public static String TAG = NBUFragment.class.getSimpleName();
+public class PreciousMetalsFragment extends Fragment {
+
+    public static String TAG = PreciousMetalsFragment.class.getSimpleName();
     private View fragmentView;
     private HashMap<String, Currencie> privatHashMap = null;
 
@@ -32,18 +34,12 @@ public class NBUFragment extends Fragment {
     public void draw() {
         try {
             if (privatHashMap != null) {
-                ((TextView) fragmentView.findViewById(R.id.USD_ask)).setText(privatHashMap.get(getString(R.string.USD)).getAsk());
-                ((TextView) fragmentView.findViewById(R.id.USD_bid)).setVisibility(View.INVISIBLE);
+                ((TextView) fragmentView.findViewById(R.id.Gold_ask)).setText(privatHashMap.get(getString(R.string.Gold_key)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.Silver_ask)).setText(privatHashMap.get(getString(R.string.Silver_key)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.Platina_ask)).setText(privatHashMap.get(getString(R.string.Platina_key)).getAsk());
+                ((TextView) fragmentView.findViewById(R.id.Palladiy_ask)).setText(privatHashMap.get(getString(R.string.Palladiy_key)).getAsk());
 
-                ((TextView) fragmentView.findViewById(R.id.EUR_ask)).setText(privatHashMap.get(getString(R.string.EUR)).getAsk());
-                ((TextView) fragmentView.findViewById(R.id.EUR_bid)).setVisibility(View.INVISIBLE);
-
-                ((TextView) fragmentView.findViewById(R.id.RUB_ask)).setText(privatHashMap.get(getString(R.string.RUR)).getAsk());
-                ((TextView) fragmentView.findViewById(R.id.RUB_bid)).setVisibility(View.INVISIBLE);
-
-                ((TextView) fragmentView.findViewById(R.id.ask)).setVisibility(View.INVISIBLE);
-                ((TextView) fragmentView.findViewById(R.id.bid)).setVisibility(View.INVISIBLE);
-            } else Log.i(TAG, "PRIVAT hash is null");
+            }
         } catch (IllegalStateException e) {
             //IllegalStateException: Fragment  not attached to Activity
             // I do not find another solution
@@ -53,12 +49,13 @@ public class NBUFragment extends Fragment {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.fragment_currencie, null);
+        fragmentView = inflater.inflate(R.layout.fragment_precious_metals, null);
         draw();
         return fragmentView;
     }
+
+
 }

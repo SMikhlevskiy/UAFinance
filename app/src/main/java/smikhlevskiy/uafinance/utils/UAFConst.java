@@ -1,13 +1,11 @@
-package smikhlevskiy.uafinance.Utils;
+package smikhlevskiy.uafinance.utils;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
 import java.util.Map;
-import java.util.Objects;
 
 import smikhlevskiy.uafinance.R;
 

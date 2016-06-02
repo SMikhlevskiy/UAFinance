@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DecimalFormat;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.model.UAFPreferences;
 import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;

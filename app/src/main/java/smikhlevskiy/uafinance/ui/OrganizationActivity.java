@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.ui;
 
 import android.app.TaskStackBuilder;
 import android.content.Intent;
@@ -33,9 +33,8 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.model.UAFPreferences;
-import smikhlevskiy.uafinance.model.FinanceUA;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 

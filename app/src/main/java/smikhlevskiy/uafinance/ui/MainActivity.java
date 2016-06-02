@@ -1,8 +1,7 @@
-package smikhlevskiy.uafinance.UI;
+package smikhlevskiy.uafinance.ui;
 
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.location.Location;
@@ -31,19 +30,18 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import smikhlevskiy.uafinance.Net.FinanceUAAsyncTask;
-import smikhlevskiy.uafinance.Net.InterBankAsyncTask;
-import smikhlevskiy.uafinance.Net.NBUDatasAsyncTask;
+import smikhlevskiy.uafinance.net.FinanceUAAsyncTask;
+import smikhlevskiy.uafinance.net.InterBankAsyncTask;
+import smikhlevskiy.uafinance.net.NBUDatasAsyncTask;
 import smikhlevskiy.uafinance.R;
-import smikhlevskiy.uafinance.UI.wigets.SlidingTabLayout;
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.ui.wigets.SlidingTabLayout;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.adapters.CurrencyFragmentPagerAdapter;
 import smikhlevskiy.uafinance.adapters.OrganizationListAdapter;
 import smikhlevskiy.uafinance.model.Currencie;
@@ -159,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
             removeLocationListener();//remove old listener
 
-            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);//get last location
+            deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);//get last location
             if (deviceLocation != null) {
                 Log.i(TAG, deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
                 organizationListAdapter.setDeviceLocation(deviceLocation);
@@ -197,9 +195,9 @@ public class MainActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
-            deviceLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (deviceLocation == null)
-                deviceLocation = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                deviceLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (SecurityException se) {
             deviceLocation = null;
             Log.i(TAG, "Program is not have permission");
@@ -267,13 +265,15 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(UAFConst.getSpanTitle(this));
+        }
 
 //        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbargradient));
 
 
-        actionBar.setTitle(UAFConst.getSpanTitle(this));
+
 
 
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Log.i(adapterViewPager.TAG, "Position=" + position);
+                Log.i(CurrencyFragmentPagerAdapter.TAG, "Position=" + position);
                 android.support.v4.app.Fragment fragment = adapterViewPager.getFragmentByPosition(position, vpPager);
                 if (fragment != null)
                     adapterViewPager.getItemPosition(fragment);//for set datas to Fragment

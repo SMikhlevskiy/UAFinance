@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.Net;
+package smikhlevskiy.uafinance.net;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import smikhlevskiy.uafinance.Utils.UAFConst;
+import smikhlevskiy.uafinance.utils.UAFConst;
 import smikhlevskiy.uafinance.model.GeoLocationDB;
 import smikhlevskiy.uafinance.model.Organization;
 

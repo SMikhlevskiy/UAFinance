@@ -8,7 +8,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
 
-    tools:context="smikhlevskiy.uafinance.UI.OrganizationActivity">
+    tools:context=".ui.OrganizationActivity">
 
     <include
         android:id="@+id/toolbars"

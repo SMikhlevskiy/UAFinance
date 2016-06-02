@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.UI.wigets;
+package smikhlevskiy.uafinance.ui.wigets;
 /*
  * Copyright 2014 Google Inc. All rights reserved.
  *

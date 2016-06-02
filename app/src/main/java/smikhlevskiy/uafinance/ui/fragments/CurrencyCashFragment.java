@@ -1,4 +1,4 @@
-package smikhlevskiy.uafinance.UI.fragments;
+package smikhlevskiy.uafinance.ui.fragments;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;

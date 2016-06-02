@@ -7,7 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="smikhlevskiy.uafinance.UI.UAFPreferencesActivity">
+    tools:context=".ui.UAFPreferencesActivity">
 
     <include
         android:id="@+id/toolbars"
