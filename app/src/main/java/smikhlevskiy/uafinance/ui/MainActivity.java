@@ -123,18 +123,14 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.mySwitch)
     protected SwitchCompat mySwitch;
 
+    private boolean isRefresh = false;
 
-    void startRefresh(){
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        swipeContainer.setProgressViewOffset(false, -200, height / 9);
-        swipeContainer.setRefreshing(true);
-        swLayout.setVisibility(View.GONE);
-    }
 
-    void stopRefresh(){
+
+    void stopShowRefresh() {
+
+        Log.i(TAG,"stop refresh");
+        isRefresh = false;
         swipeContainer.setRefreshing(false);
         swLayout.setVisibility(View.VISIBLE);
     }
@@ -144,11 +140,18 @@ public class MainActivity extends AppCompatActivity {
      * Remove Location Listener(end getting GPS location)
      */
     void removeLocationListener() {
+
+
         try {
             if ((locationListener != null) && (locationManager != null)) {
                 locationManager.removeUpdates(locationListener);
                 Log.i(TAG, "Remove Location Listener");
                 locationListener = null;
+            }
+            if ((locationNetworkListener != null) && (locationManager != null)) {
+                locationManager.removeUpdates(locationNetworkListener);
+                Log.i(TAG, "Remove Location Listener");
+                locationNetworkListener = null;
             }
 
         } catch (SecurityException se) {
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
             if (locationManager == null) {
-                Log.d(TAG, "Location mager is null");
+                Log.d(TAG, "Location manager is null");
                 return;
             }
 
@@ -189,7 +192,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Have new GPS Location");
 
 
+                    Location oldLocation = deviceLocation;
                     deviceLocation = location;
+
+                    if ((oldLocation == null) ||
+                            (oldLocation.distanceTo(location) > 500))
+                        startRefreshDatas();
+
 
                     organizationListAdapter.setDeviceLocation(deviceLocation);
                     organizationListAdapter.notifyDataSetChanged();
@@ -229,11 +238,18 @@ public class MainActivity extends AppCompatActivity {
 
                     if (location == null) return;
                     Log.d(TAG, "Have new Network Location");
-
+                    Location oldLocation = deviceLocation;
                     deviceLocation = location;
+
+                    if ((oldLocation == null) ||
+                            (oldLocation.distanceTo(location) > 500))
+                        startRefreshDatas();
+
 
                     organizationListAdapter.setDeviceLocation(deviceLocation);
                     organizationListAdapter.notifyDataSetChanged();
+
+
                     try {
 
                         locationManager.removeUpdates(locationNetworkListener);
@@ -243,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 //                        // TODO: Send location to server & get new sorted stores list from server
 //                        sortStores(storesAdapter.getStores());
 //                        storesAdapter.notifyDataSetChanged();
-                        Log.d(TAG, "Sucsessfull get Network Location");
+                    Log.d(TAG, "Sucsessfull get Network Location");
 
                     //removeLocationListener();
 
@@ -267,26 +283,32 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-            if ((locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)))
-                deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (deviceLocation == null) {
+                if ((locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)))
+                    deviceLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 
-            if ((deviceLocation == null)
-                    && (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)))
-                deviceLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if ((deviceLocation == null)
+                        && (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)))
+                    deviceLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
 
-            if (deviceLocation != null) {
-                Log.d(TAG, "Last know location: " + deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
+                if (deviceLocation != null) {
+                    Log.d(TAG, "Last know location: " + deviceLocation.getLatitude() + ":" + deviceLocation.getLongitude());
 
 
+                }
+
+                if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationNetworkListener);
+                if (deviceLocation != null)
+                organizationListAdapter.setDeviceLocation(deviceLocation);
             }
+
 
             //start getting current GPS location
             if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationNetworkListener);
 
 
             if (deviceLocation == null)
@@ -307,10 +329,20 @@ public class MainActivity extends AppCompatActivity {
     public void startRefreshDatas() {
 
 
+        if (isRefresh) return;
 
-        startRefresh();
+        Log.i(TAG, "start refresh");
+        isRefresh = true;
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+        swipeContainer.setProgressViewOffset(false, -200, height / 9);
+        swipeContainer.setRefreshing(true);
+        swLayout.setVisibility(View.GONE);
 
 
+        getDeviceLocation();
 
 
         (new FinanceUAAsyncTask(
@@ -693,9 +725,11 @@ public class MainActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case 1://on Read finance datas
                         financeUA = (FinanceUA) msg.obj;
+                        Log.i(TAG,"MAIN HANDLER: On UAFinance");
 
 
                         if (financeUA != null) {
+                            Log.i(TAG,"UAFinance OK");
                             ((BaseAdapter) organizationListView.getAdapter()).notifyDataSetChanged();
                             adapterViewPager.setFinanceUA(financeUA);
                             adapterViewPager.notifyDataSetChanged();
@@ -704,8 +738,8 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         // Remove the animation.
-                        stopRefresh();
-                        Log.d(TAG,"OnFinanceUA read");
+                        stopShowRefresh();
+                        Log.d(TAG, "OnFinanceUA read");
 
                         break;
                     case 2:
@@ -733,6 +767,10 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null)
             AlarmBroadcastReciver.setAlarm(this);
 
+
+        mySwitch.setChecked(uafPreferences.getSortCurrency());
+
+        startRefreshDatas();
 
         //startRefreshDatas();
         Log.i(TAG, "End OnCreate");
@@ -782,11 +820,5 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onResume() {
-        mySwitch.setChecked(uafPreferences.getSortCurrency());
-        getDeviceLocation();
-        startRefreshDatas();
-        super.onResume();
-    }
+
 }
