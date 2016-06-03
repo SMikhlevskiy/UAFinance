@@ -53,7 +53,8 @@
 
     <string name="CurrencyCash">Наличные</string>
     <string name="InterBank">Межбанк</string>
-    <string name="PreciousMetals">Драг.металл</string>
+    <string name="PreciousMetals">Драг.Металл</string>
+    <string name="blackMarket">Черн.рынок</string>
     <string name="NBU">НБУ</string>
 
     <string name="km">км</string>

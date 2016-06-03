@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.HashMap;
 
 import smikhlevskiy.uafinance.R;
+import smikhlevskiy.uafinance.ui.fragments.BlackMarketFragment;
 import smikhlevskiy.uafinance.ui.fragments.CurrencyCashFragment;
 import smikhlevskiy.uafinance.ui.fragments.InterBankFragment;
 import smikhlevskiy.uafinance.ui.fragments.NBUFragment;
@@ -82,7 +83,10 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
                 preciousMetalsFragment.setDatas(privat);
                 return preciousMetalsFragment;
 
-
+            case UAFConst.BLACK_MARKET:
+                BlackMarketFragment blackMarketFragment = new BlackMarketFragment();
+                blackMarketFragment.setDatas(interBank);
+                return blackMarketFragment;
         }
         return null;
     }
@@ -101,6 +105,8 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
                 return context.getString(R.string.InterBank);
             case UAFConst.PRECIOUS_METALS:
                 return context.getString(R.string.PreciousMetals);
+            case UAFConst.BLACK_MARKET:
+                return context.getString(R.string.blackMarket);
         }
         return "TAB" + " " + String.valueOf(position + 1);
 
@@ -116,6 +122,9 @@ public class CurrencyFragmentPagerAdapter extends FragmentPagerAdapter {
         } else if (object instanceof InterBankFragment) {
             ((InterBankFragment) object).setDatas(interBank);
             ((InterBankFragment) object).draw();
+        } else if (object instanceof BlackMarketFragment) {
+            ((BlackMarketFragment) object).setDatas(interBank);
+            ((BlackMarketFragment) object).draw();
         } else if (object instanceof NBUFragment) {
             if (privat == null) Log.i("Privat", "Privat is null");
             else Log.i("Privat", "Privat is not null");

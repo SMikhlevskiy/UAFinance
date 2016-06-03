@@ -63,7 +63,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     private static final int TITLE_OFFSET_DIPS = 24;
-    private static final int TAB_VIEW_PADDING_DIPS = 16;
+    private static final int TAB_VIEW_PADDING_DIPS = 10;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
     private int mTitleOffset;
     private int mTabViewLayoutId;
@@ -163,6 +163,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     private TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
+        textView.setMaxLines(1);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
         textView.setTypeface(Typeface.DEFAULT_BOLD);

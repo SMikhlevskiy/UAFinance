@@ -74,11 +74,12 @@ public class UAFConst {
     };
 
     // number of fragment in PageView
-    public static final int CURRENCY_FRAGMENT_COUNT = 4;
+    public static final int CURRENCY_FRAGMENT_COUNT = 5;
     public static final int CURRENCY_CASH = 0;
     public static final int INTERBANK = 1;
     public static final int NBU = 2;
-    public static final int PRECIOUS_METALS = 3;
+    public static final int PRECIOUS_METALS = 4;
+    public static final int BLACK_MARKET = 3;
 
 
     /**

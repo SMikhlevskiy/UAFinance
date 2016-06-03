@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
      */
     void getDeviceLocation() {
         try {
-
+            Log.i(TAG,"getDeviceLocation");
 
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -816,6 +816,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        Log.i(TAG,"onPause");
         removeLocationListener();// for Power economy
         super.onPause();
     }
